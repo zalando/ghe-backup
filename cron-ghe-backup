@@ -1,0 +1,2 @@
+* * * * * root echo "Hello backup" >> /var/log/ghe-backup.log 2>&1
+
