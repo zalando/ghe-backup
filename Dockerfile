@@ -10,7 +10,7 @@ RUN mkdir -p /var/log/
 
 # backup-utils
 # read package lists // update w/ latest security patches // install english // install git
-RUN apt-get update -y && sudo apt-get install -y unattended-upgrades && sudo apt-get install -y language-pack-en && apt-get install -y git
+RUN apt-get update -y && sudo apt-get install -y unattended-upgrades language-pack-en git
 
 RUN git clone -b stable https://github.com/github/backup-utils.git
 COPY backup.config /backup/backup-utils/backup.config
