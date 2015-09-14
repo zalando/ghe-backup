@@ -1,5 +1,5 @@
 # ghe-backup
-github enterprise backup
+docker stups AWS based backup for github enterprise at zalando
 
 ## create docker image
 docker build --rm -t [repo name]:[tag] .  
