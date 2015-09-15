@@ -8,8 +8,11 @@ RUN mkdir -p /data/ghe-production-data/
 RUN mkdir -p /backup/backup-utils/
 RUN mkdir -p /var/log/
 
+# copy scm-source.json
+COPY scm-source.json /scm-source.json
+
 # backup-utils
-# read package lists // update w/ latest security patches // install english // install git
+# read package lists // update w/ latest security patches // install english & git
 RUN apt-get update -y && sudo apt-get install -y unattended-upgrades language-pack-en git
 
 RUN git clone -b stable https://github.com/github/backup-utils.git
