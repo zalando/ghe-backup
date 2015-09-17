@@ -18,10 +18,28 @@ docker run -d --name ghe-backup pierone.stups.zalan.do/bus/ghe-backup:0.0.2
 
 ### attach to the running container
 docker attach --sig-proxy=false ghe-backup
-### detach from the running container (does not stop the container) 
+### detach from the running container (does not stop the container)
 CTRL+C
 
 ## upload to pierone
 docker push [repo name]:[tag]  
 e.g.  
-docker push pierone.stups.zalan.do/bus/ghe-backup:0.0.2  
+docker push pierone.stups.zalan.do/bus/ghe-backup:0.0.2
+
+## kms
+create IAM role ghe-backup with IAM policy e.g. kms-ghe-backup-20150916:  
+`{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "Stmt1441892073456",
+            "Effect": "Allow",
+            "Action": [
+                "kms:Decrypt"
+            ],
+            "Resource": [
+                "*"
+            ]
+        }
+    ]
+}`
