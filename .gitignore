@@ -1,0 +1,8 @@
+scm-source.json
+.DS_Store
+batstests
+*.bats
+encr
+notes.*
+*.asc
+__pycache__
