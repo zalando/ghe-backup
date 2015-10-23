@@ -1,11 +1,12 @@
 # ghe-backup
-docker stups AWS based backup for [Github Enterprise](https://enterprise.github.com/)
-at [Zalando Tech](https://tech.zalando.com/)
+Docker (stups)[https://stups.io/] (AWS)[https://aws.amazon.com] based backup for
+[Github Enterprise](https://enterprise.github.com/) at
+[Zalando Tech](https://tech.zalando.com/)
 
 ## create scm-source.json
 creates a bash script ('create-scm-source.sh') as described in
 [stups application-development](http://docs.stups.io/en/latest/user-guide/application-development.html)  
-make the script executable: chmod +x create-scm-source.sh  
+make the script executable: ```chmod +x create-scm-source.sh```  
 run create-scm-source.sh e.g. ./create-scm-source.sh that produces a scm-source.json  
 
 ## create docker image
@@ -33,8 +34,11 @@ docker push [repo name]:[tag]
 e.g.  
 docker push pierone.stups.zalan.do/bus/ghe-backup:0.0.3  
 
-## iam role for kms usage
-create IAM role ghe-backup with IAM policy e.g. kms-ghe-backup-20150916:  
+## iam (policy)[http://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies.html] settings
+a kms policy is needed to:   
+* allow kms decrpytion
+* access stups s3 bucket
+* use EBS volumes
 ```{  
     "Version": "2012-10-17",  
     "Statement": [  
@@ -56,9 +60,19 @@ create IAM role ghe-backup with IAM policy e.g. kms-ghe-backup-20150916:
             "Resource": [
                 "arn:aws:s3:::[yourMintBucket]/[repo name]/*"
             ]
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "ec2:DescribeVolumes",
+                "ec2:AttachVolume",
+                "ec2:DetachVolume"
+            ],
+            "Resource": "*"
         }  
     ]  
 }```   
+Make sure you have a (role)[http://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles.html] managing your policy
 
 ## senza yaml file to deploy using
 [senza](http://docs.stups.io/en/latest/components/senza.html#senza-info)  
