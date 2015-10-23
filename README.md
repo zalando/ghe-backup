@@ -1,5 +1,5 @@
 # ghe-backup
-Docker (stups)[https://stups.io/] (AWS)[https://aws.amazon.com] based backup for
+Docker [stups](https://stups.io/) [AWS](https://aws.amazon.com) based backup for
 [Github Enterprise](https://enterprise.github.com/) at
 [Zalando Tech](https://tech.zalando.com/)
 
