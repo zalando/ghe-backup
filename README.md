@@ -39,7 +39,8 @@ a kms policy is needed to:
 * allow kms decrpytion
 * access stups s3 bucket
 * use EBS volumes
-```{  
+```  
+{  
     "Version": "2012-10-17",  
     "Statement": [  
         {  
@@ -48,30 +49,31 @@ a kms policy is needed to:
             "Action": [  
                 "kms:Decrypt"  
             ],  
-            "Resource": [  
+            "Resource": [   
                 "*"  
             ]  
-        },
-        {
-            "Effect": "Allow",
-            "Action": [
-                "s3:GetObject"
-            ],
-            "Resource": [
-                "arn:aws:s3:::[yourMintBucket]/[repo name]/*"
-            ]
-        },
-        {
-            "Effect": "Allow",
-            "Action": [
-                "ec2:DescribeVolumes",
-                "ec2:AttachVolume",
-                "ec2:DetachVolume"
-            ],
-            "Resource": "*"
+        },  
+        {  
+            "Effect": "Allow",  
+            "Action": [  
+                "s3:GetObject"  
+            ],  
+            "Resource": [  
+                "arn:aws:s3:::[yourMintBucket]/[repo name]/*"  
+            ]  
+        },  
+        {  
+            "Effect": "Allow",  
+            "Action": [  
+                "ec2:DescribeVolumes",  
+                "ec2:AttachVolume",  
+                "ec2:DetachVolume"  
+            ],  
+            "Resource": "*"  
         }  
     ]  
-}```   
+}  
+```   
 Make sure you have a (role)[http://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles.html] managing your policy
 
 ## senza yaml file to deploy using
