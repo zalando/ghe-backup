@@ -29,7 +29,7 @@ docker attach --sig-proxy=false ghe-backup
 ### detach from the running container (does not stop the container)
 CTRL+C
 
-## upload to [pierone](https://github.com/zalando-stups/pierone)
+## upload to (pierone)[https://github.com/zalando-stups/pierone]
 docker push [repo name]:[tag]  
 e.g.  
 docker push pierone.stups.zalan.do/bus/ghe-backup:0.0.3  
