@@ -35,6 +35,7 @@ SenzaComponents:
   # this basic configuration is required for the other components
   - Configuration:
       Type: Senza::StupsAutoConfiguration # auto-detect network setup
+      AvailabilityZones: [eu-west-1a] # use EBS volume's AZ
   # will create a launch configuration and auto scaling group with scaling triggers
   - AppServer:
       Type: Senza::TaupageAutoScalingGroup
