@@ -34,7 +34,7 @@ docker push [repo name]:[tag]
 e.g.  
 docker push pierone.stups.zalan.do/bus/ghe-backup:0.0.3  
 
-## iam (policy)[http://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies.html] settings
+## iam [policy](http://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies.html) settings
 a kms policy is needed to:   
 * allow kms decrpytion
 * access stups s3 bucket
