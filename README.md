@@ -10,7 +10,7 @@ Docker container and configured with an
 e.g.  
 ```docker build --rm -t pierone.stups.zalan.do/bus/ghe-backup:0.0.4 . ```  
 
-## run the image locally
+### run the image locally
 ```docker run -d --name [repo name]:[tag] ```  
 e.g.  
 ```docker run -d --name ghe-backup pierone.stups.zalan.do/bus/ghe-backup:0.0.4 ```  
@@ -20,19 +20,18 @@ or with connected bash:
 e.g.  
 ```docker run -it --entrypoint /bin/bash --name ghe-backup pierone.stups.zalan.do/bus/ghe-backup:0.0.4 ```   
 
-### attach to the running local container
+#### attach to the running local container
 ```docker attach --sig-proxy=false ghe-backup ```  
-
-### detach from the running local container (does not stop the container)
+##### detach from the running local container (does not stop the container)
 ```CTRL+C ```  
 
-### run bash in running docker container
+#### run bash in running docker container
 ```sudo docker exec -i -t [ContainerID] bash ```
-### exit bash
+##### exit bash
 ```exit ```
 
 
-## upload to [pierone](https://github.com/zalando-stups/pierone)
+### upload to [pierone](https://github.com/zalando-stups/pierone)
 ```docker push [repo name]:[tag]```  
 e.g.  
 ```docker push pierone.stups.zalan.do/bus/ghe-backup:0.0.4```  
