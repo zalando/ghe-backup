@@ -10,7 +10,7 @@ Docker container and configured with an
 e.g.  
 ```docker build --rm -t pierone.stups.zalan.do/bus/ghe-backup:0.0.4 . ```  
 
-### run the image locally
+### run the image  
 ```docker run -d --name [repo name]:[tag] ```  
 e.g.  
 ```docker run -d --name ghe-backup pierone.stups.zalan.do/bus/ghe-backup:0.0.4 ```  
@@ -36,7 +36,7 @@ e.g.
 e.g.  
 ```docker push pierone.stups.zalan.do/bus/ghe-backup:0.0.4```  
 
-## Iam [policy](http://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies.html) settings
+## IAM [policy](http://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies.html) settings
 
 A kms policy similar to the one shown below is needed to:   
 * allow kms decrpytion of the ssh key
@@ -87,7 +87,10 @@ Pls note: You need to format ( [ebs-using-volumes](http://docs.aws.amazon.com/AW
 [_You must specify the file type_](https://forums.aws.amazon.com/thread.jspa?messageID=450413).  
 
 ## Senza yaml file
-A [Senza yaml file](http://docs.stups.io/en/latest/components/senza.html#senza-info) is used to deploy to AWS. It gets translates to [AWS CloudFormation templates ](http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/template-guide.html) that cause a stack be deployed.
+[Stups](https://stups.io/) requires a [senza yaml file](http://docs.stups.io/en/latest/components/senza.html#senza-info)
+to deploy to AWS. It gets translates to
+[AWS CloudFormation templates ](http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/template-guide.html)
+that cause a stack be deployed.
 
 A sample senza yaml file would be:  
 ```  
