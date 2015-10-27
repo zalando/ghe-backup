@@ -1,42 +1,46 @@
 # ghe-backup
-Docker [stups](https://stups.io/) [AWS](https://aws.amazon.com) based backup for
-[Github Enterprise](https://enterprise.github.com/) at
-[Zalando Tech](https://tech.zalando.com/)
+Backup approach for [Github Enterprise](https://enterprise.github.com/).
+Ghe-backup is based on [Stups](https://stups.io/), [Docker](https://www.docker.com/), [AWS](https://aws.amazon.com).
+Github's [backup-utils](https://github.com/github/backup-utils) are wrapped in a
+Docker container and configured with an
+[EBS volume](https://aws.amazon.com/de/ebs/) to store the backup files in.
 
-## create scm-source.json
-creates a bash script ('create-scm-source.sh') as described in
-[stups application-development](http://docs.stups.io/en/latest/user-guide/application-development.html)  
-make the script executable: ```chmod +x create-scm-source.sh```  
-run create-scm-source.sh e.g. ./create-scm-source.sh that produces a scm-source.json  
-
-## create docker image
-docker build --rm -t [repo name]:[tag] .  
+## Create a docker image
+```docker build --rm -t [repo name]:[tag] . ```  
 e.g.  
-docker build --rm -t pierone.stups.zalan.do/bus/ghe-backup:0.0.3 .  
+```docker build --rm -t pierone.stups.zalan.do/bus/ghe-backup:0.0.3 . ```  
 
 ## run the image locally
-docker run -d --name [repo name]:[tag]  
+```docker run -d --name [repo name]:[tag] ```  
 e.g.  
-docker run -d --name ghe-backup pierone.stups.zalan.do/bus/ghe-backup:0.0.3  
+```docker run -d --name ghe-backup pierone.stups.zalan.do/bus/ghe-backup:0.0.3 ```  
 
 or with connected bash:
-docker run -it --entrypoint /bin/bash --name [repo name]:[tag]  
+```docker run -it --entrypoint /bin/bash --name [repo name]:[tag] ```    
 e.g.  
-docker run -it --entrypoint /bin/bash --name ghe-backup pierone.stups.zalan.do/bus/ghe-backup:0.0.3  
+```docker run -it --entrypoint /bin/bash --name ghe-backup pierone.stups.zalan.do/bus/ghe-backup:0.0.3 ```   
 
-### attach to the running container
-docker attach --sig-proxy=false ghe-backup
-### detach from the running container (does not stop the container)
-CTRL+C
+### attach to the running local container
+```docker attach --sig-proxy=false ghe-backup ```  
+
+### detach from the running local container (does not stop the container)
+```CTRL+C ```  
+
+### run bash in running docker container
+```sudo docker exec -i -t [ContainerID] bash ```
+### exit bash
+```exit ```
+
 
 ## upload to [pierone](https://github.com/zalando-stups/pierone)
-docker push [repo name]:[tag]  
+```docker push [repo name]:[tag]```  
 e.g.  
-docker push pierone.stups.zalan.do/bus/ghe-backup:0.0.3  
+```docker push pierone.stups.zalan.do/bus/ghe-backup:0.0.3```  
 
-## iam [policy](http://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies.html) settings
-a kms policy is needed to:   
-* allow kms decrpytion
+## Iam [policy](http://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies.html) settings
+
+A kms policy similar to the one shown below is needed to:   
+* allow kms decrpytion of the ssh key
 * access stups s3 bucket
 * use EBS volumes
 ```  
@@ -74,30 +78,32 @@ a kms policy is needed to:
     ]  
 }  
 ```   
-Make sure you have a (role)[http://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles.html] managing your policy
 
-## senza yaml file to deploy using
-[senza](http://docs.stups.io/en/latest/components/senza.html#senza-info)  
+Make sure you have an according [role](http://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles.html) managing your policy.
 
+## EBS volume for backup data
+Backup data shall be saved on an EBS volume to persist them even if the backup
+instance goes down. You can create such an ebs volume as described in [senza's storage guild](https://docs.stups.io/en/latest/user-guide/storage.html) .  
+Pls note: You need to format ( [ebs-using-volumes](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-using-volumes.html) ) the EBS volume before you use it otherwise you may experience issues like:  
+[_You must specify the file type_](https://forums.aws.amazon.com/thread.jspa?messageID=450413).  
+
+## Senza yaml file
+A [Senza yaml file](http://docs.stups.io/en/latest/components/senza.html#senza-info) is used to deploy to AWS. It gets translates to [AWS CloudFormation templates ](http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/template-guide.html) that cause a stack be deployed.
+
+A sample senza yaml file would be:  
 ```  
-# basic information for generating and executing this definition  
+# basic information for generating and executing this definition   
 SenzaInfo:  
   StackName: hello-world  
   Parameters:  
-    - ApplicationId:  
-        Description: "Application ID from kio"
     - ImageVersion:
         Description: "Docker image version of hello-world."
-    - MintBucket:
-        Description: "Mint bucket for your team"
-    - GreetingText:
-        Description: "The greeting to be displayed"
-        Default: "Hello, world!"
 # a list of senza components to apply to the definition
 SenzaComponents:
   # this basic configuration is required for the other components
   - Configuration:
       Type: Senza::StupsAutoConfiguration # auto-detect network setup
+      AvailabilityZones: [myAZ] # use EBS volume's AZ
   # will create a launch configuration and auto scaling group with scaling triggers
   - AppServer:
       Type: Senza::TaupageAutoScalingGroup
@@ -112,33 +118,43 @@ SenzaComponents:
         runtime: Docker
         source: "stups/hello-world:{{Arguments.ImageVersion}}"
         mint_bucket: "{{Arguments.MintBucket}}"
-        kms_private_ssh_key: "aws:kms:myAWSregion:123456789:key/myrandomstringwithnumbers123456567890"  
+        kms_private_ssh_key: "aws:kms:myAWSregion:123456789:key/myrandomstringwithnumbers123456567890"
+        volumes:
+          ebs:
+            /dev/sdf: ghe-backup-volume
+        mounts:
+          /data:
+            partition: /dev/xvdf  
 ```
+_If you copy/paste, make sure your details replace the dummy values_  
+
+
+## Create scm-source.json
+Create a bash script (e.g. 'create-scm-source.sh') as described in
+[stups application-development](http://docs.stups.io/en/latest/user-guide/application-development.html).  
+Make the script executable: ```chmod +x create-scm-source.sh ```  
+run create-scm-source.sh  
+```./create-scm-source.sh that produces a scm-source.json ```  
+
 
 ## Tests
 See below 2 sections about
 * python nose tests
-* bash bats tests
+* bash tests
 
 Both can be run with
-```  
-./run-tests.sh  
-```  
+```./run-tests.sh  ```  
 note:
+
 * kms tests don't run on ci environments as it requires aws logins e.g. via mai
-* *make sure* you run
-```  
-bashtest/cleanup-tests.sh  
-```  
-in order to clean up afterwards
+* *make sure* you run ```bashtest/cleanup-tests.sh```  in order to clean up afterwards.
 
 ### nosetest
-* make sure you are logged in with AWS e.g. mai login bus-PowerUser
-* (sudo pip3 install -r python/test_requirements.txt --upgrade )
-* nosetests -w python -v --nocapture testdecryptkms.py
+* make sure you are logged in with AWS e.g. ```mai login [awsaccount-role]```  
+* ```nosetests -w python -v --nocapture testdecryptkms.py```  
 
 ### bash tests
-* cd bashtest
-* ./test-convert-kms-private-ssh-key.sh
-* ./cleanup-tests.sh
-* *make sure* you run ./cleanup-tests.sh in order to clean up afterwards
+```cd bashtest  
+./test-convert-kms-private-ssh-key.sh  
+./cleanup-tests.sh```  
+*make sure* you run ```./cleanup-tests.sh``` in order to clean up afterwards  
