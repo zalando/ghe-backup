@@ -158,7 +158,7 @@ Pls note:
 ``` cd bashtest ```  
 ``` ./test-convert-kms-private-ssh-key.sh ```  
 ``` ./cleanup-tests.sh ```  
-*make sure* you run ```./cleanup-tests.sh``` afterwards in order to clean up  
+*make sure* you run ```./cleanup-tests.sh``` in order to clean up.  
 
 ===
 #### License
