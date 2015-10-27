@@ -1,5 +1,5 @@
 # ghe-backup
-Backup approach for [Github Enterprise](https://enterprise.github.com/).
+Backup for [Github Enterprise](https://enterprise.github.com/).
 Ghe-backup is based on [Stups](https://stups.io/), [Docker](https://www.docker.com/), [AWS](https://aws.amazon.com).
 Github's [backup-utils](https://github.com/github/backup-utils) are wrapped in a
 Docker container and configured with an
