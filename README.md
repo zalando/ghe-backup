@@ -154,7 +154,7 @@ note:
 * ```nosetests -w python -v --nocapture testdecryptkms.py```  
 
 ### bash tests
-```cd bashtest  
-./test-convert-kms-private-ssh-key.sh  
-./cleanup-tests.sh```  
+```cd bashtest```    
+```./test-convert-kms-private-ssh-key.sh```  
+```./cleanup-tests.sh```  
 *make sure* you run ```./cleanup-tests.sh``` in order to clean up afterwards  
