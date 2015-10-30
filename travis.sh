@@ -9,8 +9,8 @@ pip install pyyaml --upgrade
 pip install requests --upgrade
 
 cd bashtest
-sudo ./prepare-tests.sh
-sudo chmod 0755 /kms/parseyaml.py
+./prepare-tests.sh
+chmod 0755 /kms/parseyaml.py
 ../convert-kms-private-ssh-key.sh
 
 if [ $? -eq 1 ]
