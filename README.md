@@ -10,18 +10,12 @@ Docker container and configured with an
 
 ## Create a docker image
 ```docker build --rm -t [repo name]:[tag] . ```  
-e.g.  
-```docker build --rm -t pierone.stups.zalan.do/bus/ghe-backup:0.0.4 . ```  
 
 ### run the image  
 ```docker run -d --name [repo name]:[tag] ```  
-e.g.  
-```docker run -d --name ghe-backup pierone.stups.zalan.do/bus/ghe-backup:0.0.4 ```  
 
 or with connected bash:
 ```docker run -it --entrypoint /bin/bash --name [repo name]:[tag] ```    
-e.g.  
-```docker run -it --entrypoint /bin/bash --name ghe-backup pierone.stups.zalan.do/bus/ghe-backup:0.0.4 ```   
 
 #### attach to the running local container
 ```docker attach --sig-proxy=false ghe-backup ```  
@@ -36,8 +30,6 @@ e.g.
 
 ### upload to [pierone](https://github.com/zalando-stups/pierone)
 ```docker push [repo name]:[tag]```  
-e.g.  
-```docker push pierone.stups.zalan.do/bus/ghe-backup:0.0.4```  
 
 ## IAM [policy](http://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies.html) settings
 
