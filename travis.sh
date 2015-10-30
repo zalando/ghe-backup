@@ -9,7 +9,7 @@ set +e
 #pip install requests --upgrade
 
 cd bashtest
-./prepare-tests.sh
+sudo ./prepare-tests.sh
 chmod 0755 /kms/parseyaml.py
 ../convert-kms-private-ssh-key.sh
 
