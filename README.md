@@ -1,7 +1,6 @@
 # ghe-backup
 
-[![Build Status](https://travis-ci.org/zalando/ghe-backup.svg?branch=master)](https://travis-ci.org/zalando/ghe-backup)   
-[![Build Status](https://buildhive.cloudbees.com/job/zalando/job/ghe-backup/badge/icon)](https://buildhive.cloudbees.com/job/zalando/job/ghe-backup/)   
+[![Build Status](https://travis-ci.org/zalando/ghe-backup.svg?branch=master)](https://travis-ci.org/zalando/ghe-backup)   [![Build Status](https://buildhive.cloudbees.com/job/zalando/job/ghe-backup/badge/icon)](https://buildhive.cloudbees.com/job/zalando/job/ghe-backup/)   [![Hex.pm](https://img.shields.io/hexpm/l/plug.svg)]()   
 
 Backup for [Github Enterprise](https://enterprise.github.com/).
 Ghe-backup is based on [Stups](https://stups.io/), [Docker](https://www.docker.com/), [AWS](https://aws.amazon.com).
