@@ -1,0 +1,4 @@
+language: bash
+
+script:
+    - bash ci-tests.sh
