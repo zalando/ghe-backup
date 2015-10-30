@@ -1,6 +1,7 @@
 # ghe-backup
 
-[![Build Status](https://travis-ci.org/zalando/ghe-backup.svg?branch=master)](https://travis-ci.org/zalando/ghe-backup)   [![Build Status](https://buildhive.cloudbees.com/job/zalando/job/ghe-backup/badge/icon)](https://buildhive.cloudbees.com/job/zalando/job/ghe-backup/)   
+[![Build Status](https://travis-ci.org/zalando/ghe-backup.svg?branch=master)](https://travis-ci.org/zalando/ghe-backup)   
+[![Build Status](https://buildhive.cloudbees.com/job/zalando/job/ghe-backup/badge/icon)](https://buildhive.cloudbees.com/job/zalando/job/ghe-backup/)   
 
 Backup for [Github Enterprise](https://enterprise.github.com/).
 Ghe-backup is based on [Stups](https://stups.io/), [Docker](https://www.docker.com/), [AWS](https://aws.amazon.com).
@@ -26,7 +27,6 @@ or with connected bash:
 ```sudo docker exec -i -t [ContainerID] bash ```
 ##### exit bash
 ```exit ```
-
 
 ### upload to [pierone](https://github.com/zalando-stups/pierone)
 ```docker push [repo name]:[tag]```  
@@ -118,7 +118,7 @@ SenzaComponents:
         kms_private_ssh_key: "aws:kms:myAWSregion:123456789:key/myrandomstringwithnumbers123456567890"
         volumes:
           ebs:
-            /dev/sdf: ghe-backup-volume
+            /dev/sdf: my-volume
         mounts:
           /data:
             partition: /dev/xvdf  
