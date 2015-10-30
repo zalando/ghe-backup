@@ -51,4 +51,10 @@ SenzaComponents:
         source: "stups/hello-world:{{Arguments.ImageVersion}}"
         mint_bucket: "{{Arguments.MintBucket}}"
         kms_private_ssh_key: "aws:kms:myAWSregion:123456789:key/myrandomstringwithnumbers123456567890"
+        volumes:
+          ebs:
+            /dev/sdf: ghe-backup-volume
+        mounts:
+          /data:
+            partition: /dev/xvdf
 EOT
