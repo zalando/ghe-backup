@@ -19,7 +19,7 @@ or with connected bash:
 ```docker run -it --entrypoint /bin/bash --name [repo name]:[tag] ```    
 
 #### attach to the running local container
-```docker attach --sig-proxy=false ghe-backup ```  
+```docker attach --sig-proxy=false [repo name] ```  
 ##### detach from the running local container (does not stop the container)
 ```CTRL+C ```  
 
