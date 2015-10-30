@@ -1,9 +1,9 @@
 language: c
 
-#sudo: required
+sudo: required
 
 before_install:
-    - apt-get install python3
+    - sudo apt-get install python3
     - apt-get install python3-dev
     - apt-get install python3-pip
     - apt-get install python3-yaml
