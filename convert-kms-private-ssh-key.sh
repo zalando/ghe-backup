@@ -5,7 +5,7 @@ IFS=$'\n\t'
 
 #read senza yaml file (taupage.yaml)
 eval $(/kms/parseyaml.py --export /meta/taupage.yaml "configuration")
-SSHKEY=$(echo "$configuration_SenzaComponents" | python -c 'import sys;stuff=sys.stdin.read(1000);kmsstuff=stuff[stuff.find("aws:kms:"):len(stuff)];kmsstr=kmsstuff[0:kmsstuff.find(",")-1];print(kmsstr + "\n")')
+SSHKEY=$(echo "$configuration_SenzaComponents" | python3 -c 'import sys;stuff=sys.stdin.read(1000);kmsstuff=stuff[stuff.find("aws:kms:"):len(stuff)];kmsstr=kmsstuff[0:kmsstuff.find(",")-1];print(kmsstr + "\n")')
 
 if [[ $SSHKEY == "aws:kms:"* ]]; then
   SSHKEY=${SSHKEY##aws:kms:}
