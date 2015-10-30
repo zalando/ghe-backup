@@ -1,6 +1,4 @@
 set +e
-# http://stackoverflow.com/questions/13400445/jenkins-build-script-exits-after-google-test-execution/13404608#13404608
-# http://stackoverflow.com/questions/22814559/how-when-does-execute-shell-mark-a-build-as-failure-in-jenkins
 
 cd bashtest
 sudo ./prepare-tests.sh
