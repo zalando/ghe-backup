@@ -5,8 +5,8 @@ IFS=$'\n\t'
 
 #read senza yaml file (taupage.yaml)
 eval $(/kms/parseyaml.py --export /meta/taupage.yaml "configuration")
-### @todo: won't work because path within yaml tree changed
-SSHKEY=$configuration_kms_private_ssh_key
+SSHKEY=$(echo "$configuration_SenzaComponents" | python -c 'import sys;stuff=sys.stdin.read(1000);kmsstuff=stuff[stuff.find("aws:kms:"):len(stuff)];kmsstr=kmsstuff[0:kmsstuff.find(",")-1];print(kmsstr + "\n")')
+
 if [[ $SSHKEY == "aws:kms:"* ]]; then
   SSHKEY=${SSHKEY##aws:kms:}
   SSHKEY=`python3 /kms/decryptkms.py $SSHKEY`
