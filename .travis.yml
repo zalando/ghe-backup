@@ -3,7 +3,7 @@ language: bash
 script:
     - bash set +e
     - bash virtualenv --no-site-packages --distribute -p /usr/bin/python3 ~/.ghebackup_venv
-    - bash . ~/.ghebackup_venv/bin/activate
+    - bash ~/.ghebackup_venv/bin/activate
     - bash pip install boto3 --upgrade
     - bash pip install pyyaml --upgrade
     - bash pip install requests --upgrade
