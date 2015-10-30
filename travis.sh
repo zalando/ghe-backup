@@ -31,14 +31,5 @@ if [ $SSHKEY = "aws:kms:"* ]; then
     exit 0
   fi
 fi
-exit 1
-
-
-if [ $? -eq 1 ]
-then
-  echo "^^^^^^^^^^^^ This is expected. Test succesfully passed." # ../convert-kms-private-ssh-key.sh executed w/ error.
-  exit 0
-else
-  echo "^^^^^^^^^^^^ This is NOT expected." # ../convert-kms-private-ssh-key.sh executed w/o error.
-  exit 1
-fi
+echo "This is expected. Test succesfully passed."
+exit 0
