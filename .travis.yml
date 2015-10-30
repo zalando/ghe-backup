@@ -1,15 +1,4 @@
 language: bash
 
 script:
-    - bash set +e
-    - bash virtualenv --no-site-packages --distribute -p /usr/bin/python3 ~/.ghebackup_venv
-    - bash . ~/.ghebackup_venv/bin/activate
-    - bash pip install boto3 --upgrade
-    - bash pip install pyyaml --upgrade
-    - bash pip install requests --upgrade
-    - bash cd bashtest
-    - bash sudo ./prepare-tests.sh
-    - bash sudo chmod 0755 /kms/parseyaml.py
-    - bash cd bashtest
-    - bash ../convert-kms-private-ssh-key.sh
-    - bash if [ $? -eq 1 ] then echo "^^^^^^^^^^^^ This is expected. Test succesfully passed." exit 0 else echo "^^^^^^^^^^^^ This is NOT expected." exit 1 fi
+    - bash travis.sh
