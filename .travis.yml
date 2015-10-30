@@ -6,9 +6,9 @@ before_install:
     - sudo apt-get install python3-dev
     #- sudo apt-get install python3-pip
     - sudo apt-get install python3-yaml
-    - sudo pip3 install boto3 --upgrade
-    - sudo pip3 install pyyaml --upgrade
-    - sudo pip3 install requests --upgrade
+    - sudo pip install boto3 --upgrade
+    - sudo pip install pyyaml --upgrade
+    - sudo pip install requests --upgrade
 cache:
   apt: true
 
