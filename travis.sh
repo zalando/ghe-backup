@@ -10,7 +10,7 @@ set +e
 
 cd bashtest
 sudo ./prepare-tests.sh
-chmod 0755 /kms/parseyaml.py
+sudo chmod 0755 /kms/parseyaml.py
 ../convert-kms-private-ssh-key.sh
 
 if [ $? -eq 1 ]
