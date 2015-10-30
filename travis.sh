@@ -8,6 +8,8 @@ set +e
 #pip install pyyaml --upgrade
 #pip install requests --upgrade
 
+apt-get install -y unattended-upgrades python3 python3-dev python3-pip python3-yaml
+
 cd bashtest
 sudo ./prepare-tests.sh
 sudo chmod 0755 /kms/parseyaml.py
