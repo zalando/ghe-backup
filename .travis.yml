@@ -6,9 +6,11 @@ before_install:
     - sudo apt-get install python3-dev
     #- sudo apt-get install python3-pip
     - sudo apt-get install python3-yaml
-    - sudo pip install --upgrade boto boto3
-    - sudo pip install pyyaml --upgrade
-    - sudo pip install requests --upgrade
+    - sudo pip3 install --upgrade boto boto3
+    - sudo pip3 install pyyaml --upgrade
+    - sudo pip3 install requests --upgrade
+cache:
+  apt: true
 
 script:
     - sh ./travis.sh
