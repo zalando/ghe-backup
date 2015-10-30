@@ -1,4 +1,4 @@
-language: bash
+language: c
 
 sudo: required
 
@@ -9,4 +9,4 @@ before_install:
     - sudo pip3 install requests --upgrade
 
 script:
-    - bash travis.sh
+    - sh ./travis.sh
