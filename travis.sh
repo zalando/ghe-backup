@@ -5,7 +5,6 @@ set +e
 cd bashtest
 sudo ./prepare-tests.sh
 SSHKEY="aws:kms:myAWSregion:123456789:key/myrandomstringwithnumbers123456567890"
-
 if [ $SSHKEY = "aws:kms:"* ]; then
   SSHKEY=${SSHKEY##aws:kms:}
   SSHKEY=`python3 /kms/decryptkms.py $SSHKEY`
