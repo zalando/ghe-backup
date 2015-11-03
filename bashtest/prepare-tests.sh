@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # clean possible left overs
-./cleanup-tests.sh
+#./cleanup-tests.sh
 
 # create folder and file structure
 # call this script from folder above
@@ -11,8 +11,6 @@ chmod 744 /kms/parseyaml.py
 cp ../python/decryptkms.py /kms/decryptkms.py
 chmod 744 /kms/decryptkms.py
 mkdir -p /meta/
-touch /meta/ghe-backup.yaml
-chmod 744 /meta/ghe-backup.yaml
 
 # create a dummy senza yaml file
 # http://stups.readthedocs.org/en/latest/components/senza.html
