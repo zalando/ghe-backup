@@ -6,3 +6,4 @@ encr
 notes.*
 *.asc
 __pycache__
+config.xml
