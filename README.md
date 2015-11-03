@@ -18,7 +18,7 @@ e.g.
 e.g.  
 ```docker run -d --name ghe-backup pierone.stups.zalan.do/bus/ghe-backup:0.0.5 ```
 
-or with connected bash:
+or with connected bash:  
 ```docker run -it --entrypoint /bin/bash --name [repo name]:[tag] ```    
 e.g.  
 ```docker run -it --entrypoint /bin/bash --name ghe-backup pierone.stups.zalan.do/bus/ghe-backup:0.0.5 ```
