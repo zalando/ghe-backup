@@ -28,7 +28,7 @@ COPY scm-source.json /scm-source.json
 
 # copy files to decrypt private ssh key using kms
 COPY python/decryptkms.py /kms/decryptkms.py
-COPY python/parseyaml.py /kms/parseyaml.py
+COPY python/extract-kms-str.py /kms/extract-kms-str.py
 COPY convert-kms-private-ssh-key.sh /kms/convert-kms-private-ssh-key.sh
 
 # copy cron job
@@ -39,10 +39,9 @@ RUN \
   chown -R application: /data && \
   chown -R application: /backup && \
   chown -R application: /kms && \
-  chmod 0700 /kms/parseyaml.py && \
+  chmod 0700 /kms/extract-kms-str.py && \
   chmod 0700 /kms/convert-kms-private-ssh-key.sh && \
   chmod 0644 /etc/cron.d/ghe-backup && \
   mkfifo /var/log/ghe-prod-backup.log
 
 CMD /kms/convert-kms-private-ssh-key.sh && cron && tail -F /var/log/ghe-prod-backup.log
-#CMD cron && tail -f /var/log/ghe-prod-backup.log && /kms/convert-kms-private-ssh-key.sh
