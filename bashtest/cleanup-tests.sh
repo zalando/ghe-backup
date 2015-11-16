@@ -8,6 +8,6 @@ do
    if [ -f "$file" ]; then
      echo -n "" > $file
    else
-      echo "$file does not exists"
+      echo "cleanup: $file does not exists"
    fi
 done
