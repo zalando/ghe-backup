@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.org/zalando/ghe-backup.svg?branch=master)](https://travis-ci.org/zalando/ghe-backup)        [![Hex.pm](https://img.shields.io/hexpm/l/plug.svg)](https://github.com/zalando/ghe-backup/blob/master/LICENSE.txt)   
 
 Backup for [Github Enterprise](https://enterprise.github.com/) based on [Stups](https://stups.io/), [Docker](https://www.docker.com/) and [AWS](https://aws.amazon.com).
-This description uses other [Stups](https://stups.io/) tools such as [Senza](https://github.com/zalando-stups/senza) because backup of Zalando Github Enterprise appliance has to be based on [Stups'](https://stups.io/) [Taupage AMI](https://github.com/zalando-stups/taupage).  
+Backup of Zalando Github Enterprise appliance has to be based on [Stups'](https://stups.io/) [Taupage AMI](https://github.com/zalando-stups/taupage). As this one [Stups](https://stups.io/) tool is mandatory, other [Stups](https://stups.io/) tools namely [Senza](https://github.com/zalando-stups/senza) is also used.    
 Basically github's [backup-utils](https://github.com/github/backup-utils) are wrapped in a
 Docker container and configured with an
 [EBS volume](https://aws.amazon.com/de/ebs/) to store the backups in.
