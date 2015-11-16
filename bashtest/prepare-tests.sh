@@ -1,13 +1,13 @@
 #!/bin/bash
 
 # clean possible left overs
-#./cleanup-tests.sh
+./cleanup-tests.sh
 
 # create folder and file structure
 # call this script from folder above
 mkdir -p /kms/
-cp ../python/parseyaml.py /kms/parseyaml.py
-chmod 744 /kms/parseyaml.py
+cp ../python/extract-kms-str.py /kms/extract-kms-str.py
+chmod 744 /kms/extract-kms-str.py
 cp ../python/decryptkms.py /kms/decryptkms.py
 chmod 744 /kms/decryptkms.py
 mkdir -p /meta/
