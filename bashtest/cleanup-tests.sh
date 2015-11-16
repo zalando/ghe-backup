@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # clean up test files (before-convert-kms-private-ssh-key.sh)
-files=("/kms/parseyaml.py" "/kms/decryptkms.py" "/meta/taupage.yaml" )
+files=("/kms/extract-kms-str.py" "/kms/decryptkms.py" "/meta/taupage.yaml" )
 for file in "${files[@]}"
 do
    :
