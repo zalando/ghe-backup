@@ -8,17 +8,17 @@ import argparse
 import yaml
 #import pprint
 
-def flatten_data(data: dict, prevkeys: list, flatten_vars: dict, depth):
+def flatten_data(data: dict, prevkeys: list, flatten_vars: dict):
     for key, val in data.items():
         key = str(key)
         previouskeys = prevkeys.copy()
         previouskeys.append(key)
         if isinstance(val, dict):
-            flatten_data(val, previouskeys, flatten_vars, depth+1)
+            flatten_data(val, previouskeys, flatten_vars)
         elif isinstance(val, list):
             for i, item in enumerate(val):
                 if isinstance(item, dict):
-                    flatten_data(item, previouskeys, flatten_vars, depth+1)
+                    flatten_data(item, previouskeys, flatten_vars)
                 else:
                     flatten_vars['{}'.format("-".join(previouskeys))] = val
         else:
@@ -31,7 +31,7 @@ def main(args):
     #pp.pprint(data)
 
     flatten_vars = {}
-    flatten_data(data, [], flatten_vars, 0)
+    flatten_data(data, [], flatten_vars)
     #pp.pprint(flatten_vars)
     for key in flatten_vars.keys():
         if args.key in key:
