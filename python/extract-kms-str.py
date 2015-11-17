@@ -1,54 +1,47 @@
 #!/usr/bin/env python3
 '''
 inspired by https://github.com/zalando-stups/taupage/blob/master/runtime/opt/taupage/bin/parse-yaml.py
-Generate script output to given reg exp
+Prints value of provided key based on given yaml file.
 '''
 
-
 import argparse
-import re
-import shlex
 import yaml
-import re
+#import pprint
 
-VALID_KEY_PATTERN = re.compile('^[a-zA-Z0-9_]+$')
-
-
-def collect_env_vars(data: dict, env_vars: dict):
+def flatten_data(data: dict, prevkeys: list, flatten_vars: dict, depth):
     for key, val in data.items():
         key = str(key)
-        if VALID_KEY_PATTERN.match(key):
-            if isinstance(val, dict):
-                collect_env_vars(val, env_vars)
-            else:
-                env_vars['{}'.format(key)] = val
-
+        previouskeys = prevkeys.copy()
+        previouskeys.append(key)
+        if isinstance(val, dict):
+            flatten_data(val, previouskeys, flatten_vars, depth+1)
+        elif isinstance(val, list):
+            for i, item in enumerate(val):
+                if isinstance(item, dict):
+                    flatten_data(item, previouskeys, flatten_vars, depth+1)
+                else:
+                    flatten_vars['{}'.format("-".join(previouskeys))] = val
+        else:
+            flatten_vars['{}'.format("-".join(previouskeys))] = val
 
 def main(args):
+
     data = yaml.safe_load(args.file)
+    #pp = pprint.PrettyPrinter(indent=1)
+    #pp.pprint(data)
 
-    env_vars = {}
-    collect_env_vars(data, env_vars)
-
-    result = ""
-
-    for key, val in sorted(env_vars.items()):
-        findings = re.findall(args.regexp, str(val))
-        if findings:
-                result += findings[0] # only first one
-                break
-    if args.prefix2remove:
-        result = result[len(args.prefix2remove):len(result)]
-    if args.suffix2remove:
-        result = result[0:len(args.suffix2remove)*-1]
-    print(result)
+    flatten_vars = {}
+    flatten_data(data, [], flatten_vars, 0)
+    #pp.pprint(flatten_vars)
+    for key in flatten_vars.keys():
+        if args.key in key:
+            print(flatten_vars[key])
+            break
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('file', type=argparse.FileType('r'))
-    parser.add_argument('-r', '--regexp', help="regular expression to ", required=True)
-    parser.add_argument('-p', '--prefix2remove')
-    parser.add_argument('-s', '--suffix2remove')
+    parser.add_argument('-k', '--key', help="taupage yaml 'key'", required=True)
 
     args = parser.parse_args()
 
