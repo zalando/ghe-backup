@@ -17,9 +17,10 @@ def main(args):
     #print("---/data-----")
 
     if args.key in data.keys():
-        #print("----data[args.key]-----")
-        print(data[args.key])
-        #print("---/data[args.key]-----")
+        result = data[args.key]
+        if result.startswith('aws:kms:'):
+            result = result.replace('aws:kms:', '', 1)
+        print(result)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
