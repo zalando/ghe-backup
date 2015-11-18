@@ -36,6 +36,8 @@ def aws_decrypt(to_decrypt, region=region_name, aws_access_key=None, aws_secret_
 if __name__ == "__main__":
     for arg in sys.argv[1:]:
         try:
+            if arg.startswith('aws:kms:'):
+                arg = arg.replace('aws:kms:', '', 1)
             print(aws_decrypt(arg, region_name, aws_access_key=None, aws_secret_key=None))
         except ValueError:
             print("Invalid KMS key.")
