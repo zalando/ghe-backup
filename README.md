@@ -2,10 +2,18 @@
 
 [![Build Status](https://travis-ci.org/zalando/ghe-backup.svg?branch=master)](https://travis-ci.org/zalando/ghe-backup)        [![Hex.pm](https://img.shields.io/hexpm/l/plug.svg)](https://github.com/zalando/ghe-backup/blob/master/LICENSE.txt)   
 
-Backup for [Github Enterprise](https://enterprise.github.com/) based on [Stups](https://stups.io/), [Docker](https://www.docker.com/) and [AWS](https://aws.amazon.com).
-Backup of Zalando Github Enterprise appliance has to be based on [Stups'](https://stups.io/) [Taupage AMI](https://github.com/zalando-stups/taupage). As this one [Stups](https://stups.io/) tool is mandatory, other [Stups](https://stups.io/) tools namely [Senza](https://github.com/zalando-stups/senza) is also used.    
-Basically github's [backup-utils](https://github.com/github/backup-utils) are wrapped in a
-Docker container and configured with an
+[Zalando Tech's ](https://tech.zalando.com/) [Github Enterprise](https://enterprise.github.com/) backup approach.
+
+Github Enterprise master and replica instances run on an AWS account. The same account runs also a backup host. There is another backup host running in a different AWS account.
+
+IMAGE goes here
+
+Other technologies used are [Stups](https://stups.io/) and  [Docker](https://www.docker.com/).
+Backup of Zalando Github Enterprise appliance has to be based on .
+
+[Senza](https://github.com/zalando-stups/senza) is also used, as [Stups'](https://stups.io/) [Taupage AMI](https://github.com/zalando-stups/taupage) is mandatory.    
+
+Basically github's [backup-utils](https://github.com/github/backup-utils) are wrapped in a Docker container and configured with an
 [EBS volume](https://aws.amazon.com/de/ebs/) to store the backups in.
 
 ## Create a docker image
@@ -41,9 +49,9 @@ e.g.
 ## IAM [policy](http://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies.html) settings
 
 A kms policy similar to the one shown below is needed to:   
-* allow kms decrpytion of the ssh key
+* allow kms decryption of the encrypted ssh key
 * access stups s3 bucket
-* use EBS volumes
+* use EBS volume
 ```  
 {  
     "Version": "2012-10-17",  
@@ -84,8 +92,8 @@ Make sure you have an according [role](http://docs.aws.amazon.com/IAM/latest/Use
 
 ## EBS volume for backup data
 Backup data shall be saved on an EBS volume to persist them even if the backup
-instance goes down. You can create such an ebs volume as described in [senza's storage guild](https://docs.stups.io/en/latest/user-guide/storage.html) .  
-Pls note: You need to format ( [ebs-using-volumes](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-using-volumes.html) ) the EBS volume before you use it otherwise you may experience issues like:  
+instance goes down. Creation of such an ebs volume is described in [senza's storage guild](https://docs.stups.io/en/latest/user-guide/storage.html) .  
+Pls note: You need to format ([ebs-using-volumes](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-using-volumes.html)) the EBS volume before you use it, otherwise you may experience issues like:  
 [_You must specify the file type_](https://forums.aws.amazon.com/thread.jspa?messageID=450413).  
 
 ## Senza yaml file
@@ -130,19 +138,20 @@ SenzaComponents:
           /data:
             partition: /dev/xvdf  
 ```
-_If you copy/paste, make sure your details replace the dummy values_  
+_If you copy/paste the template above, make sure your details replace the dummy values_  
 
 
 ## Create scm-source.json
-Create a bash script (e.g. 'create-scm-source.sh') as described in
+A bash script (e.g. 'create-scm-source.sh') as described in
 [stups application-development](http://docs.stups.io/en/latest/user-guide/application-development.html).  
-Make the script executable: ```chmod +x create-scm-source.sh ```  
-run create-scm-source.sh  
+Make the script executable:  
+```chmod +x create-scm-source.sh ```  
+and run it like:  
 ```./create-scm-source.sh that produces a scm-source.json ```  
 
 
 ## Tests
-See below 2 sections about
+There are two kinds of tests available:
 * python nose tests
 * bash tests
 
@@ -157,10 +166,12 @@ Pls note:
 * ```nosetests -w python -v --nocapture testdecryptkms.py```  
 
 ### bash tests
-``` cd bashtest ```  
+Change directory:
+``` cd bashtest ```,  
+run the tests:  
 ``` ./test-convert-kms-private-ssh-key.sh ```  
-``` ./cleanup-tests.sh ```  
-*make sure* you run ```./cleanup-tests.sh``` in order to clean up.  
+
+*Make sure* you run ```./cleanup-tests.sh``` in order to clean up afterwards.  
 
 ===
 #### License
