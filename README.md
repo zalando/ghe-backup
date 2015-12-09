@@ -6,7 +6,7 @@
 
 Github Enterprise master and replica instances run on an AWS account. The same account runs also a backup host. There is another backup host running in a different AWS account.
 
-IMAGE goes here
+![overview](Slide1.PNG "backup approach overview")
 
 Other technologies used are [Stups](https://stups.io/) and  [Docker](https://www.docker.com/).
 Backup of Zalando Github Enterprise appliance has to be based on .
