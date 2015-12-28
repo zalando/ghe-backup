@@ -4,24 +4,23 @@
 
 [Zalando Tech's ](https://tech.zalando.com/) [Github Enterprise](https://enterprise.github.com/) backup approach.
 
-Github Enterprise master and replica instances run on an AWS account. The same account runs also a backup host. There is another backup host running in a different AWS account.
+## Overview
+[Github Enterprise](https://enterprise.github.com/) master and replica instances run on an AWS account. The same AWS account runs also a backup host. There is another backup host running in a different AWS account.
 
 ![overview](/Slide1.PNG "backup approach overview")
 
-Other technologies used are [Stups](https://stups.io/) and  [Docker](https://www.docker.com/).
-Backup of Zalando Github Enterprise appliance has to be based on .
+The [Taupage AMI](https://github.com/zalando-stups/taupage) is mandatory for backup hosts of [Zalando Tech's ](https://tech.zalando.com/) [Github Enterprise](https://enterprise.github.com/) for compliance reasons.
+As [Taupage AMI](https://github.com/zalando-stups/taupage) is part of [Stups](https://stups.io/),  
+other [Stups](https://stups.io/) technologies like [Senza](https://github.com/zalando-stups/senza) are also used.
 
-[Senza](https://github.com/zalando-stups/senza) is also used, as [Stups'](https://stups.io/) [Taupage AMI](https://github.com/zalando-stups/taupage) is mandatory.    
+Basically github's [backup-utils](https://github.com/github/backup-utils) are wrapped in a [Docker](https://www.docker.com/) container. An [EBS volume](https://aws.amazon.com/de/ebs/) stores the actual backup data.
 
-Basically github's [backup-utils](https://github.com/github/backup-utils) are wrapped in a Docker container and configured with an
-[EBS volume](https://aws.amazon.com/de/ebs/) to store the backups in.
-
-## Create a docker image
+### Create a docker image
 ```docker build --rm -t [repo name]:[tag] . ```  
 e.g.  
 ```docker build --rm -t pierone.stups.zalan.do/bus/ghe-backup:0.0.7 . ```
 
-### run the image  
+#### run the image  
 ```docker run -d --name [repo name]:[tag] ```  
 e.g.  
 ```docker run -d --name ghe-backup pierone.stups.zalan.do/bus/ghe-backup:0.0.7 ```
@@ -31,22 +30,22 @@ or with connected bash:
 e.g.  
 ```docker run -it --entrypoint /bin/bash --name ghe-backup pierone.stups.zalan.do/bus/ghe-backup:0.0.7 ```
 
-#### attach to the running local container
+##### attach to the running local container
 ```docker attach --sig-proxy=false [repo name] ```  
-##### detach from the running local container (does not stop the container)
+###### detach from the running local container (does not stop the container)
 ```CTRL+C ```  
 
-#### run bash in running docker container
+##### run bash in running docker container
 ```sudo docker exec -i -t [ContainerID] bash ```
-##### exit bash
+###### exit bash
 ```exit ```
 
-### upload to [pierone](https://github.com/zalando-stups/pierone)
+#### upload Docker images to [pierone](https://github.com/zalando-stups/pierone) (a Zalando docker registry)
 ```docker push [repo name]:[tag]```  
 e.g.  
 ```docker push pierone.stups.zalan.do/bus/ghe-backup:0.0.7```
 
-## IAM [policy](http://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies.html) settings
+### IAM [policy](http://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies.html) settings
 
 A kms policy similar to the one shown below is needed to:   
 * allow kms decryption of the encrypted ssh key
@@ -90,17 +89,17 @@ A kms policy similar to the one shown below is needed to:
 
 Make sure you have an according [role](http://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles.html) managing your policy.
 
-## EBS volume for backup data
-Backup data shall be saved on an EBS volume to persist them even if the backup
-instance goes down. Creation of such an ebs volume is described in [senza's storage guild](https://docs.stups.io/en/latest/user-guide/storage.html) .  
+### configure an [EBS](https://aws.amazon.com/de/ebs/) volume for backup data  
+
+Backup data shall be saved on an [EBS](https://aws.amazon.com/de/ebs/) volume to persist backups even if the backup instance goes down. Creation of such an ebs volume is described in Please follow these instructions: [senza's storage guild](https://docs.stups.io/en/latest/user-guide/storage.html) to create a regarding volume.  
 Pls note: You need to format ([ebs-using-volumes](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-using-volumes.html)) the EBS volume before you use it, otherwise you may experience issues like:  
 [_You must specify the file type_](https://forums.aws.amazon.com/thread.jspa?messageID=450413).  
 
-## Senza yaml file
+### Senza yaml file
 [Stups](https://stups.io/) requires a [senza yaml file](http://docs.stups.io/en/latest/components/senza.html#senza-info)
-to deploy to AWS. It gets translates to
+to deploy something to AWS. This yaml file gets basically translated to
 [AWS CloudFormation templates ](http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/template-guide.html)
-that cause a stack be deployed.
+that causes a stack being deployed.
 
 A sample senza yaml file would be:  
 ```  
@@ -141,13 +140,13 @@ SenzaComponents:
 _If you copy/paste the template above, make sure your details replace the dummy values_  
 
 
-## Create scm-source.json
-A bash script (e.g. 'create-scm-source.sh') as described in
-[stups application-development](http://docs.stups.io/en/latest/user-guide/application-development.html).  
-Make the script executable:  
+### Create scm-source.json
+Ghe-backup uses a bash script similar to
+[stups application-development](http://docs.stups.io/en/latest/user-guide/application-development.html) to generate a scm-source.json file.   
+Make sure the bash script is executable:  
 ```chmod +x create-scm-source.sh ```  
 and run it like:  
-```./create-scm-source.sh that produces a scm-source.json ```  
+```./create-scm-source.sh ```  
 
 
 ## Tests
@@ -155,26 +154,27 @@ There are two kinds of tests available:
 * python nose tests
 * bash tests
 
-Both can be run together with ```./run-tests.sh```.  
+Both can be run with ```./run-tests.sh ```.  
 Pls note:
 
 * kms tests don't run on ci environments as it requires aws logins e.g. via mai
 * *make sure* you run ```bashtest/cleanup-tests.sh```  in order to clean up afterwards.
 
 ### nosetest
-* make sure you are logged in with AWS e.g. ```mai login [awsaccount-role]```  
-* ```nosetests -w python -v --nocapture testdecryptkms.py```  
+* precondition: you are logged in with AWS e.g.  
+```mai login [awsaccount-role] ```  
+* test run:  
+```nosetests -w python -v --nocapture testdecryptkms.py ```  
 
 ### bash tests
-Change directory:
-``` cd bashtest ```,  
-run the tests:  
+Pls go to bashtest directory:
+``` cd bashtest ``` and run the tests:  
 ``` ./test-convert-kms-private-ssh-key.sh ```  
 
-*Make sure* you run ```./cleanup-tests.sh``` in order to clean up afterwards.  
+*Make sure* you run ```./cleanup-tests.sh ``` in order to clean up afterwards.  
 
 ===
-#### License
+### License
 
 
 Copyright © 2015 Zalando SE
