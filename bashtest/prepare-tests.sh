@@ -12,9 +12,15 @@ cp ../python/decryptkms.py /kms/decryptkms.py
 chmod 744 /kms/decryptkms.py
 mkdir -p /meta/
 
+mkdir -p /data/ghe-production-data
+#touch /data/ghe-production-data/in-progress
+cat <<EOT1 >> /data/ghe-production-data/in-progress
+a
+EOT1
+
 # create a dummy senza yaml file
 # http://stups.readthedocs.org/en/latest/components/senza.html
-cat <<EOT >> /meta/taupage.yaml
+cat <<EOT2 >> /meta/taupage.yaml
 application_id: ghe-backup
 application_version: 0.0.0
 instance_logs_url: https://my.logs.url
@@ -36,4 +42,4 @@ token_service_url: https://my.token.service.url
 volumes:
     ebs:
         /dev/sdf: abackupvolume
-EOT
+EOT2
