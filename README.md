@@ -170,6 +170,7 @@ Pls note:
 Pls go to bashtest directory:
 ``` cd bashtest ``` and run the tests:  
 ``` ./test-convert-kms-private-ssh-key.sh ```  
+``` ./test-delete-instuck-progress.sh ```  
 
 *Make sure* you run ```./cleanup-tests.sh ``` in order to clean up afterwards.  
 
