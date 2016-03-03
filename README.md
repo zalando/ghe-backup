@@ -5,17 +5,15 @@
 [Zalando Tech's ](https://tech.zalando.com/) [Github Enterprise](https://enterprise.github.com/) backup approach.
 
 ## Overview
-[Github Enterprise](https://enterprise.github.com/) master and replica instances run on an AWS account. The same AWS account runs also a backup host. There is another backup host running in a different AWS account.
+[Github Enterprise](https://enterprise.github.com/) at Zalando Tech is a Ha setup running master and replica instances on AWS. The AWS account that runs the [high availability](https://help.github.com/enterprise/2.5/admin/guides/installation/high-availability-configuration/) setup also runs one backup host. There is a second backup host running in a different AWS account. We believe this backup gives us reliable backup data even in case one AWS is compromised.
 
 ![overview](/Slide1.PNG "backup approach overview")
 
-The [Taupage AMI](https://github.com/zalando-stups/taupage) is mandatory for backup hosts of [Zalando Tech's ](https://tech.zalando.com/) [Github Enterprise](https://enterprise.github.com/) for compliance reasons.
-As [Taupage AMI](https://github.com/zalando-stups/taupage) is part of [Stups](https://stups.io/),  
-other [Stups](https://stups.io/) technologies like [Senza](https://github.com/zalando-stups/senza) are also used.
+Basically ghe-backup wraps github's [backup-utils](https://github.com/github/backup-utils) in a [Docker](https://www.docker.com/) container. An [EBS volume](https://aws.amazon.com/de/ebs/) stores the actual backup data to be able to access the data even if the regarding backup host is down.
 
-Basically github's [backup-utils](https://github.com/github/backup-utils) are wrapped in a [Docker](https://www.docker.com/) container. An [EBS volume](https://aws.amazon.com/de/ebs/) stores the actual backup data.
+## local docker development
 
-### Create a docker image
+### create a ghe-backup docker image
 ```docker build --rm -t [repo name]:[tag] . ```  
 e.g.  
 ```docker build --rm -t pierone.stups.zalan.do/bus/ghe-backup:0.0.7 . ```
@@ -40,41 +38,21 @@ e.g.
 ###### exit bash
 ```exit ```
 
-#### upload Docker images to [pierone](https://github.com/zalando-stups/pierone) (a Zalando docker registry)
-```docker push [repo name]:[tag]```  
-e.g.  
-```docker push pierone.stups.zalan.do/bus/ghe-backup:0.0.7```
 
 ### IAM [policy](http://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies.html) settings
 
+Github Enterprise backup hosts contain private ssh keys that have to match with public ssh keys registered on the Github Enterprise main instance.
+Private ssh keys should not be propagated unencrypted with deployments. AWS KMS allows to encrypt any kind of data, so this service is used to encrypt the private ssh key. KMS actions are managed by policies to make sure only configured tasks can be performed.
 A kms policy similar to the one shown below is needed to:   
 * allow kms decryption of the encrypted ssh key
-* access stups s3 bucket
+* access s3 bucket
 * use EBS volume
 ```  
-{  
-    "Version": "2012-10-17",  
-    "Statement": [  
-        {  
-            "Sid": "Stmt1441892073456",  
-            "Effect": "Allow",  
-            "Action": [  
-                "kms:Decrypt"  
-            ],  
-            "Resource": [   
-                "*"  
-            ]  
-        },  
-        {  
-            "Effect": "Allow",  
-            "Action": [  
-                "s3:GetObject"  
-            ],  
+...
             "Resource": [  
                 "arn:aws:s3:::[yourMintBucket]/[repo name]/*"  
             ]  
-        },  
-        {  
+...
             "Effect": "Allow",  
             "Action": [  
                 "ec2:DescribeVolumes",  
@@ -82,22 +60,59 @@ A kms policy similar to the one shown below is needed to:
                 "ec2:DetachVolume"  
             ],  
             "Resource": "*"  
-        }  
-    ]  
-}  
+...
 ```   
+You can find a full policy sample here in the [gist "ghe-backup-kms-policy-sample" ](https://gist.github.com/lotharschulz/725026cfdd599cf6243d)
 
-Make sure you have an according [role](http://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles.html) managing your policy.
+Make sure you have an according [role](http://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles.html) that allows managing your policy.
 
 ### configure an [EBS](https://aws.amazon.com/de/ebs/) volume for backup data  
 
-Backup data shall be saved on an [EBS](https://aws.amazon.com/de/ebs/) volume to persist backups even if the backup instance goes down. Creation of such an ebs volume is described in Please follow these instructions: [senza's storage guild](https://docs.stups.io/en/latest/user-guide/storage.html) to create a regarding volume.  
-Pls note: You need to format ([ebs-using-volumes](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-using-volumes.html)) the EBS volume before you use it, otherwise you may experience issues like:  
+Backup data shall be saved on an [EBS](https://aws.amazon.com/de/ebs/) volume to persist backups even if the backup instance goes down. The creation of such an ebs volume is described in [creating-ebs-volume guide](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-creating-volume.html).  
+After creating an EBS volume, you have to make sure you can use it as described in [ebs-using-volumes](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-using-volumes.html).
+
+Pls note: You need to format the EBS volume before you use it, otherwise you may experience issues like:  
 [_You must specify the file type_](https://forums.aws.amazon.com/thread.jspa?messageID=450413).  
 
-### Senza yaml file
+
+## Tests
+There are two kinds of tests available:
+* python nose tests
+* bash tests
+
+Both can be run with ```./run-tests.sh ```.  
+Pls note:
+
+* kms tests don't run on ci environments as it requires aws logins e.g. via mai
+* *make sure* you run ```bashtest/cleanup-tests.sh```  in order to clean up afterwards.
+
+### nosetest
+* precondition: you are logged in with AWS e.g.  
+```mai login [awsaccount-role] ```  
+* test run:  
+```nosetests -w python -v --nocapture testdecryptkms.py ```  
+
+### bash tests
+Pls go to bashtest directory:
+``` cd bashtest ``` and run the tests:  
+``` ./test-convert-kms-private-ssh-key.sh ```  
+
+*Make sure* you run ```./cleanup-tests.sh ``` in order to clean up afterwards.  
+
+## Zalando specifics
+
+### [Taupage AMI](https://github.com/zalando-stups/taupage)
+The [Taupage AMI](https://github.com/zalando-stups/taupage) is mandatory for backup hosts of [Zalando Tech's ](https://tech.zalando.com/) [Github Enterprise](https://enterprise.github.com/) for compliance reasons.
+As [Taupage AMI](https://github.com/zalando-stups/taupage) is part of [Stups](https://stups.io/), other [Stups](https://stups.io/) technologies like [Senza](https://github.com/zalando-stups/senza) are also used for local development.
+
+### upload Docker images to [pierone](https://github.com/zalando-stups/pierone) (a Zalando docker registry) would be:
+```docker push [repo name]:[tag]```  
+e.g.  
+```docker push pierone.stups.zalan.do/bus/ghe-backup:0.0.7```
+
+### senza yaml file
 [Stups](https://stups.io/) requires a [senza yaml file](http://docs.stups.io/en/latest/components/senza.html#senza-info)
-to deploy something to AWS. This yaml file gets basically translated to
+to deploy an artefact to AWS. Such a yaml file gets basically translated to
 [AWS CloudFormation templates ](http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/template-guide.html)
 that causes a stack being deployed.
 
@@ -140,7 +155,7 @@ SenzaComponents:
 _If you copy/paste the template above, make sure your details replace the dummy values_  
 
 
-### Create scm-source.json
+### create scm-source.json
 Ghe-backup uses a bash script similar to
 [stups application-development](http://docs.stups.io/en/latest/user-guide/application-development.html) to generate a scm-source.json file.   
 Make sure the bash script is executable:  
@@ -148,30 +163,10 @@ Make sure the bash script is executable:
 and run it like:  
 ```./create-scm-source.sh ```  
 
+### EBS volumes with Senza
+Please follow these instructions: [senza's storage guild](https://docs.stups.io/en/latest/user-guide/storage.html) to create a EBS volume the stups way.
 
-## Tests
-There are two kinds of tests available:
-* python nose tests
-* bash tests
 
-Both can be run with ```./run-tests.sh ```.  
-Pls note:
-
-* kms tests don't run on ci environments as it requires aws logins e.g. via mai
-* *make sure* you run ```bashtest/cleanup-tests.sh```  in order to clean up afterwards.
-
-### nosetest
-* precondition: you are logged in with AWS e.g.  
-```mai login [awsaccount-role] ```  
-* test run:  
-```nosetests -w python -v --nocapture testdecryptkms.py ```  
-
-### bash tests
-Pls go to bashtest directory:
-``` cd bashtest ``` and run the tests:  
-``` ./test-convert-kms-private-ssh-key.sh ```  
-
-*Make sure* you run ```./cleanup-tests.sh ``` in order to clean up afterwards.  
 
 ===
 ### License
