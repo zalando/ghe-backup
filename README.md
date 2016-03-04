@@ -11,7 +11,7 @@
 
 Basically ghe-backup wraps github's [backup-utils](https://github.com/github/backup-utils) in a [Docker](https://www.docker.com/) container. An [EBS volume](https://aws.amazon.com/de/ebs/) stores the actual backup data to be able to access the data even if the regarding backup host is down.
 
-## local docker development
+## Local docker development
 
 ### create a ghe-backup docker image
 ```docker build --rm -t [repo name]:[tag] . ```  
@@ -66,7 +66,7 @@ You can find a full policy sample here in the [gist "ghe-backup-kms-policy-sampl
 
 Make sure you have an according [role](http://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles.html) that allows managing your policy.
 
-### configure an [EBS](https://aws.amazon.com/de/ebs/) volume for backup data  
+### Configure an [EBS](https://aws.amazon.com/de/ebs/) volume for backup data  
 
 Backup data shall be saved on an [EBS](https://aws.amazon.com/de/ebs/) volume to persist backups even if the backup instance goes down. The creation of such an ebs volume is described in [creating-ebs-volume guide](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-creating-volume.html).  
 After creating an EBS volume, you have to make sure you can use it as described in [ebs-using-volumes](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-using-volumes.html).
@@ -86,13 +86,13 @@ Pls note:
 * kms tests don't run on ci environments as it requires aws logins e.g. via mai
 * *make sure* you run ```bashtest/cleanup-tests.sh```  in order to clean up afterwards.
 
-### nosetest
+### Nosetest
 * precondition: you are logged in with AWS e.g.  
 ```mai login [awsaccount-role] ```  
 * test run:  
 ```nosetests -w python -v --nocapture testdecryptkms.py ```  
 
-### bash tests
+### Bash tests
 Pls go to bashtest directory:
 ``` cd bashtest ``` and run the tests:  
 ``` ./test-convert-kms-private-ssh-key.sh ```  
@@ -105,12 +105,12 @@ Pls go to bashtest directory:
 The [Taupage AMI](https://github.com/zalando-stups/taupage) is mandatory for backup hosts of [Zalando Tech's ](https://tech.zalando.com/) [Github Enterprise](https://enterprise.github.com/) for compliance reasons.
 As [Taupage AMI](https://github.com/zalando-stups/taupage) is part of [Stups](https://stups.io/), other [Stups](https://stups.io/) technologies like [Senza](https://github.com/zalando-stups/senza) are also used for local development.
 
-### upload Docker images to [pierone](https://github.com/zalando-stups/pierone) (a Zalando docker registry) would be:
+### Upload Docker images to [pierone](https://github.com/zalando-stups/pierone) (a Zalando docker registry) would be:
 ```docker push [repo name]:[tag]```  
 e.g.  
 ```docker push pierone.stups.zalan.do/bus/ghe-backup:0.0.7```
 
-### senza yaml file
+### Senza yaml file
 [Stups](https://stups.io/) requires a [senza yaml file](http://docs.stups.io/en/latest/components/senza.html#senza-info)
 to deploy an artefact to AWS. Such a yaml file gets basically translated to
 [AWS CloudFormation templates ](http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/template-guide.html)
@@ -155,7 +155,7 @@ SenzaComponents:
 _If you copy/paste the template above, make sure your details replace the dummy values_  
 
 
-### create scm-source.json
+### Create scm-source.json
 Ghe-backup uses a bash script similar to
 [stups application-development](http://docs.stups.io/en/latest/user-guide/application-development.html) to generate a scm-source.json file.   
 Make sure the bash script is executable:  
