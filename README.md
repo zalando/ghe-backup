@@ -166,7 +166,8 @@ and run it like:
 ### EBS volumes with Senza
 Please follow these instructions: [senza's storage guild](https://docs.stups.io/en/latest/user-guide/storage.html) to create a EBS volume the stups way.
 
-
+## Blog Post
+You can find more context on [Zalando's](https://github.com/zalando/) [tech blog](https://tech.zalando.com/): [tech.zalando.com/blog/multi-aws-github-enterprise-backup](https://tech.zalando.com/blog/multi-aws-github-enterprise-backup/).
 
 ===
 ### License
