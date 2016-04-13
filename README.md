@@ -167,7 +167,9 @@ and run it like:
 Please follow these instructions: [senza's storage guild](https://docs.stups.io/en/latest/user-guide/storage.html) to create a EBS volume the stups way.
 
 ## Blog Post
-You can find more context and details on [Zalando's](https://github.com/zalando/) [tech blog](https://tech.zalando.com/): [tech.zalando.com/blog/multi-aws-github-enterprise-backup](https://tech.zalando.com/blog/multi-aws-github-enterprise-backup/).
+You can find more context and details on [Zalando's](https://github.com/zalando/) [tech blog](https://tech.zalando.com/).  
+Blog post one is basically why and how ghe-backup was done: [tech.zalando.com/blog/multi-aws-github-enterprise-backup](https://tech.zalando.com/blog/multi-aws-github-enterprise-backup/).  
+Blog post two explains how changes gets continuously delivered using [Lizzy](https://github.com/zalando/lizzy/): [tech.zalando.com/blog/ci-pipelines-with-lizzy](https://tech.zalando.com/blog/ci-pipelines-with-lizzy/).  
 
 ===
 ### License
