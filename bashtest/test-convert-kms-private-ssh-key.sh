@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ./prepare-tests.sh
-../convert-kms-private-ssh-key.sh
+../convert-kms-private-ssh-key.sh /mymeta
 
 if [ $? -eq 1 ]
 then
