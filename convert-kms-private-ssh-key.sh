@@ -3,8 +3,20 @@
 set -euo pipefail
 IFS=$'\n\t'
 
+f=""
+set +u
+if [ ! -z $1 ];
+then
+  f=$1
+else
+  f="/meta"
+fi
+set -u
+
 #read senza yaml file (taupage.yaml)
-SSHKEY=$(python3 /kms/extract-kms-str.py /meta/taupage.yaml -k "kms_private_ssh_key")
+#SSHKEY=$(python3 /kms/extract-kms-str.py /meta/taupage.yaml -k "kms_private_ssh_key")
+SSHKEY=$(python3 /kms/extract-kms-str.py $f/taupage.yaml -k "kms_private_ssh_key")
+
 SSHKEY=`python3 /kms/decryptkms.py $SSHKEY`
 if [[ $SSHKEY == "Invalid KMS key." ]]
 then

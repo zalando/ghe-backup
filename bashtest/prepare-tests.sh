@@ -10,7 +10,7 @@ cp ../python/extract-kms-str.py /kms/extract-kms-str.py
 chmod 744 /kms/extract-kms-str.py
 cp ../python/decryptkms.py /kms/decryptkms.py
 chmod 744 /kms/decryptkms.py
-mkdir -p /meta/
+mkdir -p /mymeta/
 
 mkdir -p /data/ghe-production-data
 #touch /data/ghe-production-data/in-progress
@@ -20,7 +20,7 @@ EOT1
 
 # create a dummy senza yaml file
 # http://stups.readthedocs.org/en/latest/components/senza.html
-cat <<EOT2 >> /meta/taupage.yaml
+cat <<EOT2 >> /mymeta/taupage.yaml
 application_id: ghe-backup
 application_version: 0.0.0
 instance_logs_url: https://my.logs.url
