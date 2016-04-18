@@ -11,3 +11,7 @@ do
       echo "cleanup: $file does not exists"
    fi
 done
+
+if [ -f ~/.ssh/id_rsa ]; then
+  rm -f ~/.ssh/id_rsa
+fi
