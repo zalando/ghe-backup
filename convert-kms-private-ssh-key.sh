@@ -36,7 +36,7 @@ else
   mkdir -p ~/.ssh
   printf "%s" "$SSHKEY" >> ~/.ssh/id_rsa
   chmod 0600 ~/.ssh/id_rsa
-  echo "Private ssh key file written.".
+  echo "Private ssh key file written."
   exit 0
 fi
 
