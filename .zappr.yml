@@ -1,7 +1,7 @@
 # https://github.com/zalando/zappr/blob/master/.zappr-example.yml
 approvals:
   # PR needs at least 4 approvals
-  minimum: 2
+  minimum: 1
   # approval = comment that matches this regex
   pattern: "^(:\\+1:|👍|LGTM|lgtm)$"
   from:
