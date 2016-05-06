@@ -1,4 +1,4 @@
-FROM zalando/ubuntu:14.04.2-1
+FROM registry.opensource.zalan.do/stups/ubuntu:16.04-28
 MAINTAINER lothar.schulz@zalando.de
 
 USER root
@@ -18,7 +18,8 @@ RUN \
   apt-get install -y unattended-upgrades python3 python3-dev python3-pip python3-yaml language-pack-en git && \
   pip3 install --upgrade boto boto3 && \
   rm -rf /var/lib/apt/lists/* && \
-  git clone -b stable https://github.com/github/backup-utils.git
+  git clone -b stable https://github.com/github/backup-utils.git && \
+  git -C /backup/backup-utils pull
 
 # copy predefined backup config
 COPY backup.config /backup/backup-utils/backup.config
