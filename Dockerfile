@@ -1,4 +1,4 @@
-FROM registry.opensource.zalan.do/stups/ubuntu:16.04-28
+FROM registry.opensource.zalan.do/stups/python:3.5.1-18
 MAINTAINER lothar.schulz@zalando.de
 
 USER root
