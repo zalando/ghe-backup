@@ -47,6 +47,11 @@ RUN \
   chmod 0700 /delete-instuck-backups/delete-instuck-progress.py && \
   mkfifo /var/log/ghe-prod-backup.log
 
+# delete-instuck-progress log
+RUN \
+  touch /var/log/ghe-delete-instuck-progress.log && \
+  chown -R application: /var/log/ghe-delete-instuck-progress.log
+
 CMD python3 /delete-instuck-backups/delete-instuck-progress.py && \
     /kms/convert-kms-private-ssh-key.sh && \
     cron && \
