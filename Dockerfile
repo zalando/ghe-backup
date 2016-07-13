@@ -24,9 +24,6 @@ RUN \
 # copy predefined backup config
 COPY backup.config /backup/backup-utils/backup.config
 
-# copy scm-source.json
-COPY scm-source.json /scm-source.json
-
 # copy files to decrypt private ssh key using kms
 COPY python/decryptkms.py /kms/decryptkms.py
 COPY python/extract-kms-str.py /kms/extract-kms-str.py
