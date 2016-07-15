@@ -87,10 +87,16 @@ Pls note:
 * *make sure* you run ```bashtest/cleanup-tests.sh```  in order to clean up afterwards.
 
 ### Nosetest
-* precondition: you are logged in with AWS e.g.  
+
+#### decrypt test
+* precondition: you are logged in with AWS e.g. using (mai)[https://stups.io/mai]  
 ```mai login [awsaccount-role] ```  
 * test run:  
 ```nosetests -w python -v --nocapture testdecryptkms.py ```  
+
+#### delete in stuck in prgress files
+```nosetests -w python -v --nocapture testDeleteInstuckProgress.py ```  
+
 
 ### Bash tests
 Pls go to bashtest directory:
