@@ -1,3 +1,4 @@
 .DS_Store
 python/__pycache__/
 scm-source.json
+.idea
