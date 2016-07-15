@@ -14,4 +14,4 @@ cache:
 
 script:
     - sh ./travis.sh
-    - nosetests -w python -v --nocapture testDeleteInstuckProgress.py
+#    - nosetests -w python -v --nocapture testDeleteInstuckProgress.py
