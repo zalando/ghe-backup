@@ -8,6 +8,7 @@ before_install:
     - sudo pip install boto3 --upgrade
     - sudo pip install pyyaml --upgrade
     - sudo pip install requests --upgrade
+    - sudo pip install nose --upgrade
 
 cache:
   apt: true
