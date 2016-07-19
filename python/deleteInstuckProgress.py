@@ -8,20 +8,14 @@ import os.path
 import time
 
 
-def dropfile(abs_folder, filename):
+def drop_file(abs_folder, filename):
     if os.path.isfile(os.path.join(abs_folder, filename)):
         os.remove(os.path.join(abs_folder, filename))
         return True
     return False
 
 
-def dropinprogress(abs_folder, filename):
-    if dropinprgressfileallowed(abs_folder, filename):
-        return dropfile(abs_folder, filename)
-    return False
-
-
-def dropinprgressfileallowed(abs_folder, filename):
+def drop_outdated_inprogress_file(abs_folder, filename):
     if os.path.isfile(os.path.join(abs_folder, filename)):
         mtime = os.stat(os.path.join(abs_folder, filename)).st_mtime
         now = time.gmtime()
@@ -41,7 +35,7 @@ def dropinprgressfileallowed(abs_folder, filename):
 
 if __name__ == "__main__":
     try:
-        dropfile('/data/ghe-production-data', 'in-progress')
+        drop_file('/data/ghe-production-data', 'in-progress')
     except FileNotFoundError as e:
         pass
         # print("error: file does not exists: %s" % e.message)
