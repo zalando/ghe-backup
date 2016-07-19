@@ -14,3 +14,4 @@ cache:
 
 script:
     - sh ./travis_bash.sh
+    - sh ./travis_deleteInstuckProgress.sh
