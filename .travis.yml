@@ -13,5 +13,4 @@ cache:
   apt: true
 
 script:
-    - sh ./travis.sh
-#    - nosetests -w python -v --nocapture testDeleteInstuckProgress.py
+    - sh ./travis_bash.sh
