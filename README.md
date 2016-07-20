@@ -95,7 +95,7 @@ Pls note:
 ```nosetests -w python -v --nocapture testdecryptkms.py ```  
 
 #### delete in stuck in prgress files
-```nosetests -w python -v --nocapture testDeleteInstuckProgress.py ```  
+```nosetests -w python -v --nocapture test_delete_instuck_progress.py ```  
 
 
 ### Bash tests
