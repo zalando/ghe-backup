@@ -19,6 +19,8 @@ def drop_outdated_inprogress_file(abs_folder, filename):
     if os.path.isfile(os.path.join(abs_folder, filename)):
         mtime = os.stat(os.path.join(abs_folder, filename)).st_mtime
         now = time.gmtime()
+        print("\nmtime: " + str(mtime))
+        print("now: " + str(now))
         # TODO
         # check last modification of os.path.join(abs_folder, filename)
         #  smth like os.stat(os.path.join(abs_folder, filename)).st_mtime
@@ -30,7 +32,9 @@ def drop_outdated_inprogress_file(abs_folder, filename):
         #   mtimevalue = datetime.datetime.fromtimestamp(calendar.timegm(mtime))
         #   if datetime.timedelta(seconds=t2-t1) > one day:
         #     go delete
-        return True
+
+        #return True
+        return False
     return False
 
 if __name__ == "__main__":
