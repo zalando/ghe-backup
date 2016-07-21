@@ -5,13 +5,22 @@ import os.path
 import nose.tools as nt
 import delete_instuck_progress
 import shutil
+import datetime
+import time
+
+
+# note: ~ folder is not your home folder, but a sub folder of the one this code runs into
+
 
 def create_test_files(abs_folder='~/tmp', filename='in-progress'):
     if not os.path.exists(os.path.join(abs_folder, filename)):
         if not os.path.isdir(abs_folder):
             os.makedirs(abs_folder)
         with open(os.path.join(abs_folder, filename), 'a'):
-            os.utime(os.path.join(abs_folder, filename), None)
+            # date in the past
+            t = datetime.datetime(2013, 12, 18, 0, 0)
+            am_time = time.mktime(t.timetuple())
+            os.utime(os.path.join(abs_folder, filename), (am_time, am_time))
 
 
 def test_drop_file(abs_folder='~/3456', filename='test.txt'):
