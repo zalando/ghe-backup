@@ -19,14 +19,9 @@ def drop_file(abs_folder, filename):
 def drop_outdated_inprogress_file(abs_folder, filename):
     if os.path.isfile(os.path.join(abs_folder, filename)):
         modification_time = os.stat(os.path.join(abs_folder, filename)).st_mtime
-        modification_time_year = int(datetime.fromtimestamp(modification_time).strftime('%Y'))
-        modification_time_month = int(datetime.fromtimestamp(modification_time).strftime('%m'))
-        modification_time_day = int(datetime.fromtimestamp(modification_time).strftime('%d'))
-
         today = date.today()
-        modification_day = date(modification_time_year, modification_time_month, modification_time_day)
-
-        if (today - modification_day).days > 1:
+        modification_day = date.fromtimestamp(modification_time)
+        if today > modification_day:
             os.remove(os.path.join(abs_folder, filename))
             return True
     return False
