@@ -3,16 +3,15 @@
 import os
 import os.path
 import nose.tools as nt
+from nose.tools import nottest
 import delete_instuck_progress
 import datetime
 import time
 import tempfile as tf
 
 
-# note: ~ folder is not your home folder, but a sub folder of the one this code runs into
-
-
-def create_test_files(abs_folder='~/tmp', filename='in-progress'):
+@nottest
+def create_test_files(abs_folder='mytmp', filename='in-progress'):
     full_path = os.path.join(abs_folder, filename)
     if not os.path.exists(full_path):
         if not os.path.isdir(abs_folder):
