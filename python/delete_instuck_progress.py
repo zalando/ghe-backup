@@ -5,15 +5,7 @@ deletes file in case it exists
 
 import os
 import os.path
-from datetime import datetime
 from datetime import date
-
-
-def drop_file(abs_folder, filename):
-    if os.path.isfile(os.path.join(abs_folder, filename)):
-        os.remove(os.path.join(abs_folder, filename))
-        return True
-    return False
 
 
 def drop_outdated_inprogress_file(abs_folder, filename):
@@ -28,7 +20,7 @@ def drop_outdated_inprogress_file(abs_folder, filename):
 
 if __name__ == "__main__":
     try:
-        drop_file('/data/ghe-production-data', 'in-progress')
+        drop_outdated_inprogress_file('/data/ghe-production-data', 'in-progress')
     except FileNotFoundError as e:
         pass
         # print("error: file does not exists: %s" % e.message)
