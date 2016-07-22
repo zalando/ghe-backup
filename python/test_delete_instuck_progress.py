@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 
-import os
-import os.path
-import nose.tools as nt
-from nose.tools import nottest
 import delete_instuck_progress
 import datetime
-import time
+import nose.tools as nt
+from nose.tools import nottest
+import os
+import os.path
 import tempfile as tf
+import time
 
 
 @nottest
