@@ -24,16 +24,13 @@ RUN \
 # copy predefined backup config
 COPY backup.config /backup/backup-utils/backup.config
 
-# copy scm-source.json
-COPY scm-source.json /scm-source.json
-
 # copy files to decrypt private ssh key using kms
 COPY python/decryptkms.py /kms/decryptkms.py
 COPY python/extract-kms-str.py /kms/extract-kms-str.py
 COPY convert-kms-private-ssh-key.sh /kms/convert-kms-private-ssh-key.sh
 
 # copy file to drop in stuck backup
-COPY python/delete-instuck-progress.py /delete-instuck-backups/delete-instuck-progress.py
+COPY python/delete_instuck_progress.py /delete-instuck-backups/delete_instuck_progress.py
 
 # copy cron job
 COPY cron-ghe-backup /etc/cron.d/ghe-backup
@@ -47,10 +44,15 @@ RUN \
   chmod 0700 /kms/extract-kms-str.py && \
   chmod 0700 /kms/convert-kms-private-ssh-key.sh && \
   chmod 0644 /etc/cron.d/ghe-backup && \
-  chmod 0700 /delete-instuck-backups/delete-instuck-progress.py && \
+  chmod 0700 /delete-instuck-backups/delete_instuck_progress.py && \
   mkfifo /var/log/ghe-prod-backup.log
 
-CMD python3 /delete-instuck-backups/delete-instuck-progress.py && \
-    /kms/convert-kms-private-ssh-key.sh && \
-    cron && \
-    tail -F /var/log/ghe-prod-backup.log
+# delete_instuck_progress log
+RUN \
+  touch /var/log/ghe-delete-instuck-progress.log && \
+  chown -R application: /var/log/ghe-delete-instuck-progress.log
+
+CMD ["python3", "/delete-instuck-backups/delete_instuck_progress.py",
+    "/kms/convert-kms-private-ssh-key.sh",
+    "cron",
+    "tail -F /var/log/ghe-prod-backup.log"

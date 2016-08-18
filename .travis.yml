@@ -1,4 +1,7 @@
-language: bash
+language: python
+
+python:
+  - "3.4"
 
 before_install:
     - sudo apt-get update
@@ -8,9 +11,11 @@ before_install:
     - sudo pip install boto3 --upgrade
     - sudo pip install pyyaml --upgrade
     - sudo pip install requests --upgrade
+    - sudo pip install nose --upgrade
 
 cache:
   apt: true
 
 script:
-    - sh ./travis.sh
+    - sh ./travis_bash.sh
+    - sh ./travis_deleteInstuckProgress.sh
