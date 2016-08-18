@@ -105,6 +105,9 @@ Pls go to bashtest directory:
 
 *Make sure* you run ```./cleanup-tests.sh ``` in order to clean up afterwards.  
 
+## Contribution
+pls refer to [CONTRIBUTING.md](CONTRIBUTING.md)
+
 ## Zalando specifics
 
 ### [Taupage AMI](https://github.com/zalando-stups/taupage)
@@ -171,9 +174,6 @@ and run it like:
 
 ### EBS volumes with Senza
 Please follow these instructions: [senza's storage guild](https://docs.stups.io/en/latest/user-guide/storage.html) to create a EBS volume the stups way.
-
-## Contribution
-pls refer to CONTRIBUTING.md
 
 ## Blog Post
 You can find more context and details on [Zalando's](https://github.com/zalando/) [tech blog](https://tech.zalando.com/).  
