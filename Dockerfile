@@ -56,4 +56,4 @@ RUN \
   touch /var/log/ghe-delete-instuck-progress.log && \
   chown -R application: /var/log/ghe-delete-instuck-progress.log
 
-CMD ["/bin/bash", "/backup/final-docker-cmd.sh"]
+CMD ["/backup/final-docker-cmd.sh"]
