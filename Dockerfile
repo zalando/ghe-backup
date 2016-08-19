@@ -52,7 +52,4 @@ RUN \
   touch /var/log/ghe-delete-instuck-progress.log && \
   chown -R application: /var/log/ghe-delete-instuck-progress.log
 
-CMD ["python3", "/delete-instuck-backups/delete_instuck_progress.py",
-    "/kms/convert-kms-private-ssh-key.sh",
-    "cron",
-    "tail -F /var/log/ghe-prod-backup.log"
+CMD ["python3", "/delete-instuck-backups/delete_instuck_progress.py", "/kms/convert-kms-private-ssh-key.sh", "cron", "tail -F /var/log/ghe-prod-backup.log"]
