@@ -35,6 +35,9 @@ COPY python/delete_instuck_progress.py /delete-instuck-backups/delete_instuck_pr
 # copy cron job
 COPY cron-ghe-backup /etc/cron.d/ghe-backup
 
+# copy finale CMD commands
+COPY final-docker-cmd.sh /backup/final-docker-cmd.sh
+
 # change mode of files
 RUN \
   chown -R application: /data && \
@@ -45,6 +48,7 @@ RUN \
   chmod 0700 /kms/convert-kms-private-ssh-key.sh && \
   chmod 0644 /etc/cron.d/ghe-backup && \
   chmod 0700 /delete-instuck-backups/delete_instuck_progress.py && \
+  chmod 0700 /backup/final-docker-cmd.sh && \
   mkfifo /var/log/ghe-prod-backup.log
 
 # delete_instuck_progress log
@@ -52,4 +56,4 @@ RUN \
   touch /var/log/ghe-delete-instuck-progress.log && \
   chown -R application: /var/log/ghe-delete-instuck-progress.log
 
-CMD ["python3", "/delete-instuck-backups/delete_instuck_progress.py", "/kms/convert-kms-private-ssh-key.sh", "cron", "tail -F /var/log/ghe-prod-backup.log"]
+CMD ["/bin/bash", "/backup/final-docker-cmd.sh"]
