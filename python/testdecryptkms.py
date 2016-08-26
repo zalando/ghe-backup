@@ -4,13 +4,16 @@ import nose.tools as nt
 import decryptkms
 import os,binascii
 
+
 def test_several_aws_decrypt(s=10, t=25):
     for i in range(s,t):
         print("\nrandomword({}): {}\n".format(i, randomword(i)))
         test_aws_decrypt(randomword(i))
 
+
 def randomword(length):
-   return binascii.b2a_hex(os.urandom(length)).decode('ascii')
+    return binascii.b2a_hex(os.urandom(length)).decode('ascii')
+
 
 def test_aws_decrypt(toencrypt="BCDE"):
     print("\ntoencrypt: {}\n".format(toencrypt))
