@@ -6,15 +6,16 @@ Prints value of provided key based on given yaml file.
 
 import argparse
 import yaml
-#import pprint
+# import pprint
+
 
 def main(args):
 
     data = yaml.safe_load(args.file)
-    #pp = pprint.PrettyPrinter(indent=1)
-    #print("----data-----")
-    #pp.pprint(data)
-    #print("---/data-----")
+    # pp = pprint.PrettyPrinter(indent=1)
+    # print("----data-----")
+    # pp.pprint(data)
+    # print("---/data-----")
 
     if args.key in data.keys():
         result = data[args.key]
