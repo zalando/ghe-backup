@@ -2,3 +2,4 @@
 python/__pycache__/
 scm-source.json
 .idea
+*.pyc
