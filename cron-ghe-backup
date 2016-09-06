@@ -1,4 +1,4 @@
 # ghe prod backups
 # timezone is GMT -1
-26 9,14,19 * * 1-6 root /backup/backup-utils/bin/ghe-backup -v 1>> /var/log/ghe-prod-backup.log 2>&1
+13 7,8,9,10,11,12,13,14,15,16,17,18,19 * * 1-6 root /backup/backup-utils/bin/ghe-backup 1>> /var/log/ghe-prod-backup.log 2>&1
 57 7,8,9,10,11,12,13,14,15,16,17,18,19 * * 1-6 root python3 /delete-instuck-backups/delete_instuck_progress.py 1>> /var/log/ghe-delete-instuck-progress.log 2>&1
