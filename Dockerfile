@@ -56,4 +56,6 @@ RUN \
   touch /var/log/ghe-delete-instuck-progress.log && \
   chown -R application: /var/log/ghe-delete-instuck-progress.log
 
+COPY scm-source.json /
+
 CMD ["/backup/final-docker-cmd.sh"]
