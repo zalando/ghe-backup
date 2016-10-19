@@ -41,7 +41,7 @@ if (env.BRANCH_NAME == 'master') {
         echo "New image version: imageVersion"
     }
 
-    stage("Build Docker") {
+    stage("Build and Push Docker") {
           /*
           zalando specific jenkins job that creates a docker image and pushes it to the zalando docker registry
           */
