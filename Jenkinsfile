@@ -30,9 +30,7 @@ stage("Test") {
   build job: 'ghe-backup/GithubEnterpriseBackupTestPipelineJob', propagate: true, wait: true
 }
 
-/*
 if (env.BRANCH_NAME == 'master') {
-*/
     node('kraken') {
         checkout scm
         def shortCommit = sh(returnStdout: true, script: "git rev-parse --short HEAD").trim()
@@ -89,6 +87,4 @@ if (env.BRANCH_NAME == 'master') {
             echo "Deployment canceled."
         }
     }
-    /*
 }
-*/
