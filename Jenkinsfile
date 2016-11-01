@@ -38,8 +38,7 @@ if (env.BRANCH_NAME == 'master') {
         def shortCommit = sh(returnStdout: true, script: "git rev-parse --short HEAD").trim()
         fullImageName = "$shortImageName:$buildNumber-$shortCommit"
         imageVersion = "$buildNumber-$shortCommit"
-        /* 000 to distinguish buzild number and short commit as lizzy allows only letters and numbers in stack name */
-        nextStackVersion = "$buildNumber000$shortCommit"
+        nextStackVersion = "$buildNumber$shortCommit"
         echo "New image name: $fullImageName"
         echo "New image version: $imageVersion"
         echo "New cf stack version: $nextStackVersion"
