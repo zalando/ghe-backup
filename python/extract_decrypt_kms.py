@@ -2,7 +2,6 @@
 
 """
 @attention: inspired by
-- https://github.com/zalando-stups/taupage/blob/master/runtime/opt/taupage/bin/parse-yaml.py on 2015 11 16
 - https://github.com/zalando/kmsclient on 2015 10 15
 - https://github.com/zalando-stups/taupage/blob/master/runtime/opt/taupage/bin/decrypt_kms.py on 2015 10 15
 """
@@ -13,38 +12,57 @@ import boto3
 import base64
 # import pprint
 
+class Kms:
 
-def extract_kms_string(arguments):
-    """
-    Prints value of provided key based on given yml file
-    :param arguments: file taupage yml and kms key within yml details
-    :return: the kms string identified by the kms key
-    """
+    def __init__(self,
+                 file: str,
+                 key: str,
+                 region: str):
+        self.file = file
+        self.key = key
+        self.region = region
+        self.service_name = 'kms'
 
-    data = yaml.safe_load(arguments.file)
-    # pp = pprint.PrettyPrinter(indent=1)
-    # print("----data-----")
-    # pp.pprint(data)
-    # print("---/data-----")
+    @classmethod
+    def extract_kms_string(cls) -> str:
+        """
+        Prints value of provided key based on given yml file
+        :param arguments: file taupage yml and kms key within yml details
+        :return: the kms string identified by the kms key
+        """
 
-    if arguments.key in data.keys():
-        result = data[arguments.key]
-        if result.startswith('aws:kms:'):
-            result = result.replace('aws:kms:', '', 1)
-        return result
+        data = yaml.safe_load(cls.file)
+        # pp = pprint.PrettyPrinter(indent=1)
+        # print("----data-----")
+        # pp.pprint(data)
+        # print("---/data-----")
 
+        if cls.key in data.keys():
+            result = data[cls.key]
+            if result.startswith('aws:kms:'):
+                result = result.replace('aws:kms:', '', 1)
+            return result
 
-def aws_kms_client(region_name):
-    return boto3.client(service_name='kms', region_name=region_name)
+    @classmethod
+    def aws_kms_client(cls) -> str:
+        return boto3.client(service_name=cls.service_name, region_name=cls.region_name)
 
+    @classmethod
+    def aws_decrypt(cls, data2decrypt) -> str:
+        client = cls.aws_kms_client()
+        response = client.decrypt(
+            CiphertextBlob=base64.b64decode(data2decrypt)
+        )
+        return str(response['Plaintext'], "UTF-8")
 
-def aws_encrypt(key_id, to_encrypt, region):
-    client = aws_kms_client(region)
-    response = client.encrypt(
-        KeyId=key_id,
-        Plaintext=to_encrypt
-    )
-    return str(base64.b64encode(response['CiphertextBlob']), "UTF-8")
+    @classmethod
+    def aws_encrypt(cls, key_id, to_encrypt) -> str:
+        client = cls.aws_kms_client()
+        response = client.encrypt(
+            KeyId=key_id,
+            Plaintext=to_encrypt
+        )
+        return str(base64.b64encode(response['CiphertextBlob']), "UTF-8")
 
 
 if __name__ == '__main__':
@@ -55,6 +73,5 @@ if __name__ == '__main__':
 
     args = parser.parse_args()
 
-    kms_string = extract_kms_string(args)
-
-    print(aws_encrypt(key_id=kms_string, region=args.region))
+    kms = Kms(file=args.file, key=args.key, region=args.region)
+    print(kms.aws_decrypt(data2decrypt=kms.extract_kms_string(args)))
