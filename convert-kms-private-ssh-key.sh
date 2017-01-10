@@ -3,21 +3,17 @@
 set -euo pipefail
 IFS=$'\n\t'
 
-f=""
+folder=""
 set +u
 if [ ! -z $1 ];
 then
-  f=$1
+  folder=$1
 else
-  f="/meta"
+  folder="/meta"
 fi
 set -u
 
-#read senza yaml file (taupage.yaml)
-#SSHKEY=$(python3 /kms/extract_kms_str.py /meta/taupage.yaml -k "kms_private_ssh_key")
-SSHKEY=$(python3 /kms/extract_kms_str.py $f/taupage.yaml -k "kms_private_ssh_key")
-
-SSHKEY=`python3 /kms/decrypt_kms.py $SSHKEY`
+SSHKEY=$(python3 /kms/extract_kms_str.py -f "$folder/taupage.yaml" -k "kms_private_ssh_key" -r "eu-west-1")
 if [[ $SSHKEY == "Invalid KMS key." ]]
 then
   echo "KMS key or KMS string is invalid."
