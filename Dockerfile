@@ -25,8 +25,8 @@ RUN \
 COPY backup.config /backup/backup-utils/backup.config
 
 # copy files to decrypt private ssh key using kms
-COPY python/decryptkms.py /kms/decryptkms.py
-COPY python/extract-kms-str.py /kms/extract-kms-str.py
+COPY python/decrypt_kms.py /kms/decrypt_kms.py
+COPY python/extract_kms_str.py /kms/extract_kms_str.py
 COPY convert-kms-private-ssh-key.sh /kms/convert-kms-private-ssh-key.sh
 
 # copy file to drop in stuck backup
@@ -44,7 +44,7 @@ RUN \
   chown -R application: /backup && \
   chown -R application: /kms && \
   chown -R application: /delete-instuck-backups && \
-  chmod 0700 /kms/extract-kms-str.py && \
+  chmod 0700 /kms/extract_kms_str.py && \
   chmod 0700 /kms/convert-kms-private-ssh-key.sh && \
   chmod 0644 /etc/cron.d/ghe-backup && \
   chmod 0700 /delete-instuck-backups/delete_instuck_progress.py && \

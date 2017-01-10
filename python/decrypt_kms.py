@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 '''
 @attention: This helper is inspired by https://github.com/zalando/kmsclient &
-https://github.com/zalando-stups/taupage/blob/master/runtime/opt/taupage/bin/decrypt-kms.py on 2015 10 15
+https://github.com/zalando-stups/taupage/blob/master/runtime/opt/taupage/bin/decrypt_kms.py on 2015 10 15
 '''
 
 import boto3

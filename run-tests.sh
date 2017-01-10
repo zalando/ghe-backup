@@ -12,7 +12,7 @@ if ! curl --max-time 2 --output /dev/null --silent --head --fail "$link"; then
 fi
 nosetests -w python
 # uncomment for verbose output:
-#nosetests -w python -vv --nocapture testdecryptkms.py
+#nosetests -w python -vv --nocapture test_decrypt_kms.py
 
 cd bashtest
 ./test-convert-kms-private-ssh-key.sh

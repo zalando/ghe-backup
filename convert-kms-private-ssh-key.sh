@@ -14,10 +14,10 @@ fi
 set -u
 
 #read senza yaml file (taupage.yaml)
-#SSHKEY=$(python3 /kms/extract-kms-str.py /meta/taupage.yaml -k "kms_private_ssh_key")
-SSHKEY=$(python3 /kms/extract-kms-str.py $f/taupage.yaml -k "kms_private_ssh_key")
+#SSHKEY=$(python3 /kms/extract_kms_str.py /meta/taupage.yaml -k "kms_private_ssh_key")
+SSHKEY=$(python3 /kms/extract_kms_str.py $f/taupage.yaml -k "kms_private_ssh_key")
 
-SSHKEY=`python3 /kms/decryptkms.py $SSHKEY`
+SSHKEY=`python3 /kms/decrypt_kms.py $SSHKEY`
 if [[ $SSHKEY == "Invalid KMS key." ]]
 then
   echo "KMS key or KMS string is invalid."

@@ -92,7 +92,7 @@ Pls note:
 * precondition: you are logged in with AWS e.g. using (mai)[https://stups.io/mai]  
 ```mai login [awsaccount-role] ```  
 * test run:  
-```nosetests -w python -v --nocapture testdecryptkms.py ```  
+```nosetests -w python -v --nocapture test_decrypt_kms.py ```  
 
 #### delete in stuck in prgress files
 ```nosetests -w python -v --nocapture test_delete_instuck_progress.py ```  
