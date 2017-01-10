@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 '''
-inspired by https://github.com/zalando-stups/taupage/blob/master/runtime/opt/taupage/bin/parse-yaml.py
-Prints value of provided key based on given yaml file.
+@attention: inspired by https://github.com/zalando-stups/taupage/blob/master/runtime/opt/taupage/bin/parse-yaml.py on 2015 11 16
+Prints value of provided key based on given yaml file
 '''
 
 import argparse
