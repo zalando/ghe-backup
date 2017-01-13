@@ -12,16 +12,18 @@ import boto3
 import base64
 # import pprint
 
+
 class Kms:
 
-    def __init__(self,
-                 file: str,
-                 key: str,
-                 region: str):
-        self.file = file
-        self.key = key
-        self.region = region
-        self.service_name = 'kms'
+    @classmethod
+    def __init__(cls,
+                 file: str = None,
+                 key: str = None,
+                 region: str = None):
+        cls.file = file
+        cls.key = key
+        cls.region = region
+        cls.service_name = 'kms'
 
     @classmethod
     def extract_kms_string(cls) -> str:
@@ -45,13 +47,13 @@ class Kms:
 
     @classmethod
     def aws_kms_client(cls) -> str:
-        return boto3.client(service_name=cls.service_name, region_name=cls.region_name)
+        return boto3.client(service_name=cls.service_name, region_name=cls.region)
 
     @classmethod
-    def aws_decrypt(cls, data2decrypt) -> str:
+    def aws_decrypt(cls, to_decrypt) -> str:
         client = cls.aws_kms_client()
         response = client.decrypt(
-            CiphertextBlob=base64.b64decode(data2decrypt)
+            CiphertextBlob=base64.b64decode(to_decrypt)
         )
         return str(response['Plaintext'], "UTF-8")
 
@@ -74,4 +76,4 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     kms = Kms(file=args.file, key=args.key, region=args.region)
-    print(kms.aws_decrypt(data2decrypt=kms.extract_kms_string(args)))
+    print(kms.aws_decrypt(to_decrypt=kms.extract_kms_string(args)))
