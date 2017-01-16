@@ -14,6 +14,7 @@ import base64
 
 
 class Kms:
+    service_name = 'kms'
 
     @classmethod
     def __init__(cls,
@@ -23,7 +24,6 @@ class Kms:
         cls.file = file
         cls.key = key
         cls.region = region
-        cls.service_name = 'kms'
 
     @classmethod
     def extract_kms_string(cls) -> str:
