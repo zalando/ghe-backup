@@ -90,13 +90,15 @@ Pls note:
 
 #### decrypt test
 * precondition: you are logged in with AWS e.g. using (mai)[https://stups.io/mai]  
-```mai login [awsaccount-role] ```  
+```mai login [awsaccount-role]```  
 * test run:  
-```nosetests -w python -v --nocapture test_decrypt_kms.py ```  
+```nosetests -w python -v --nocapture test_extract_decrypt_kms.py```  
 
 #### delete in stuck in prgress files
-```nosetests -w python -v --nocapture test_delete_instuck_progress.py ```  
+```nosetests -w python -v --nocapture test_delete_instuck_progress.py```  
 
+#### run all test minimum output
+```nosetests -w python```
 
 ### Bash tests
 Pls go to bashtest directory:

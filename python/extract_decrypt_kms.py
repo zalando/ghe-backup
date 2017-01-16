@@ -15,42 +15,48 @@ import base64
 
 class Kms:
     service_name = 'kms'
+    aws_kms_str = 'aws:kms:'
 
     @classmethod
     def __init__(cls,
-                 file: str = None,
-                 key: str = None,
-                 region: str = None):
+                 file: str,
+                 key: str,
+                 region: str):
         cls.file = file
         cls.key = key
         cls.region = region
 
     @classmethod
-    def extract_kms_string(cls) -> str:
+    def extract_kms_string(cls, file: __file__, key: str) -> str:
         """
         Prints value of provided key based on given yml file
-        :param arguments: file taupage yml and kms key within yml details
+        :param file: taupage yml file
+        :param key: kms key string
         :return: the kms string identified by the kms key
         """
 
-        data = yaml.safe_load(cls.file)
+        data = yaml.safe_load(file if file is not None else cls.file)
         # pp = pprint.PrettyPrinter(indent=1)
         # print("----data-----")
         # pp.pprint(data)
         # print("---/data-----")
 
-        if cls.key in data.keys():
-            result = data[cls.key]
-            if result.startswith('aws:kms:'):
-                result = result.replace('aws:kms:', '', 1)
+        kms_key = key if key is not None else cls.key
+        if type(dict) is type(data) and kms_key in data.keys():
+            result = data[kms_key]
+            if result.startswith(cls.aws_kms_str):
+                result = result.replace(cls.aws_kms_str, '', 1)
             return result
+        return None
 
     @classmethod
-    def aws_kms_client(cls) -> str:
-        return boto3.client(service_name=cls.service_name, region_name=cls.region)
+    def aws_kms_client(cls, region: str = None) -> str:
+        return boto3.client(service_name=cls.service_name, region_name=region if region is not None else cls.region)
 
     @classmethod
-    def aws_decrypt(cls, to_decrypt) -> str:
+    def aws_decrypt(cls, to_decrypt: str) -> str:
+        if type(None) is type(to_decrypt):
+            return None
         client = cls.aws_kms_client()
         response = client.decrypt(
             CiphertextBlob=base64.b64decode(to_decrypt)
@@ -58,7 +64,9 @@ class Kms:
         return str(response['Plaintext'], "UTF-8")
 
     @classmethod
-    def aws_encrypt(cls, key_id, to_encrypt) -> str:
+    def aws_encrypt(cls, key_id: str, to_encrypt: str) -> str:
+        if type(None) is type(key_id) or type(None) is type(to_encrypt):
+            return None
         client = cls.aws_kms_client()
         response = client.encrypt(
             KeyId=key_id,
