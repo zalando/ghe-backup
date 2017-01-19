@@ -1,4 +1,4 @@
-FROM registry.opensource.zalan.do/stups/python:3.5.1-21
+FROM registry.opensource.zalan.do/stups/python:3.5-cd22
 MAINTAINER lothar.schulz@zalando.de
 
 USER root
