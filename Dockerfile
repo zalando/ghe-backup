@@ -25,8 +25,7 @@ RUN \
 COPY backup.config /backup/backup-utils/backup.config
 
 # copy files to decrypt private ssh key using kms
-COPY python/decrypt_kms.py /kms/decrypt_kms.py
-COPY python/extract_kms_str.py /kms/extract_kms_str.py
+COPY python/extract_decrypt_kms.py /kms/extract_decrypt_kms.py
 COPY convert-kms-private-ssh-key.sh /kms/convert-kms-private-ssh-key.sh
 
 # copy file to drop in stuck backup
