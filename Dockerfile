@@ -43,7 +43,7 @@ RUN \
   chown -R application: /backup && \
   chown -R application: /kms && \
   chown -R application: /delete-instuck-backups && \
-  chmod 0700 /kms/extract_kms_str.py && \
+  chmod 0700 /kms/extract_decrypt_kms.py && \
   chmod 0700 /kms/convert-kms-private-ssh-key.sh && \
   chmod 0644 /etc/cron.d/ghe-backup && \
   chmod 0700 /delete-instuck-backups/delete_instuck_progress.py && \
