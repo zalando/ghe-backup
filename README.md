@@ -89,7 +89,7 @@ Pls note:
 ### Nosetest
 
 #### decrypt test
-* precondition: you are logged in with AWS e.g. using (mai)[https://stups.io/mai]  
+* precondition: you are logged in with AWS e.g. using [mai](https://stups.io/mai)  
 ```mai login [awsaccount-role]```  
 * test run:  
 ```nosetests -w python -v --nocapture test_extract_decrypt_kms.py```  
