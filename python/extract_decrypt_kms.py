@@ -78,4 +78,4 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     kms = Kms(file=args.file, key=args.key, region=args.region)
-    print(kms.aws_decrypt(to_decrypt=kms.extract_kms_string(args)))
+    print(kms.aws_decrypt(to_decrypt=kms.extract_kms_string(file=args.file, key=args.key)))
