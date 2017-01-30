@@ -21,7 +21,7 @@ if [ $SSHKEY = "aws:kms:"* ]; then
     exit 0
   else
     # assumption: file does not exists on new created docker container
-    echo "The file ~/.ssh/id_rsa does not exists. Start writing private ssh key.".
+    echo "The file ~/.ssh/id_rsa does not exists. Start writing private ssh key."
     mkdir -p ~/.ssh
     printf "%s" "$SSHKEY" >> ~/.ssh/id_rsa
     chmod 0600 ~/.ssh/id_rsa

@@ -18,7 +18,7 @@ class Kms:
 
     @classmethod
     def __init__(cls,
-                 file: str,
+                 file,
                  key: str,
                  region: str):
         cls.file = file
@@ -26,7 +26,7 @@ class Kms:
         cls.region = region
 
     @classmethod
-    def extract_kms_string(cls, file: __file__, key: str) -> str:
+    def extract_kms_string(cls, file, key: str) -> str:
         """
         Prints value of provided key based on given yml file
         :param file: taupage yml file
@@ -36,12 +36,12 @@ class Kms:
 
         data = yaml.safe_load(file if file is not None else cls.file)
         kms_key = key if key is not None else cls.key
-        if type(dict) is type(data) and kms_key in data.keys():
+        if type(data) is dict and kms_key in data.keys():
             result = data[kms_key]
             if result.startswith(cls.aws_kms_str):
                 result = result.replace(cls.aws_kms_str, '', 1)
             return result
-        return None
+        return ""
 
     @classmethod
     def aws_kms_client(cls, region: str = None) -> str:
@@ -49,8 +49,8 @@ class Kms:
 
     @classmethod
     def aws_decrypt(cls, to_decrypt: str) -> str:
-        if type(None) is type(to_decrypt):
-            return None
+        if to_decrypt is "":
+            return ""
         client = cls.aws_kms_client()
         response = client.decrypt(
             CiphertextBlob=base64.b64decode(to_decrypt)
@@ -59,8 +59,8 @@ class Kms:
 
     @classmethod
     def aws_encrypt(cls, key_id: str, to_encrypt: str) -> str:
-        if type(None) is type(key_id) or type(None) is type(to_encrypt):
-            return None
+        if key_id is "" or to_encrypt is "":
+            return ""
         client = cls.aws_kms_client()
         response = client.encrypt(
             KeyId=key_id,
