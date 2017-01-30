@@ -6,8 +6,8 @@
 # create folder and file structure
 # call this script from folder above
 mkdir -p /kms/
-cp ../python/extract_kms_str.py /kms/extract_kms_str.py
-chmod 744 /kms/extract_kms_str.py
+cp ../python/extract_decrypt_kms.py /kms/extract_decrypt_kms.py
+chmod 744 /kms/extract_decrypt_kms.py
 cp ../python/decrypt_kms.py /kms/decrypt_kms.py
 chmod 744 /kms/decrypt_kms.py
 mkdir -p /mymeta/
