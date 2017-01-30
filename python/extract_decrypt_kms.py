@@ -10,7 +10,6 @@ import argparse
 import yaml
 import boto3
 import base64
-# import pprint
 
 
 class Kms:
@@ -36,11 +35,6 @@ class Kms:
         """
 
         data = yaml.safe_load(file if file is not None else cls.file)
-        # pp = pprint.PrettyPrinter(indent=1)
-        # print("----data-----")
-        # pp.pprint(data)
-        # print("---/data-----")
-
         kms_key = key if key is not None else cls.key
         if type(dict) is type(data) and kms_key in data.keys():
             result = data[kms_key]
