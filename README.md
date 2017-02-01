@@ -7,7 +7,7 @@
 ## Overview
 [Github Enterprise](https://enterprise.github.com/) at Zalando Tech is a Ha setup running master and replica instances on AWS. The AWS account that runs the [high availability](https://help.github.com/enterprise/2.5/admin/guides/installation/high-availability-configuration/) setup also runs one backup host. There is a second backup host running in a different AWS account. We believe this backup gives us reliable backup data even in case one AWS is compromised.
 
-![overview](/Slide1.PNG "backup approach overview")
+![overview](/backup_overview.PNG "backup approach overview")
 
 Basically ghe-backup wraps github's [backup-utils](https://github.com/github/backup-utils) in a [Docker](https://www.docker.com/) container. An [EBS volume](https://aws.amazon.com/de/ebs/) stores the actual backup data to be able to access the data even if the regarding backup host is down.
 
@@ -89,14 +89,16 @@ Pls note:
 ### Nosetest
 
 #### decrypt test
-* precondition: you are logged in with AWS e.g. using (mai)[https://stups.io/mai]  
-```mai login [awsaccount-role] ```  
+* precondition: you are logged in with AWS e.g. using [mai](https://stups.io/mai)  
+```mai login [awsaccount-role]```  
 * test run:  
-```nosetests -w python -v --nocapture testdecryptkms.py ```  
+```nosetests -w python -v --nocapture test_extract_decrypt_kms.py```  
 
 #### delete in stuck in prgress files
-```nosetests -w python -v --nocapture test_delete_instuck_progress.py ```  
+```nosetests -w python -v --nocapture test_delete_instuck_progress.py```  
 
+#### run all test minimum output
+```nosetests -w python```
 
 ### Bash tests
 Pls go to bashtest directory:
