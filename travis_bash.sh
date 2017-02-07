@@ -6,7 +6,7 @@ sudo ./prepare-tests.sh
 SSHKEY="aws:kms:myAWSregion:123456789:key/myrandomstringwithnumbers123456567890"
 if [ $SSHKEY = "aws:kms:"* ]; then
   SSHKEY=${SSHKEY##aws:kms:}
-  SSHKEY=`python3 /kms/decryptkms.py $SSHKEY`
+  SSHKEY=`python3 /kms/decrypt_kms.py $SSHKEY`
   if [[ $SSHKEY == "Invalid KMS key." ]]
   then
     echo "KMS key or KMS string is invalid."
@@ -21,7 +21,7 @@ if [ $SSHKEY = "aws:kms:"* ]; then
     exit 0
   else
     # assumption: file does not exists on new created docker container
-    echo "The file ~/.ssh/id_rsa does not exists. Start writing private ssh key.".
+    echo "The file ~/.ssh/id_rsa does not exists. Start writing private ssh key."
     mkdir -p ~/.ssh
     printf "%s" "$SSHKEY" >> ~/.ssh/id_rsa
     chmod 0600 ~/.ssh/id_rsa

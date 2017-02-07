@@ -3,21 +3,17 @@
 set -euo pipefail
 IFS=$'\n\t'
 
-f=""
+folder=""
 set +u
 if [ ! -z $1 ];
 then
-  f=$1
+  folder=$1
 else
-  f="/meta"
+  folder="/meta"
 fi
 set -u
 
-#read senza yaml file (taupage.yaml)
-#SSHKEY=$(python3 /kms/extract-kms-str.py /meta/taupage.yaml -k "kms_private_ssh_key")
-SSHKEY=$(python3 /kms/extract-kms-str.py $f/taupage.yaml -k "kms_private_ssh_key")
-
-SSHKEY=`python3 /kms/decryptkms.py $SSHKEY`
+SSHKEY=$(python3 /kms/extract_decrypt_kms.py -f "$folder/taupage.yaml" -k "kms_private_ssh_key" -r "eu-west-1")
 if [[ $SSHKEY == "Invalid KMS key." ]]
 then
   echo "KMS key or KMS string is invalid."
@@ -32,7 +28,7 @@ then
   exit 0
 else
   # assumption: file does not exists on new created docker container
-  echo "The file ~/.ssh/id_rsa does not exists. Start writing private ssh key.".
+  echo "The file ~/.ssh/id_rsa does not exists. Start writing private ssh key."
   mkdir -p ~/.ssh
   printf "%s" "$SSHKEY" >> ~/.ssh/id_rsa
   chmod 0600 ~/.ssh/id_rsa
