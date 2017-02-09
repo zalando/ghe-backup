@@ -94,8 +94,11 @@ Pls note:
 * test run:  
 ```nosetests -w python -v --nocapture test_extract_decrypt_kms.py```  
 
-#### delete in stuck in prgress files
+#### delete in stuck in progress files
 ```nosetests -w python -v --nocapture test_delete_instuck_progress.py```  
+
+#### trigger ghe backup
+```nosetests -w python -v --nocapture test_trigger_ghebackup.py```  
 
 #### run all test minimum output
 ```nosetests -w python```

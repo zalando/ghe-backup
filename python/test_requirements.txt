@@ -1,1 +1,7 @@
 nose
+datetime
+os
+tempfile
+time
+binascii
+unittest
