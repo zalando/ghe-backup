@@ -1,4 +1,4 @@
-# ghe prod backups
+# ghe automata prod backups
 # timezone is GMT -1
 13 8,10,12,14,16,18,20 * * 1-6 root /backup/backup-utils/bin/ghe-backup -v 1>> /var/log/ghe-prod-backup.log 2>&1
 13 12,19 * * 7 root /backup/backup-utils/bin/ghe-backup -v 1>> /var/log/ghe-prod-backup.log 2>&1
