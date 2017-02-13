@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-from subprocess import check_output
-from subprocess import Popen
+import subprocess
 import sys
 
 
@@ -8,7 +7,9 @@ def get_pid(name: str) -> list:
     """Returns a list of pids, can be empty.
     @attention: inspired by http://stackoverflow.com/a/26688998 on 09/02/2017
     @author: Padraic Cunningham"""
-    return list(map(int,check_output(["pidof", name]).split()))
+    if name:
+        return list(map(int, subprocess.check_output(["pidof", name]).split()))
+    return []
 
 
 def start_ghe_backup(name: str) -> None:
@@ -17,7 +18,7 @@ def start_ghe_backup(name: str) -> None:
     :param name: process to be spawned
     """
     try:
-        Popen([name, '-v', '1>>', '/var/log/ghe-prod-backup.log', '2>&1'])
+        subprocess.Popen([name, '-v', '1>>', '/var/log/ghe-prod-backup.log', '2>&1'])
     except Exception as err:
         sys.stderr.write('ERROR: %sn' % str(err))
 
