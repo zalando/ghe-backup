@@ -5,6 +5,6 @@ IFS=$'\n\t'
 
 python3 /delete-instuck-backups/delete_instuck_progress.py
 /kms/convert-kms-private-ssh-key.sh
-# do randomize cron
+# do the actual backups via cron
 cron
 tail -F /var/log/ghe-prod-backup.log
