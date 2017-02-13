@@ -4,14 +4,14 @@ from subprocess import Popen
 import sys
 
 
-def get_pid(name:str) -> list:
+def get_pid(name: str) -> list:
     """Returns a list of pids, can be empty.
     @attention: inspired by http://stackoverflow.com/a/26688998 on 09/02/2017
     @author: Padraic Cunningham"""
-    return list(map(int,check_output(["pidof",name]).split()))
+    return list(map(int,check_output(["pidof", name]).split()))
 
 
-def start_ghe_backup(name:str) -> None:
+def start_ghe_backup(name: str) -> None:
     """
     Spawns process specified by given name
     :param name: process to be spawned
@@ -22,7 +22,7 @@ def start_ghe_backup(name:str) -> None:
         sys.stderr.write('ERROR: %sn' % str(err))
 
 
-def trigger_backup(name:str, test:bool) -> str:
+def trigger_backup(name: str, test: bool) -> str:
     """
     Check if there is a pid for the given name. If not, process after last space gets spawned.
     :param name: process thats pid will be requested
