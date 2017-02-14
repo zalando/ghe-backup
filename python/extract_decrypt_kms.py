@@ -36,7 +36,7 @@ class Kms:
 
         data = yaml.safe_load(file if file is not None else cls.file)
         kms_key = key if key is not None else cls.key
-        if type(data) is dict and kms_key in data.keys():
+        if isinstance(data, dict) and kms_key in data.keys():
             result = data[kms_key]
             if result.startswith(cls.aws_kms_str):
                 result = result.replace(cls.aws_kms_str, '', 1)
