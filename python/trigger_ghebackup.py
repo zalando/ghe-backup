@@ -8,7 +8,7 @@ def get_pid(name: str) -> list:
     @attention: inspired by http://stackoverflow.com/a/26688998 on 09/02/2017
     @author: Padraic Cunningham"""
     if name:
-        return list(map(int, subprocess.check_output(["pidof", name]).split()))
+        return [int(pid) for pid in subprocess.check_output(["pidof", name]).split()]
     return []
 
 
