@@ -23,9 +23,9 @@ if [ -f ~/.ssh/id_rsa ]
     mkdir -p ~/.ssh
     printf "%s" "$SSHKEY" >> ~/.ssh/id_rsa
     chmod 0600 ~/.ssh/id_rsa
-    echo "Private ssh key file written.".
+    echo "Private ssh key file written."
     exit 0
 fi
 
-echo "This is expected. Test succesfully passed."
+echo "This is expected. Test successfully passed."
 exit 0
