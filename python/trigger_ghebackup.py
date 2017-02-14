@@ -32,7 +32,7 @@ def trigger_backup(name: str, test: bool) -> str:
     """
     res = get_pid(name)
     # process not running
-    if len(res) == 0:
+    if not res:
         name2start = name[name.rfind(" ")+1:]
         if not test:
             start_ghe_backup(name2start)
