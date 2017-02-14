@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
 import subprocess
 import sys
+import typing
 
 
-def get_pid(name: str) -> list:
+def get_pid(name: str) -> typing.List[int]:
     """Returns a list of pids, can be empty.
     @attention: inspired by http://stackoverflow.com/a/26688998 on 09/02/2017
-    @author: Padraic Cunningham"""
+    @author on stackoverflow: Padraic Cunningham"""
     if name:
         return [int(pid) for pid in subprocess.check_output(["pidof", name]).split()]
     return []
