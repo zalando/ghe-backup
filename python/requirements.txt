@@ -1,7 +1,4 @@
-os
-date
-argparse
-yaml
+pyyaml
 boto3
-base64
-subprocess
+requests
+nose
