@@ -14,5 +14,5 @@ cache:
   apt: true
 
 script:
-    - sh ./travis_bash.sh
-    - sh ./travis_deleteInstuckProgress.sh
+    - bash ./travis_bash.sh
+    - bash ./travis_deleteInstuckProgress.sh
