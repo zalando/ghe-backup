@@ -53,8 +53,8 @@ class Kms:
             return ""
         client = cls.aws_kms_client()
         response = client.decrypt(
-            # CiphertextBlob=base64.b64decode(to_decrypt)
-            CiphertextBlob=base64.urlsafe_b64decode(to_decrypt)
+            CiphertextBlob=base64.b64decode(cls.decode_base64(data=to_decrypt))
+            # CiphertextBlob=base64.urlsafe_b64decode(to_decrypt)
         )
         return str(response['Plaintext'], "UTF-8")
 
@@ -69,20 +69,21 @@ class Kms:
         )
         return str(base64.b64encode(response['CiphertextBlob']), "UTF-8")
 
-    # @classmethod
-    # def decode_base64(cls, data: str) -> str:
-    #     """
-    #     Decode base64, padding being optional.
-    #     :param data: Base64 data as an ASCII byte string
-    #     :returns: The decoded byte string.
-    #     @attention: inspired by http://stackoverflow.com/a/9807138 on 21/02/2017
-    #     @author: Simon Sapin
-    #     @author: Rajani Karuturi
-    #     """
-    #     missing_padding = len(data) % 4
-    #     if missing_padding != 0:
-    #         data += b'=' * (4 - missing_padding)
-    #     return base64.decodebytes(data)
+    @classmethod
+    def decode_base64(cls, data: str) -> str:
+        """
+        Decode base64, padding being optional.
+        :param data: Base64 data as an ASCII byte string
+        :returns: The decoded byte string.
+        @attention: inspired by http://stackoverflow.com/a/9807138 on 21/02/2017
+        @author: Simon Sapin
+        @author: Rajani Karuturi
+        """
+        missing_padding = len(data) % 4
+        res_data = bytes(data, 'utf-8')
+        if missing_padding != 0:
+            res_data += bytes('=', 'utf-8') * (4 - missing_padding)
+        return base64.decodebytes(res_data)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
