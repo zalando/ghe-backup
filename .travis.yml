@@ -10,7 +10,6 @@ python:
 #    - sudo apt-get install python3-yaml
 
 install:
-    - pip install .
     - pip install --user -r python/requirements.txt
 
 cache:
