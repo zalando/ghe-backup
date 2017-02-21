@@ -2,7 +2,7 @@
 set +e
 
 cd bashtest
-./prepare-tests.sh
+sudo ./prepare-tests.sh
 
 SSHKEY=$(python3 /kms/extract_decrypt_kms.py -f "/mymeta/taupage.yaml" -k "kms_private_ssh_key" -r "eu-west-1")
 if [[ $SSHKEY == "Invalid KMS key." ]]
