@@ -42,6 +42,9 @@ class Test(unittest.TestCase):
                 # KMS oeration can't be executed properly because either boto client
                 # can't connect to an AWS account or the wrong one
                 sys.stderr.write('\nBoto client error due to misconfigured AWS account: %s\n' % str(nfe))
+            elif str(nfe).find("credentials") > 0:
+                # no boto client credentials in CI environment
+                sys.stderr.write('\nBoto client error due to missing credentials: %s\n' % str(nfe))
             else:
                 raise
         if encryption_res:
@@ -58,6 +61,9 @@ class Test(unittest.TestCase):
                 # KMS operation can't be executed properly because either boto client
                 # can't connect to an AWS account or the wrong one
                 sys.stderr.write('\nBoto client error due to misconfigured AWS account: %s\n' % str(nfe))
+            elif str(nfe).find("credentials") > 0:
+                # no boto client credentials in CI environment
+                sys.stderr.write('\nBoto client error due to missing credentials: %s\n' % str(nfe))
             else:
                 raise
         if encryption_res:
