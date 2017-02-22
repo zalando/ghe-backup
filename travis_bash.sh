@@ -8,7 +8,7 @@ SSHKEY=$(python3 /kms/extract_decrypt_kms.py -f "/mymeta/taupage.yaml" -k "kms_p
 if [[ $SSHKEY == "Invalid KMS key." ]]
     then
     echo "KMS key or KMS string is invalid."
-    echo "KMS string must be formate: aws:kms:<BASE64STRING>"
+    echo "KMS string must be formated: aws:kms:<BASE64STRING>"
     echo "KMS key must be usable via Host-IAM-Profile"
     exit 1
 fi
