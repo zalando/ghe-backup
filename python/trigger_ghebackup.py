@@ -21,7 +21,7 @@ def start_ghe_backup(name: str) -> None:
     try:
         subprocess.Popen([name, '-v', '1>>', '/var/log/ghe-prod-backup.log', '2>&1'])
     except Exception as err:
-        sys.stderr.write('ERROR: %sn' % str(err))
+        sys.stderr.write('ERROR: %\n' % str(err))
 
 
 def trigger_backup(name: str, test: bool) -> str:
