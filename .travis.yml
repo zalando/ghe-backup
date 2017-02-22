@@ -3,12 +3,6 @@ sudo: required
 python:
   - "3.4"
 
-#before_install:
-#    - sudo apt-get update
-#    - sudo apt-get install python3
-#    - sudo apt-get install python3-dev
-#    - sudo apt-get install python3-yaml
-
 install:
     - pip install -r python/requirements.txt
 
@@ -16,5 +10,4 @@ cache:
   apt: true
 
 script:
-    - bash ./travis_bash.sh
-    - bash ./travis_deleteInstuckProgress.sh
+    - nosetests -w python

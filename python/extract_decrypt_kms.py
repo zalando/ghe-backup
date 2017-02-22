@@ -52,7 +52,6 @@ class Kms:
         if to_decrypt is "":
             return ""
         client = cls.aws_kms_client()
-        print("\nto_decrypt: {}\n".format(to_decrypt))
         response = client.decrypt(
             CiphertextBlob=base64.urlsafe_b64decode(to_decrypt)
         )
