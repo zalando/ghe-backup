@@ -65,11 +65,6 @@ class Test(unittest.TestCase):
             nt.assert_not_equal(to_encrypt, decryption_res)
 
     @classmethod
-    def test_decode_base64(cls, to_decrypt="ABCDEF"):
-        decodeB64_res = cls.kms.decode_base64(data=to_decrypt)
-        nt.assert_equal(base64.decodebytes(bytes(to_decrypt + "==", "utf-8")), decodeB64_res)
-
-    @classmethod
     def test_aws_kms_client(cls):
         nt.assert_equal(str(cls.kms.aws_kms_client()._endpoint),
                         str(cls.kms.aws_kms_client(region="eu-west-1")._endpoint))
