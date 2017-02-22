@@ -39,9 +39,12 @@ class Test(unittest.TestCase):
             encryption_res = cls.kms.aws_encrypt(key_id="b44f5008-cebc-4cba-b677-02c938f7a197", to_encrypt=to_encrypt)
         except Exception as nfe:
             if str(nfe).find("NotFoundException") > 0:
-                # KMS oeration can't be executed properly because either boto client
+                # KMS operation can't be executed properly because either boto client
                 # can't connect to an AWS account or the wrong one
                 sys.stderr.write('\nBoto client error due to misconfigured AWS account: %s\n' % str(nfe))
+            elif str(nfe).find("ExpiredToken") > 0:
+                # KMS operation can't be executed properly because either AWS token exprired.
+                sys.stderr.write('\nBoto client error due to expired token: %s\n' % str(nfe))
             elif str(nfe).find("credentials") > 0:
                 # no boto client credentials in CI environment
                 sys.stderr.write('\nBoto client error due to missing credentials: %s\n' % str(nfe))
@@ -61,6 +64,9 @@ class Test(unittest.TestCase):
                 # KMS operation can't be executed properly because either boto client
                 # can't connect to an AWS account or the wrong one
                 sys.stderr.write('\nBoto client error due to misconfigured AWS account: %s\n' % str(nfe))
+            elif str(nfe).find("ExpiredToken") > 0:
+                # KMS operation can't be executed properly because either AWS token exprired.
+                sys.stderr.write('\nBoto client error due to expired token: %s\n' % str(nfe))
             elif str(nfe).find("credentials") > 0:
                 # no boto client credentials in CI environment
                 sys.stderr.write('\nBoto client error due to missing credentials: %s\n' % str(nfe))
