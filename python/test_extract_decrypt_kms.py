@@ -1,12 +1,10 @@
 #!/usr/bin/env python3
 import nose.tools as nt
-import nose
 
 import os
 import binascii
 import extract_decrypt_kms
 import unittest
-import base64
 import sys
 
 

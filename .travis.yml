@@ -10,6 +10,4 @@ cache:
   apt: true
 
 script:
-    - nosetests -w python -v --nocapture test_extract_decrypt_kms.py
-    - nosetests -w python -v --nocapture test_delete_instuck_progress.py
-    - nosetests -w python -v --nocapture test_trigger_ghebackup.py
+    - nosetests -w python
