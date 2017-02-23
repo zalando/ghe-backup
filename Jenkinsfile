@@ -24,7 +24,7 @@ properties([
 
 node('kraken') {
     stage("Test") {
-        checkout([$class: 'GitSCM', branches: [[name: '**']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/zalando/ghe-backup.git']]])
+        checkout scm
         def shortCommit = sh(returnStdout: true, script: "git rev-parse --short HEAD").trim()
         fullImageName = "$shortImageName:$buildNumber-$shortCommit"
         imageVersion = "$buildNumber-$shortCommit"
@@ -39,7 +39,7 @@ node('kraken') {
 node('kraken') {
     stage("Test") {
         deleteDir()
-        checkout([$class: 'GitSCM', branches: [[name: '**']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/zalando/ghe-backup.git']]])
+        checkout scm
         // run nosetests as in https://github.com/zalando/ghe-backup/blob/master/.travis.yml
         sh "/tools/run :ghe-backup -- nosetests -w python"
     }
