@@ -9,7 +9,13 @@ def get_pid(name: str) -> typing.List[int]:
     @attention: inspired by http://stackoverflow.com/a/26688998 on 09/02/2017
     @author on stackoverflow: Padraic Cunningham"""
     if name:
-        return [int(pid) for pid in subprocess.check_output(["pidof", name]).split()]
+        try:
+            return [int(pid)
+                    for pid
+                    in subprocess.check_output(["pidof", name]).split()]
+        except subprocess.CalledProcessError:
+            # process `name` was not not found
+            return []
     return []
 
 
