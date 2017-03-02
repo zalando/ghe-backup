@@ -1,0 +1,5 @@
+pyyaml
+boto3
+requests
+nose
+typing

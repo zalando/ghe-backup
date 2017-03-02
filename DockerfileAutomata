@@ -1,4 +1,4 @@
-FROM registry.opensource.zalan.do/stups/python:3.5-cd22
+FROM registry.opensource.zalan.do/stups/python:3.5-cd26
 MAINTAINER lothar.schulz@zalando.de
 
 USER root
@@ -27,6 +27,7 @@ COPY backup.config /backup/backup-utils/backup.config
 # copy files to decrypt private ssh key using kms
 COPY python/extract_decrypt_kms.py /kms/extract_decrypt_kms.py
 COPY convert-kms-private-ssh-key.sh /kms/convert-kms-private-ssh-key.sh
+COPY start_backup.sh /start_backup.sh
 
 # copy file to drop in stuck backup
 COPY python/delete_instuck_progress.py /delete-instuck-backups/delete_instuck_progress.py
@@ -43,10 +44,12 @@ RUN \
   chown -R application: /backup && \
   chown -R application: /kms && \
   chown -R application: /delete-instuck-backups && \
+  chown -R root: /start_backup.sh && \
   chmod 0700 /kms/extract_decrypt_kms.py && \
   chmod 0700 /kms/convert-kms-private-ssh-key.sh && \
   chmod 0644 /etc/cron.d/ghe-backup && \
   chmod 0700 /delete-instuck-backups/delete_instuck_progress.py && \
+  chmod 0700 /start_backup.sh && \
   chmod 0700 /backup/final-docker-cmd.sh && \
   mkfifo /var/log/ghe-prod-backup.log
 

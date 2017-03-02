@@ -36,7 +36,7 @@ class Kms:
 
         data = yaml.safe_load(file if file is not None else cls.file)
         kms_key = key if key is not None else cls.key
-        if type(data) is dict and kms_key in data.keys():
+        if isinstance(data, dict) and kms_key in data.keys():
             result = data[kms_key]
             if result.startswith(cls.aws_kms_str):
                 result = result.replace(cls.aws_kms_str, '', 1)
@@ -53,7 +53,7 @@ class Kms:
             return ""
         client = cls.aws_kms_client()
         response = client.decrypt(
-            CiphertextBlob=base64.b64decode(to_decrypt)
+            CiphertextBlob=base64.urlsafe_b64decode(to_decrypt)
         )
         return str(response['Plaintext'], "UTF-8")
 
@@ -67,7 +67,6 @@ class Kms:
             Plaintext=to_encrypt
         )
         return str(base64.b64encode(response['CiphertextBlob']), "UTF-8")
-
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
