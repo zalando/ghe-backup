@@ -46,12 +46,17 @@ node('kraken') {
 }
 
 node('kraken') {
-    stage("Build and Push Docker") {
+    stage("Build Docker Image") {
         docker(dockerRepo, fullImageName, "DockerfileAutomata" , false)
     }
 }
 
 if (env.BRANCH_NAME == 'master') {
+    node('kraken') {
+        stage("Build and Push Docker") {
+            docker(dockerRepo, fullImageName, "DockerfileAutomata" , true)
+        }
+    }
     timeout(time: 60, unit: "MINUTES") {
         /*
         https://issues.jenkins-ci.org/browse/JENKINS-36543
