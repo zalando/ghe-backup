@@ -35,6 +35,9 @@ COPY python/delete_instuck_progress.py /delete-instuck-backups/delete_instuck_pr
 # copy cron job
 COPY cron-ghe-backup-bus /etc/cron.d/ghe-backup
 
+# copy log rotate conf file
+COPY logrotate.conf /etc/logrotate.d/ghe-backup-log.conf
+
 # copy finale CMD commands
 COPY final-docker-cmd.sh /backup/final-docker-cmd.sh
 
@@ -51,7 +54,7 @@ RUN \
   chmod 0700 /delete-instuck-backups/delete_instuck_progress.py && \
   chmod 0700 /start_backup.sh && \
   chmod 0700 /backup/final-docker-cmd.sh && \
-  mkfifo /var/log/ghe-prod-backup.log
+  touch /var/log/ghe-prod-backup.log
 
 # delete_instuck_progress log
 RUN \
