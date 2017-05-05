@@ -97,12 +97,13 @@ if (env.BRANCH_NAME == 'master') {
 
 //  Builds the docker image and returns the full name of the new image:
 def docker(String dockerRepo, String fullImageName, String dockerfile, boolean pushImage) {
-    def shortCommit = sh(returnStdout: true, script: "git rev-parse --short HEAD").trim()
-    sh "git status"
-    sh "/tools/run :stups -- scm-source"
-    sh "/tools/run :stups -- echo 'COPY scm-source.json /' >> $dockerfile"
 
-    sh "/tools/run :stups -- pierone login --url $dockerRepo"
+    if (pushImage == true) {
+        sh "git status"
+        sh "/tools/run :stups -- scm-source"
+        sh "/tools/run :stups -- echo 'COPY scm-source.json /' >> $dockerfile"
+    }
+
     sh "/tools/run :stups -- docker build --rm -t $fullImageName -f $dockerfile ."
 
     if (pushImage == true) {
