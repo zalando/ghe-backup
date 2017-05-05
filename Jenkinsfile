@@ -97,9 +97,8 @@ if (env.BRANCH_NAME == 'master') {
 
 //  Builds the docker image and returns the full name of the new image:
 def docker(String dockerRepo, String fullImageName, String dockerfile, boolean pushImage) {
-
+    sh "git status"
     if (pushImage == true) {
-        sh "git status"
         sh "/tools/run :stups -- scm-source"
         sh "/tools/run :stups -- echo 'COPY scm-source.json /' >> $dockerfile"
     }
