@@ -38,7 +38,7 @@ COPY cron-ghe-backup-automata /etc/cron.d/ghe-backup
 # copy finale CMD commands
 COPY final-docker-cmd.sh /backup/final-docker-cmd.sh
 
-#PLACEHOLDER_4_COPY_SCM_SOURCE.JSON
+#PLACEHOLDER_4_COPY_SCM_SOURCE_JSON
 
 # change mode of files
 RUN \
