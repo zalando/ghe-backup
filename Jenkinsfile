@@ -47,7 +47,7 @@ node('kraken') {
 
 node('kraken') {
     stage("Build Docker Image") {
-        docker(dockerRepo, fullImageName, "DockerfileAutomata" , false)
+        docker(dockerRepo, fullImageName, "DockerfileAutomata" , true)
     }
 }
 
