@@ -100,6 +100,8 @@ def docker(String dockerRepo, String fullImageName, String dockerfile, boolean p
     if (pushImage == true) {
         sh "/tools/run :stups -- git status"
         sh "/tools/run :stups -- scm-source"
+        sh "/tools/run :stups -- pwd"
+        sh "/tools/run :stups -- ls"
         sh "/tools/run :stups -- sed -i 's/.*#PLACEHOLDER_4_COPY_SCM_SOURCE_JSON.*/COPY scm-source.json/' DockerfileBus"
         sh "/tools/run :stups -- sed -i 's/.*#PLACEHOLDER_4_COPY_SCM_SOURCE_JSON.*/COPY scm-source.json/' DockerfileAutomata"
     }
