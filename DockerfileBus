@@ -38,6 +38,8 @@ COPY cron-ghe-backup-bus /etc/cron.d/ghe-backup
 # copy finale CMD commands
 COPY final-docker-cmd.sh /backup/final-docker-cmd.sh
 
+#PLACEHOLDER_4_COPY_SCM_SOURCE_JSON
+
 # change mode of files
 RUN \
   chown -R application: /data && \
