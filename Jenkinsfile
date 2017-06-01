@@ -102,8 +102,8 @@ def docker(String dockerRepo, String fullImageName, String dockerfile, boolean p
         sh "/tools/run :stups -- scm-source"
         sh "/tools/run :stups -- pwd"
         sh "/tools/run :stups -- ls"
-        sh "/tools/run :stups -- sed -i 's#.*#PLACEHOLDER_4_COPY_SCM_SOURCE_JSON.*#COPY scm-source.json /scm-source.json#' DockerfileBus"
-        sh "/tools/run :stups -- sed -i 's#.*#PLACEHOLDER_4_COPY_SCM_SOURCE_JSON.*#COPY scm-source.json /scm-source.json#' DockerfileAutomata"
+        sh "/tools/run :stups -- sed -i 's&.*#PLACEHOLDER_4_COPY_SCM_SOURCE_JSON.*&COPY scm-source.json /scm-source.json&' DockerfileBus"
+        sh "/tools/run :stups -- sed -i 's&.*#PLACEHOLDER_4_COPY_SCM_SOURCE_JSON.*&COPY scm-source.json /scm-source.json&' DockerfileAutomata"
     }
 
     sh "/tools/run :stups -- docker build --rm -t $fullImageName -f $dockerfile ."
