@@ -9,3 +9,5 @@ approvals:
     # a public zalando org member
     orgs:
       - zalando
+X-Zalando-Team: "bus"
+X-Zalando-Type: code
