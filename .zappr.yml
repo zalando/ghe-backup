@@ -1,6 +1,6 @@
 # https://github.com/zalando/zappr/blob/master/.zappr-example.yml
 approvals:
-  minimum: 1
+  minimum: 2
   # approval = comment that matches this regex
   pattern: "^(:\\+1:|👍|LGTM|lgtm)$"
   from:
