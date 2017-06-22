@@ -1,12 +1,10 @@
-# https://github.com/zalando/zappr/blob/master/.zappr-example.yml
+X-Zalando-Team: machinery
+X-Zalando-Type: code
+
 approvals:
   minimum: 2
-  # approval = comment that matches this regex
-  pattern: "^(:\\+1:|👍|LGTM|lgtm)$"
-  from:
-    # commenter must be either one of:
-    # a public zalando org member
-    orgs:
-      - zalando
-X-Zalando-Team: bus
-X-Zalando-Type: code
+  groups:
+    zalando:
+      from:
+        orgs:
+          - zalando
