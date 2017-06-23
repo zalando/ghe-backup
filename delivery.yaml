@@ -1,0 +1,37 @@
+build_steps:
+
+- desc: "test stuff"
+  cmd: |
+    apt-get update
+    apt-get install -y python3-dev python-pip #python3-pip
+    curl -sSL https://delivery.cloud.zalando.com/utils/ensure-docker | sh
+    pip install --upgrade pip
+    #pip3 --version
+    pip --version
+    pip install -r python/requirements.txt
+
+- desc: Run tests
+  cmd: |
+    nosetests -w python
+
+- desc: Build and push Docker image
+  cmd: |
+    IMAGE=pierone.stups.zalan.do/machinery/ghe-backup:${CDP_BUILD_VERSION}
+    ### bus one
+    DOCKERFILE=DockerfileBus
+    docker build -t $IMAGE -f $DOCKERFILE .
+    IS_PR_BUILD=${CDP_PULL_REQUEST_NUMBER+true}
+    if [ "$IS_PR_BUILD" = true ]; then
+      echo "Image not pushed because the build is not a push to master"
+    else
+      docker push $IMAGE
+    fi
+    ### automata one
+    DOCKERFILE=DockerfileAutomata
+    docker build -t $IMAGE -f $DOCKERFILE .
+    IS_PR_BUILD=${CDP_PULL_REQUEST_NUMBER+true}
+    if [ "$IS_PR_BUILD" = true ]; then
+      echo "Image not pushed because the build is not a push to master"
+    else
+      docker push $IMAGE
+    fi
