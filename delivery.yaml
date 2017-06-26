@@ -12,6 +12,7 @@ build_steps:
 
 - desc: "run tests"
   cmd: |
+    python --version
     nosetests -w python
 
 - desc: "build and push docker images"
