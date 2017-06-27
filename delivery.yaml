@@ -8,7 +8,6 @@ build_steps:
     sudo update-alternatives --install /usr/bin/python python /usr/bin/python3 10
     python --version
     pip install --upgrade pip
-    #pip3 --version
     pip --version
     pip install -r python/requirements.txt
 
