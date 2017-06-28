@@ -10,7 +10,7 @@ You can contribute in many ways:
 ### Report Bugs
 
 
-Report bugs at [GitHub Issues](https://github.com/zalando-stups/lizzy/issues)
+Report bugs at [GitHub Issues](https://github.com/zalando/ghe-backup/issues)
 
 If you are reporting a bug, please include:
 
@@ -20,7 +20,7 @@ If you are reporting a bug, please include:
 ### Fix Bugs
 
 
-Look through the [GitHub Issues](https://github.com/zalando-stups/lizzy/issues) for bugs. Anything tagged with [bug](https://github.com/zalando/ghe-backup/issues?utf8=%E2%9C%93&q=label%3Abug%20)
+Look through the [GitHub Issues](https://github.com/zalando/ghe-backup/issues) for bugs. Anything tagged with [bug](https://github.com/zalando/ghe-backup/issues?utf8=%E2%9C%93&q=label%3Abug%20)
 and [help wanted](https://github.com/zalando/ghe-backup/issues?utf8=%E2%9C%93&q=label%3A%22help%20wanted%22%20) is open to whoever wants to implement it.
 
 ### Implement Features
