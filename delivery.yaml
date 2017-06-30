@@ -7,6 +7,7 @@ build_steps:
     curl -sSL https://delivery.cloud.zalando.com/utils/ensure-docker | sh
     sudo update-alternatives --install /usr/bin/python python /usr/bin/python3 10
     python --version
+    pip3 --version
     pip --version
     pip install -r python/requirements.txt
 
