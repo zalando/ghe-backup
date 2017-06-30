@@ -3,7 +3,7 @@ build_steps:
 - desc: "setup the environment"
   cmd: |
     apt-get update
-    apt-get install -y python3-dev python-pip #python3-pip
+    apt-get install -y python3-dev python-pip python3-pip
     curl -sSL https://delivery.cloud.zalando.com/utils/ensure-docker | sh
     sudo update-alternatives --install /usr/bin/python python /usr/bin/python3 10
     python --version
