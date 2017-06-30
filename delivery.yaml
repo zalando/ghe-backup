@@ -5,17 +5,19 @@ build_steps:
     apt-get update
     apt-get install -y python3-dev python-pip #python3-pip
     curl -sSL https://delivery.cloud.zalando.com/utils/ensure-docker | sh
-    pip install --upgrade pip
-    #pip3 --version
+    sudo update-alternatives --install /usr/bin/python python /usr/bin/python3 10
+    python --version
     pip --version
     pip install -r python/requirements.txt
 
 - desc: "run tests"
   cmd: |
+    python --version
     nosetests -w python
 
 - desc: "build and push docker images"
   cmd: |
+    python --version
     IMAGE=pierone.stups.zalan.do/machinery/ghe-backup:${CDP_BUILD_VERSION}
     ### bus one
     DOCKERFILE=DockerfileBus
