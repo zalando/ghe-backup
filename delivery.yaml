@@ -14,7 +14,7 @@ build_steps:
 
 - desc: "build and push docker images"
   cmd: |
-    IMAGE=pierone.stups.zalan.do/machinery/ghe-backup:cdp-${CDP_BUILD_VERSION}-$(CDP_TARGET_REPOSITORY_COUNTER)
+    IMAGE=pierone.stups.zalan.do/machinery/ghe-backup:cdp-${CDP_BUILD_VERSION}-${CDP_TARGET_REPOSITORY_COUNTER}
     ### bus one ##########################
     DOCKERFILE=DockerfileBus
     docker build -t $IMAGE -f $DOCKERFILE .
