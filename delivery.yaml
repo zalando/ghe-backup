@@ -14,20 +14,19 @@ build_steps:
 
 - desc: "build and push docker images"
   cmd: |
-    IMAGE=pierone.stups.zalan.do/machinery/ghe-backup:cdp-${CDP_BUILD_VERSION}-${CDP_TARGET_REPOSITORY_COUNTER}
     ### bus one ##########################
-    DOCKERFILE=DockerfileBus
-    docker build -t $IMAGE -f $DOCKERFILE .
+    IMAGE=pierone.stups.zalan.do/machinery/ghe-backup-bus:cdp-${CDP_BUILD_VERSION}-${CDP_TARGET_REPOSITORY_COUNTER}
+    docker build -t $IMAGE -f DockerfileBus .
     if [ -z "$CDP_PULL_REQUEST_NUMBER" ]; then
-      echo "Image not pushed because the build is not a push to master"
-    else
       docker push $IMAGE
+    else
+      echo "Image not pushed because the build is not a push to master"
     fi
     ### automata one ##########################
-    DOCKERFILE=DockerfileAutomata
-    docker build -t $IMAGE -f $DOCKERFILE .
+    IMAGE=pierone.stups.zalan.do/machinery/ghe-backup-automata:cdp-${CDP_BUILD_VERSION}-${CDP_TARGET_REPOSITORY_COUNTER}
+    docker build -t $IMAGE -f DockerfileAutomata .
     if [ -z "$CDP_PULL_REQUEST_NUMBER" ]; then
-      echo "Image not pushed because the build is not a push to master"
-    else
       docker push $IMAGE
+    else
+      echo "Image not pushed because the build is not a push to master"
     fi
