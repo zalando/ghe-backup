@@ -18,8 +18,7 @@ build_steps:
     ### bus one ##########################
     DOCKERFILE=DockerfileBus
     docker build -t $IMAGE -f $DOCKERFILE .
-    IS_PR_BUILD=${CDP_PULL_REQUEST_NUMBER+true}
-    if [ "$IS_PR_BUILD" = true ]; then
+    if [ -z "$CDP_PULL_REQUEST_NUMBER" ]; then
       echo "Image not pushed because the build is not a push to master"
     else
       docker push $IMAGE
@@ -27,8 +26,7 @@ build_steps:
     ### automata one ##########################
     DOCKERFILE=DockerfileAutomata
     docker build -t $IMAGE -f $DOCKERFILE .
-    IS_PR_BUILD=${CDP_PULL_REQUEST_NUMBER+true}
-    if [ "$IS_PR_BUILD" = true ]; then
+    if [ -z "$CDP_PULL_REQUEST_NUMBER" ]; then
       echo "Image not pushed because the build is not a push to master"
     else
       docker push $IMAGE
