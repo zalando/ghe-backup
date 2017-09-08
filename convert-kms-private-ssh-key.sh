@@ -13,6 +13,12 @@ else
 fi
 set -u
 
+# - use https://kubernetes.io/docs/tasks/inject-data-application/downward-api-volume-expose-pod-information/ to check if container runs on K8s
+# - if K8s
+# - mount secrets
+# - read secret file and write the public key
+# - else
+
 SSHKEY=$(python3 /kms/extract_decrypt_kms.py -f "$folder/taupage.yaml" -k "kms_private_ssh_key" -r "eu-west-1")
 if [[ $SSHKEY == "Invalid KMS key." ]]
 then
