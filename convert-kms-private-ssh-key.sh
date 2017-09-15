@@ -28,16 +28,16 @@ set -u
 # running as pod that gets a labels file via downward-api-volume
 if [ -f /etc/labels ]
 then
-  echo "/etc/labels file exists."
+  echo "File /etc/labels exists."
   cat /etc/labels
   exit 1
 else
-  echo "/etc/labels does not file exist."
+  echo "File /etc/labels does not exist."
 fi
 
 if [ -f $folder/taupage.yaml ]
 then
-  echo "$folder/taupage.yaml file exists."
+  echo "File $folder/taupage.yaml exists."
   SSHKEY=$(python3 /kms/extract_decrypt_kms.py -f "$folder/taupage.yaml" -k "kms_private_ssh_key" -r "eu-west-1")
   if [[ $SSHKEY == "Invalid KMS key." ]]
   then
@@ -61,7 +61,7 @@ then
     exit 0
   fi
 else
-  echo "$folder/taupage.yaml file does not exist."
+  echo "File $folder/taupage.yaml does not exist."
 fi
 
 exit 1
