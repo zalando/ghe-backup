@@ -5,7 +5,7 @@ IFS=$'\n\t'
 
 echo $PATH
 env
-echo "========================="
+echo "======================================================"
 which python3
 echo "run /delete-instuck-backups/delete_instuck_progress.py"
 python3 /delete-instuck-backups/delete_instuck_progress.py
