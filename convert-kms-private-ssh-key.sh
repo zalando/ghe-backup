@@ -25,11 +25,12 @@ set -u
 # - read secret file and write the public key
 # - else
 
-# running as pod that gets a labels file via downward-api-volume
+# running as pod that gets labels file via downward-api-volume
 if [ -f /details/labels ]
 then
-  echo "File /etc/labels exists."
+  echo "File /details/labels exists. cat /details/labels:\n"
   cat /details/labels
+  echo "==================================================="
   exit 1
 else
   echo "File /details/labels does not exist."
