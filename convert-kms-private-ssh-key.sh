@@ -26,13 +26,13 @@ set -u
 # - else
 
 # running as pod that gets a labels file via downward-api-volume
-if [ -f /etc/labels ]
+if [ -f /details/labels ]
 then
   echo "File /etc/labels exists."
-  cat /etc/labels
+  cat /details/labels
   exit 1
 else
-  echo "File /etc/labels does not exist."
+  echo "File /details/labels does not exist."
 fi
 
 if [ -f $folder/taupage.yaml ]
