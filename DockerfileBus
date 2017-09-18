@@ -60,4 +60,8 @@ RUN \
   touch /var/log/ghe-delete-instuck-progress.log && \
   chown -R application: /var/log/ghe-delete-instuck-progress.log
 
+RUN \
+  python3 --version
+
+
 CMD ["/backup/final-docker-cmd.sh"]
