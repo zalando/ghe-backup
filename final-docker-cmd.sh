@@ -3,7 +3,6 @@
 set -euo pipefail
 IFS=$'\n\t'
 
-which python3
 python3 /delete-instuck-backups/delete_instuck_progress.py
 /kms/convert-kms-private-ssh-key.sh
 # do the actual backups via cron
