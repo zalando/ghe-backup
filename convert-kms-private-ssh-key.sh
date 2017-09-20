@@ -30,7 +30,7 @@ if [ -f /details/labels ]
 then
   echo "File /details/labels exists. cat /details/labels:\n"
   cat /details/labels
-  echo "\n==================================================="
+  echo "\n===================================================\n"
   exit 1
 else
   echo "File /details/labels does not exist."
