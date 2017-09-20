@@ -28,9 +28,8 @@ set -u
 # running as pod that gets labels file via downward-api-volume
 if [ -f /details/labels ]
 then
-  echo "File /details/labels exists. cat /details/labels:\n"
+  echo "File /details/labels exists. cat /details/labels:"
   cat /details/labels
-  echo "\n===================================================\n"
   exit 1
 else
   echo "File /details/labels does not exist."
