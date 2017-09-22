@@ -1,26 +1,32 @@
-build_steps:
-
-- desc: "setup the environment"
-  cmd: |
-    apt-get update
-    apt-get install -y python3-dev python-pip python3-pip
-    curl -sSL https://delivery.cloud.zalando.com/utils/ensure-docker | sh
-    sudo update-alternatives --install /usr/bin/python python /usr/bin/python3 10
-    pip install -r python/requirements.txt
-
-- desc: "run tests"
-  cmd: |
-    nosetests -w python
-
-- desc: "build and push docker images"
-  cmd: |
-    ### bus one ##########################
-    IMAGE=pierone.stups.zalan.do/machinery/ghe-backup-bus:cdp-${CDP_BUILD_VERSION}
-    docker build -t $IMAGE -f DockerfileBus .
-    docker push $IMAGE
-    echo "$IMAGE pushed"
-    ### automata one ##########################
-    IMAGE=pierone.stups.zalan.do/machinery/ghe-backup-automata:cdp-${CDP_BUILD_VERSION}
-    docker build -t $IMAGE -f DockerfileAutomata .
-    docker push $IMAGE
-    echo "$IMAGE pushed"
+version: "2017-09-20"
+pipeline:
+  - id: build & test
+    type: script
+    commands:
+      - desc: "setup the environment"
+      cmd: |
+        apt-get update
+        apt-get install -y python3-dev python-pip python3-pip
+        curl -sSL https://delivery.cloud.zalando.com/utils/ensure-docker | sh
+        sudo update-alternatives --install /usr/bin/python python /usr/bin/python3 10
+        pip install -r python/requirements.txt
+      - desc: "run tests"
+        cmd: |
+          nosetests -w python
+  - id: deploy
+    type: script
+    when:
+      branch: master
+    commands:
+      - desc: "build and push docker images"
+        cmd: |
+          ### bus one ##########################
+          IMAGE=pierone.stups.zalan.do/machinery/ghe-backup-bus:cdp-${CDP_BUILD_VERSION}
+          docker build -t $IMAGE -f DockerfileBus .
+          docker push $IMAGE
+          echo "$IMAGE pushed"
+          ### automata one ##########################
+          IMAGE=pierone.stups.zalan.do/machinery/ghe-backup-automata:cdp-${CDP_BUILD_VERSION}
+          docker build -t $IMAGE -f DockerfileAutomata .
+          docker push $IMAGE
+          echo "$IMAGE pushed"
