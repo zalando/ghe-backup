@@ -1,9 +1,9 @@
 version: "2017-09-20"
 pipeline:
-  - id: build and test
+  - id: "build and test"
     type: script
     commands:
-      - desc: setup the environment
+      - desc: "setup the environment"
         cmd: |
           apt-get update
           apt-get install -y python3-dev python-pip python3-pip
@@ -13,12 +13,12 @@ pipeline:
       - desc: run tests
         cmd: |
           nosetests -w python
-  - id: deploy
+  - id: "deploy"
     type: script
     when:
       branch: master
     commands:
-      - desc: build and push docker images
+      - desc: "build and push docker images"
         cmd: |
           ### bus one ##########################
           IMAGE=pierone.stups.zalan.do/machinery/ghe-backup-bus:cdp-${CDP_BUILD_VERSION}
