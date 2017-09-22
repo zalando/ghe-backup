@@ -1,6 +1,6 @@
 version: "2017-09-20"
 pipeline:
-  - id: build-and-test
+  - id: build
     type: script
     commands:
       - desc: "setup the environment"
@@ -10,10 +10,13 @@ pipeline:
           curl -sSL https://delivery.cloud.zalando.com/utils/ensure-docker | sh
           sudo update-alternatives --install /usr/bin/python python /usr/bin/python3 10
           pip install -r python/requirements.txt
+  - id: test
+    type: script
+    commands:
       - desc: run tests
         cmd: |
           nosetests -w python
-  - id: "deploy"
+  - id: deploy
     type: script
     when:
       branch: master
