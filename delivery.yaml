@@ -2,6 +2,8 @@ version: "2017-09-20"
 pipeline:
   - id: build
     type: script
+    #when:
+    #  branch: master
     commands:
       - desc: "setup the environment"
         cmd: |
@@ -13,20 +15,23 @@ pipeline:
       - desc: "run tests"
         cmd: |
           nosetests -w python
-  - id: deploy
-    type: script
-    when:
-      branch: master
-    commands:
       - desc: "build and push docker images"
         cmd: |
           ### bus one ##########################
           IMAGE=pierone.stups.zalan.do/machinery/ghe-backup-bus:cdp-${CDP_BUILD_VERSION}
+          #if [ -z "$CDP_PULL_REQUEST_NUMBER" ]; then
           docker build -t $IMAGE -f DockerfileBus .
           docker push $IMAGE
           echo "$IMAGE pushed"
+          #else
+          #  echo "Image not pushed because the build is not a push to master"
+          #fi
           ### automata one ##########################
           IMAGE=pierone.stups.zalan.do/machinery/ghe-backup-automata:cdp-${CDP_BUILD_VERSION}
+          #if [ -z "$CDP_PULL_REQUEST_NUMBER" ]; then
           docker build -t $IMAGE -f DockerfileAutomata .
           docker push $IMAGE
           echo "$IMAGE pushed"
+          #else
+          #  echo "Image not pushed because the build is not a push to master"
+          #fi
