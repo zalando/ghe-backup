@@ -1,6 +1,6 @@
 version: "2017-09-20"
 pipeline:
-  - id: "build and test"
+  - id: build-and-test
     type: script
     commands:
       - desc: "setup the environment"
