@@ -32,8 +32,6 @@ then
   cat /details/labels
   echo "check for /meta/ghe-backup-secret directory. ls /meta/ghe-backup-secret: "
   ls -lisa /meta/ghe-backup-secret
-  echo "readlink kms_private_ssh_key: "
-  readlink kms_private_ssh_key
   echo "find . -type l -exec ls -la {} \;: "
   find . -type l -exec ls -la {} \;
   echo "cat ..data/kms_private_ssh_key: "
