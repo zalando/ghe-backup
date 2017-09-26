@@ -32,10 +32,10 @@ then
   cat /details/labels
   echo "check for /meta/ghe-backup-secret directory. ls /meta/ghe-backup-secret: "
   ls -lisa /meta/ghe-backup-secret
-  echo "find . -type l -exec ls -la {} \;: "
-  find . -type l -exec ls -la {} \;
-  echo "cat ..data/kms_private_ssh_key: "
-  cat ..data/kms_private_ssh_key
+  echo "find /meta/ghe-backup-secret -type l -exec ls -la {} \;: "
+  find /meta/ghe-backup-secret -type l -exec ls -la {} \;
+  #echo "cat ..data/kms_private_ssh_key: "
+  #cat ..data/kms_private_ssh_key
   exit 1
 else
   echo "File /details/labels does not exist."
