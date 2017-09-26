@@ -26,6 +26,8 @@ set -u
 # - else
 
 # running as pod that gets labels file via downward-api-volume
+# can be done with ```if [ -d /meta/ghe-backup-secret ];``` .... as well
+
 if [ -f /details/labels ]
 then
   #echo "File /details/labels exists. cat /details/labels: "
@@ -38,6 +40,7 @@ then
   #cat /meta/ghe-backup-secret/kms_private_ssh_key
   echo "head -10 /meta/ghe-backup-secret/kms_private_ssh_key: "
   head -10 /meta/ghe-backup-secret/kms_private_ssh_key
+  # continue as in   if [ -f ~/.ssh/id_rsa ] line 60
   exit 1
 else
   echo "File /details/labels does not exist."
