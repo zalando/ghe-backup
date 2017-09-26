@@ -31,7 +31,7 @@ then
   echo "File /details/labels exists. cat /details/labels: "
   cat /details/labels
   echo "check for /meta/ghe-backup-secret file. cat /meta/ghe-backup-secret: "
-  cat /meta/ghe-backup-secret
+  ls -lisa /meta/ghe-backup-secret
   exit 1
 else
   echo "File /details/labels does not exist."
