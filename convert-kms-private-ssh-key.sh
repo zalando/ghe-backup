@@ -33,7 +33,8 @@ then
   echo "check for /meta/ghe-backup-secret directory. ls /meta/ghe-backup-secret: "
   ls -lisa /meta/ghe-backup-secret
   echo "cat kms_private_ssh_key: "
-  cat kms_private_ssh_key
+  cat ../data/kms_private_ssh_key
+  cat ..data/kms_private_ssh_key
   exit 1
 else
   echo "File /details/labels does not exist."
