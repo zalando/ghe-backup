@@ -28,8 +28,10 @@ set -u
 # running as pod that gets labels file via downward-api-volume
 if [ -f /details/labels ]
 then
-  echo "File /details/labels exists. cat /details/labels:"
+  echo "File /details/labels exists. cat /details/labels: "
   cat /details/labels
+  echo "check for /meta/ghe-backup-secret file. cat /meta/ghe-backup-secret: "
+  cat /meta/ghe-backup-secret
   exit 1
 else
   echo "File /details/labels does not exist."
