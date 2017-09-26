@@ -34,8 +34,8 @@ then
   ls -lisa /meta/ghe-backup-secret
   echo "find /meta/ghe-backup-secret -type l -exec ls -la {} \;: "
   find /meta/ghe-backup-secret -type l -exec ls -la {} \;
-  #echo "cat ..data/kms_private_ssh_key: "
-  #cat ..data/kms_private_ssh_key
+  echo "cat /meta/ghe-backup-secret/kms_private_ssh_key: "
+  cat /meta/ghe-backup-secret/kms_private_ssh_key
   exit 1
 else
   echo "File /details/labels does not exist."
