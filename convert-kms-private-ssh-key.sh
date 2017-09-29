@@ -48,7 +48,6 @@ then
   else
     echo "The file ~/.ssh/id_rsa does not exists. Start writing private ssh key."
     mkdir -p ~/.ssh
-    printf "%s" "$SSHKEY" >> ~/.ssh/id_rsa
     cp /meta/ghe-backup-secret/kms_private_ssh_key ~/.ssh/id_rsa
     chmod 0600 ~/.ssh/id_rsa
     echo "Private ssh key file written."
