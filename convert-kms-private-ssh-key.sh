@@ -40,7 +40,21 @@ then
   #cat /meta/ghe-backup-secret/kms_private_ssh_key
   echo "head -10 /meta/ghe-backup-secret/kms_private_ssh_key: "
   head -10 /meta/ghe-backup-secret/kms_private_ssh_key
-  # continue as in   if [ -f ~/.ssh/id_rsa ] line 60
+  ### @TODO: separate function parameter would be private key content ($SSHKEY /meta/ghe-backup-secret/kms_private_ssh_key)
+  if [ -f ~/.ssh/id_rsa ]
+  then
+    echo "The file ~/.ssh/id_rsa exists already. Won't be overridden." >&2
+    exit 0
+  else
+    echo "The file ~/.ssh/id_rsa does not exists. Start writing private ssh key."
+    mkdir -p ~/.ssh
+    printf "%s" "$SSHKEY" >> ~/.ssh/id_rsa
+    cp /meta/ghe-backup-secret/kms_private_ssh_key ~/.ssh/id_rsa
+    chmod 0600 ~/.ssh/id_rsa
+    echo "Private ssh key file written."
+    exit 0
+  fi
+  ### end of separate function
   exit 1
 else
   echo "File /details/labels does not exist."
@@ -63,7 +77,6 @@ then
     echo "The file ~/.ssh/id_rsa exists already. Won't be overridden." >&2
     exit 0
   else
-    # assumption: file does not exists on new created docker container
     echo "The file ~/.ssh/id_rsa does not exists. Start writing private ssh key."
     mkdir -p ~/.ssh
     printf "%s" "$SSHKEY" >> ~/.ssh/id_rsa
