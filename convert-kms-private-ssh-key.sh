@@ -30,14 +30,6 @@ set -u
 
 if [ -f /details/labels ]
 then
-  #echo "File /details/labels exists. cat /details/labels: "
-  #cat /details/labels
-  #echo "check for /meta/ghe-backup-secret directory. ls /meta/ghe-backup-secret: "
-  #ls -lisa /meta/ghe-backup-secret
-  #echo "find /meta/ghe-backup-secret -type l -exec ls -la {} \;: "
-  #find /meta/ghe-backup-secret -type l -exec ls -la {} \;
-  #echo "cat /meta/ghe-backup-secret/kms_private_ssh_key: "
-  #cat /meta/ghe-backup-secret/kms_private_ssh_key
   echo "head -10 /meta/ghe-backup-secret/kms_private_ssh_key: "
   head -10 /meta/ghe-backup-secret/kms_private_ssh_key
   ### @TODO: separate function parameter would be private key content ($SSHKEY /meta/ghe-backup-secret/kms_private_ssh_key)
