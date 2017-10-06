@@ -31,8 +31,8 @@ set -u
 
 if [ -f /details/labels ]
 then
-  echo "head -10 /meta/ghe-backup-secret/kms_private_ssh_key: "
-  head -10 /meta/ghe-backup-secret/kms_private_ssh_key
+  #echo "head -10 /meta/ghe-backup-secret/kms_private_ssh_key: "
+  #head -10 /meta/ghe-backup-secret/kms_private_ssh_key
   ### @TODO: separate function parameter would be private key content ($SSHKEY /meta/ghe-backup-secret/kms_private_ssh_key)
   if [ -f ~/.ssh/id_rsa ]
   then
