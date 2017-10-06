@@ -18,9 +18,13 @@ pipeline:
       - desc: "build and push docker images"
         cmd: |
           ### bus one ##########################
-          IMAGE=pierone.stups.zalan.do/machinery/ghe-backup-bus:cdp-${CDP_BUILD_VERSION}
+          BASE_IMAGE=pierone.stups.zalan.do/machinery/ghe-backup-bus
+          #IMAGE=pierone.stups.zalan.do/machinery/ghe-backup-bus:cdp-${CDP_BUILD_VERSION}
+          IMAGE=$BASEIMAGE:cdp-${CDP_BUILD_VERSION}
+          CACHE_IMAGE=$$BASEIMAGE:latest
           #if [ -z "$CDP_PULL_REQUEST_NUMBER" ]; then
-          docker build -t $IMAGE -f DockerfileBus .
+          #docker build -t $IMAGE -f DockerfileBus .
+          docker build --cache-from $CACHE_IMAGE -t $CACHE_IMAGE -t $IMAGE -f DockerfileBus .
           docker push $IMAGE
           echo "$IMAGE pushed"
           #else
