@@ -13,6 +13,7 @@ else
 fi
 set -u
 
+# https://stackoverflow.com/questions/36639062/how-do-i-tell-if-my-container-is-running-inside-a-kubernetes-cluster
 # - use https://kubernetes.io/docs/tasks/inject-data-application/downward-api-volume-expose-pod-information/ to check if container runs on K8s
 #  - Motivation for the Downward API
 #  - "you can see that the labels and annotations files are in a temporary subdirectory"
@@ -47,11 +48,7 @@ then
   fi
   ### end of separate function
   exit 1
-else
-  echo "File /details/labels does not exist."
-fi
-
-if [ -f $folder/taupage.yaml ]
+elif [ -f $folder/taupage.yaml ]
 then
   echo "File $folder/taupage.yaml exists."
   SSHKEY=$(python3 /kms/extract_decrypt_kms.py -f "$folder/taupage.yaml" -k "kms_private_ssh_key" -r "eu-west-1")
@@ -76,7 +73,7 @@ then
     exit 0
   fi
 else
-  echo "File $folder/taupage.yaml does not exist."
+  echo "Neither /details/labels nor $folder/taupage.yaml exist."
 fi
 
 exit 1
