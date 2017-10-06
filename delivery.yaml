@@ -1,32 +1,44 @@
-build_steps:
-
-- desc: "setup the environment"
-  cmd: |
-    apt-get update
-    apt-get install -y python3-dev python-pip python3-pip
-    curl -sSL https://delivery.cloud.zalando.com/utils/ensure-docker | sh
-    sudo update-alternatives --install /usr/bin/python python /usr/bin/python3 10
-    pip install -r python/requirements.txt
-
-- desc: "run tests"
-  cmd: |
-    nosetests -w python
-
-- desc: "build and push docker images"
-  cmd: |
-    ### bus one ##########################
-    IMAGE=pierone.stups.zalan.do/machinery/ghe-backup-bus:cdp-${CDP_BUILD_VERSION}
-    docker build -t $IMAGE -f DockerfileBus .
-    if [ -z "$CDP_PULL_REQUEST_NUMBER" ]; then
-      docker push $IMAGE
-    else
-      echo "Image not pushed because the build is not a push to master"
-    fi
-    ### automata one ##########################
-    IMAGE=pierone.stups.zalan.do/machinery/ghe-backup-automata:cdp-${CDP_BUILD_VERSION}
-    docker build -t $IMAGE -f DockerfileAutomata .
-    if [ -z "$CDP_PULL_REQUEST_NUMBER" ]; then
-      docker push $IMAGE
-    else
-      echo "Image not pushed because the build is not a push to master"
-    fi
+version: "2017-09-20"
+pipeline:
+  - id: build
+    type: script
+    #when:
+    #  branch: master
+    commands:
+      - desc: "setup the environment"
+        cmd: |
+          apt-get update
+          apt-get install -y python3-dev python-pip python3-pip
+          curl -sSL https://delivery.cloud.zalando.com/utils/ensure-docker | sh
+          sudo update-alternatives --install /usr/bin/python python /usr/bin/python3 10
+          pip install -r python/requirements.txt
+      - desc: "run tests"
+        cmd: |
+          nosetests -w python
+      - desc: "build and push docker images"
+        cmd: |
+          ### bus one ##########################
+          BASE_IMAGE=pierone.stups.zalan.do/machinery/ghe-backup-bus
+          #IMAGE=pierone.stups.zalan.do/machinery/ghe-backup-bus:cdp-${CDP_BUILD_VERSION}
+          IMAGE=$BASEIMAGE:cdp-${CDP_BUILD_VERSION}
+          CACHE_IMAGE=$BASEIMAGE:latest
+          echo "$BASE_IMAGE"
+          echo "$IMAGE"
+          echo "$CACHE_IMAGE"
+          #if [ -z "$CDP_PULL_REQUEST_NUMBER" ]; then
+          #docker build -t $IMAGE -f DockerfileBus .
+          docker build --cache-from $CACHE_IMAGE -t $CACHE_IMAGE -t $IMAGE -f DockerfileBus .
+          docker push $IMAGE
+          echo "$IMAGE pushed"
+          #else
+          #  echo "Image not pushed because the build is not a push to master"
+          #fi
+          ### automata one ##########################
+          IMAGE=pierone.stups.zalan.do/machinery/ghe-backup-automata:cdp-${CDP_BUILD_VERSION}
+          #if [ -z "$CDP_PULL_REQUEST_NUMBER" ]; then
+          docker build -t $IMAGE -f DockerfileAutomata .
+          docker push $IMAGE
+          echo "$IMAGE pushed"
+          #else
+          #  echo "Image not pushed because the build is not a push to master"
+          #fi
