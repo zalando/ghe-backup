@@ -20,8 +20,8 @@ pipeline:
           ### bus one ##########################
           BASE_IMAGE=pierone.stups.zalan.do/machinery/ghe-backup-bus
           #IMAGE=pierone.stups.zalan.do/machinery/ghe-backup-bus:cdp-${CDP_BUILD_VERSION}
-          IMAGE=BASE_IMAGE:cdp-${CDP_BUILD_VERSION}
-          CACHE_IMAGE=BASE_IMAGE:latest
+          IMAGE=$BASE_IMAGE:cdp-${CDP_BUILD_VERSION}
+          CACHE_IMAGE=$BASE_IMAGE:latest
           echo "$BASE_IMAGE"
           echo "$IMAGE"
           echo "$CACHE_IMAGE"
