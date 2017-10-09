@@ -18,7 +18,8 @@ pipeline:
       - desc: "build and push docker images"
         cmd: |
           ### bus one ##########################
-          BASE_IMAGE=pierone.stups.zalan.do/machinery/ghe-backup-bus
+          PIERONE_NAMESPACE=pierone.stups.zalan.do/machinery
+          BASE_IMAGE=$PIERONE_NAMESPACE/ghe-backup-bus
           #IMAGE=pierone.stups.zalan.do/machinery/ghe-backup-bus:cdp-${CDP_BUILD_VERSION}
           IMAGE=$BASE_IMAGE:cdp-${CDP_BUILD_VERSION}
           CACHE_IMAGE=$BASE_IMAGE:latest
@@ -34,9 +35,13 @@ pipeline:
           #  echo "Image not pushed because the build is not a push to master"
           #fi
           ### automata one ##########################
-          IMAGE=pierone.stups.zalan.do/machinery/ghe-backup-automata:cdp-${CDP_BUILD_VERSION}
+          BASE_IMAGE=$PIERONE_NAMESPACE/ghe-backup-automata
+          #IMAGE=pierone.stups.zalan.do/machinery/ghe-backup-automata:cdp-${CDP_BUILD_VERSION}
+          IMAGE=$BASE_IMAGE:cdp-${CDP_BUILD_VERSION}
+          CACHE_IMAGE=$BASE_IMAGE:latest
           #if [ -z "$CDP_PULL_REQUEST_NUMBER" ]; then
-          docker build -t $IMAGE -f DockerfileAutomata .
+          #docker build -t $IMAGE -f DockerfileAutomata .
+          docker build --cache-from $CACHE_IMAGE -t $CACHE_IMAGE -t $IMAGE -f DockerfileAutomata .
           docker push $IMAGE
           echo "$IMAGE pushed"
           #else
