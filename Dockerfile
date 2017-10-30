@@ -21,7 +21,7 @@ RUN \
   rm -rf /var/lib/apt/lists/* && \
 # clone backup-utils
   git clone -b stable https://github.com/github/backup-utils.git && \
-  git -C /backup/backup-utils pull
+  git -C /backup/backup-utils pull && \
 # create directories
   mkdir -p /data/ghe-production-data/ && mkdir -p /backup/backup-utils/ && \
   mkdir -p /kms && mkdir -p /var/log/ && mkdir /delete-instuck-backups
