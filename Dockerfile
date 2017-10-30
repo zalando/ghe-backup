@@ -1,7 +1,6 @@
 FROM registry.opensource.zalan.do/stups/python:3.5-cd26
 MAINTAINER lothar.schulz@zalando.de
 
-#USER root
 # folder structure and user
 RUN \
 # read package lists
