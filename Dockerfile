@@ -16,7 +16,7 @@ RUN \
 # install python pip3 boto3 pyyaml & english, git, screen
   apt-get update -y && \
   apt-get install -y --no-install-recommends unattended-upgrades python3 python3-dev python3-pip && \
-  python3-yaml=3.10 language-pack-en=13.10+20131012 git=2.14.3 screen=4.6.2 && \
+  python3-yaml language-pack-en git screen && \
   pip3 install --upgrade boto==1.4.7 boto3==1.4.7 && \
 # clean apt-get lists
   rm -rf /var/lib/apt/lists/* && \
