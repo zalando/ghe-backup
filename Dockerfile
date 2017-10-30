@@ -1,10 +1,14 @@
 FROM registry.opensource.zalan.do/stups/python:3.5-cd26
 MAINTAINER lothar.schulz@zalando.de
 
-USER root
+#USER root
 # folder structure and user
 RUN \
-  useradd -d /backup -u 998 -o application && \
+# read package lists
+  apt-get update -y && \
+  apt-get install -y sudo && \
+# create application user
+  useradd -d /backup -u 998 -o -c "application user" application && \
   mkdir -p /data/ghe-production-data/ && mkdir -p /backup/backup-utils/ && \
   mkdir -p /kms && mkdir -p /var/log/ && mkdir /delete-instuck-backups
 WORKDIR /backup
@@ -24,17 +28,19 @@ RUN \
 # copy predefined backup config
 COPY backup.config /backup/backup-utils/backup.config
 
-COPY \
 # copy files to decrypt private ssh key using kms
- python/extract_decrypt_kms.py /kms/extract_decrypt_kms.py && \
- convert-kms-private-ssh-key.sh /kms/convert-kms-private-ssh-key.sh && \
- start_backup.sh /start_backup.sh && \
+COPY python/extract_decrypt_kms.py /kms/extract_decrypt_kms.py
+COPY convert-kms-private-ssh-key.sh /kms/convert-kms-private-ssh-key.sh
+COPY start_backup.sh /start_backup.sh
+
 # copy file to drop in stuck backup
- python/delete_instuck_progress.py /delete-instuck-backups/delete_instuck_progress.py && \
+COPY python/delete_instuck_progress.py /delete-instuck-backups/delete_instuck_progress.py
+
 # copy cron job
- cron-ghe-backup /etc/cron.d/ghe-backup && \
-# copy final CMD commands
- final-docker-cmd.sh /backup/final-docker-cmd.sh
+COPY cron-ghe-backup /etc/cron.d/ghe-backup
+
+# copy finale CMD commands
+COPY final-docker-cmd.sh /backup/final-docker-cmd.sh
 
 
 #PLACEHOLDER_4_COPY_SCM_SOURCE_JSON
