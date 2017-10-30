@@ -204,6 +204,10 @@ and run it like:
 ### EBS volumes with Senza
 Please follow these instructions: [senza's storage guild](https://docs.stups.io/en/latest/user-guide/storage.html) to create a EBS volume the stups way.
 
+### Running in second AWS account
+Please adapt the cron tab definitions when running in another AWS account e.g. to the values in cron-ghe-backup-alternative.
+This lowers the load on the Github Enterprise master with respect to backup attempts.
+
 ### Kubernetes stateful set
 ```
 apiVersion: apps/v1beta1
