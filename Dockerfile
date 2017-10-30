@@ -33,7 +33,7 @@ COPY start_backup.sh /start_backup.sh
 COPY python/delete_instuck_progress.py /delete-instuck-backups/delete_instuck_progress.py
 
 # copy cron job
-COPY cron-ghe-backup-automata /etc/cron.d/ghe-backup
+COPY cron-ghe-backup /etc/cron.d/ghe-backup
 
 # copy finale CMD commands
 COPY final-docker-cmd.sh /backup/final-docker-cmd.sh
