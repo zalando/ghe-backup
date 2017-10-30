@@ -21,9 +21,10 @@ RUN \
   git clone -b stable https://github.com/github/backup-utils.git && \
   git -C /backup/backup-utils pull
 
-COPY \
 # copy predefined backup config
- backup.config /backup/backup-utils/backup.config && \
+COPY backup.config /backup/backup-utils/backup.config
+
+COPY \
 # copy files to decrypt private ssh key using kms
  python/extract_decrypt_kms.py /kms/extract_decrypt_kms.py && \
  convert-kms-private-ssh-key.sh /kms/convert-kms-private-ssh-key.sh && \
@@ -32,7 +33,7 @@ COPY \
  python/delete_instuck_progress.py /delete-instuck-backups/delete_instuck_progress.py && \
 # copy cron job
  cron-ghe-backup /etc/cron.d/ghe-backup && \
-# copy finale CMD commands
+# copy final CMD commands
  final-docker-cmd.sh /backup/final-docker-cmd.sh
 
 
