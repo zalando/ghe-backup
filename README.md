@@ -12,16 +12,14 @@
 setup running master and replica instances on AWS. 
 The AWS account that runs the [high availability](https://help.github.com/enterprise/2.11/admin/guides/installation/configuring-github-enterprise-for-high-availability/) 
 setup also runs one backup host. 
-There is a second backup host running in a different AWS account. 
-We believe this backup apporach gives us reliable backup data even in case one AWS is compromised.
+Another backup host can run in a different AWS account. 
+[Zalando Tech's ](https://tech.zalando.com/) [Github Enterprise](https://enterprise.github.com/) backup
+can also run as a [POD](https://kubernetes.io/docs/concepts/workloads/pods/pod/#what-is-a-pod) 
+inside a [Kubernetes](https://kubernetes.io/) cluster.
 
-![overview](/backup_overview.PNG "backup approach overview")
+We believe this backup approach provides reliable backup data even in case one AWS account or Kubernetes cluster is compromised.
 
-However [Zalando Tech's ](https://tech.zalando.com/) [Github Enterprise](https://enterprise.github.com/) backup
-is also able to run as a [POD](https://kubernetes.io/docs/concepts/workloads/pods/pod/#what-is-a-pod) 
-inside a [Kubernetes](https://kubernetes.io/) cluster
-
-TODO: new picture.
+![overview](/ZalandoGithubEnterprise.jpg "backup approach overview")
 
 Basically [Zalando Tech's ](https://tech.zalando.com/) [Github Enterprise](https://enterprise.github.com/) backup
 wraps github's [backup-utils](https://github.com/github/backup-utils) in a 
