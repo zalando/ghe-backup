@@ -14,7 +14,8 @@ RUN \
   chmod 0440 /etc/sudoers.d/application && \
 # update w/ latest security patches
 # install python pip3 pyyaml & english, git, screen
-  apt-get install -y unattended-upgrades python3 python3-dev python3-pip python3-yaml language-pack-en git=1:2.7.4-0ubuntu1.3 screen && \
+  apt-get install -y --no-install-recommends unattended-upgrades python3 python3-dev python3-pip && \
+  python3-yaml language-pack-en git=1:2.7.4-0ubuntu1.3 screen=4.3.1-2build1 && \
 # install boto3
   pip3 install --upgrade boto boto3 && \
 # clean apt-get lists
