@@ -1,7 +1,7 @@
 FROM registry.opensource.zalan.do/stups/python:3.5-cd26
 MAINTAINER lothar.schulz@zalando.de
 
-USER root
+#USER root
 # folder structure and user
 RUN \
   useradd -d /backup -u 998 -o application && \
@@ -15,8 +15,9 @@ WORKDIR /backup
 # clone backup-utils
 RUN \
   apt-get update -y && \
-  apt-get install -y unattended-upgrades python3 python3-dev python3-pip python3-yaml language-pack-en git screen && \
-  pip3 install --upgrade boto boto3 && \
+  apt-get install -y  --no-install-recommends unattended-upgrades python3=3.4.6 python3-dev=3.3.2 python3-pip=1.4.1 && \
+  python3-yaml=3.10 language-pack-en=13.10+20131012 git=2.14.3 screen=4.6.2 && \
+  pip3 install --upgrade boto==1.4.7 boto3==1.4.7 && \
   rm -rf /var/lib/apt/lists/* && \
   git clone -b stable https://github.com/github/backup-utils.git && \
   git -C /backup/backup-utils pull
