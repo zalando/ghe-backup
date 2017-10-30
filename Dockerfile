@@ -9,19 +9,24 @@ RUN \
   apt-get install -y sudo && \
 # create application user
   useradd -d /backup -u 998 -o -c "application user" application && \
+# allow su
+  echo "application ALL=(root) NOPASSWD:ALL" > /etc/sudoers.d/application && \
+  chmod 0440 /etc/sudoers.d/application && \
+
+# create directories
   mkdir -p /data/ghe-production-data/ && mkdir -p /backup/backup-utils/ && \
   mkdir -p /kms && mkdir -p /var/log/ && mkdir /delete-instuck-backups
 WORKDIR /backup
 
-# read package lists
-# update w/ latest security patches
-# install python pip3 boto3 pyyaml & english & git
-# clone backup-utils
 RUN \
-  apt-get update -y && \
-  apt-get install -y unattended-upgrades python3 python3-dev python3-pip python3-yaml language-pack-en git && \
+# update w/ latest security patches
+# install python pip3 pyyaml & english, git, screen
+  apt-get install -y unattended-upgrades python3 python3-dev python3-pip python3-yaml language-pack-en git screen && \
+# install boto3
   pip3 install --upgrade boto boto3 && \
+# clean apt-get lists
   rm -rf /var/lib/apt/lists/* && \
+# clone backup-utils
   git clone -b stable https://github.com/github/backup-utils.git && \
   git -C /backup/backup-utils pull
 
