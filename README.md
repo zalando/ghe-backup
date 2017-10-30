@@ -7,11 +7,33 @@
 [Zalando Tech's ](https://tech.zalando.com/) [Github Enterprise](https://enterprise.github.com/) backup approach.
 
 ## Overview
-[Github Enterprise](https://enterprise.github.com/) at Zalando Tech is a Ha setup running master and replica instances on AWS. The AWS account that runs the [high availability](https://help.github.com/enterprise/2.5/admin/guides/installation/high-availability-configuration/) setup also runs one backup host. There is a second backup host running in a different AWS account. We believe this backup gives us reliable backup data even in case one AWS is compromised.
+[Github Enterprise](https://enterprise.github.com/) at Zalando Tech is a 
+[high availability](https://help.github.com/enterprise/2.11/admin/guides/installation/configuring-github-enterprise-for-high-availability/) 
+setup running master and replica instances on AWS. 
+The AWS account that runs the [high availability](https://help.github.com/enterprise/2.11/admin/guides/installation/configuring-github-enterprise-for-high-availability/) 
+setup also runs one backup host. 
+There is a second backup host running in a different AWS account. 
+We believe this backup apporach gives us reliable backup data even in case one AWS is compromised.
 
 ![overview](/backup_overview.PNG "backup approach overview")
 
-Basically ghe-backup wraps github's [backup-utils](https://github.com/github/backup-utils) in a [Docker](https://www.docker.com/) container. An [EBS volume](https://aws.amazon.com/de/ebs/) stores the actual backup data to be able to access the data even if the regarding backup host is down.
+However [Zalando Tech's ](https://tech.zalando.com/) [Github Enterprise](https://enterprise.github.com/) backup
+is also able to run as a [POD](https://kubernetes.io/docs/concepts/workloads/pods/pod/#what-is-a-pod) 
+inside a [Kubernetes](https://kubernetes.io/) cluster
+
+TODO: new picture.
+
+Basically [Zalando Tech's ](https://tech.zalando.com/) [Github Enterprise](https://enterprise.github.com/) backup
+wraps github's [backup-utils](https://github.com/github/backup-utils) in a 
+[Docker](https://www.docker.com/) container. 
+If running on AWS, an [EBS volume](https://aws.amazon.com/de/ebs/) stores the actual backup data.
+This way one can access the data even if the regarding backup host is down.
+If running on Kubernetes, a [stateful set](https://kubernetes.io/docs/tutorials/stateful-application/basic-stateful-set/) 
+including [volumes](https://kubernetes.io/docs/concepts/storage/volumes/) and 
+[volume claims](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#persistentvolumeclaims) stores the actual backup data.
+[Zalando Kubernetes](https://github.com/zalando-incubator/kubernetes-on-aws#kubernetes-on-aws) is based on AWS, so [volume claims
+ are based on EBS](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#aws).
+
 
 ## Local docker development
 
@@ -43,8 +65,13 @@ e.g.
 
 ### IAM [policy](http://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies.html) settings
 
-Github Enterprise backup hosts contain private ssh keys that have to match with public ssh keys registered on the Github Enterprise main instance.
-Private ssh keys should not be propagated unencrypted with deployments. AWS KMS allows to encrypt any kind of data, so this service is used to encrypt the private ssh key. KMS actions are managed by policies to make sure only configured tasks can be performed.
+[Zalando Tech's ](https://tech.zalando.com/) [Github Enterprise](https://enterprise.github.com/) backup hosts contain 
+private ssh keys that have to match with public ssh keys registered on the Github Enterprise main instance.
+Private ssh keys should not be propagated unencrypted with deployments. 
+AWS KMS allows to encrypt any kind of data, so this service is used to encrypt the private ssh key for both, 
+[Zalando Tech's ](https://tech.zalando.com/) [Github Enterprise](https://enterprise.github.com/) backup running on AWS and Kubernetes. 
+KMS actions are managed by policies to make sure only configured tasks can be performed.
+
 A kms policy similar to the one shown below is needed to:   
 * allow kms decryption of the encrypted ssh key
 * access s3 bucket
@@ -179,10 +206,63 @@ and run it like:
 ### EBS volumes with Senza
 Please follow these instructions: [senza's storage guild](https://docs.stups.io/en/latest/user-guide/storage.html) to create a EBS volume the stups way.
 
-## Blog Post
-You can find more context and details on [Zalando's](https://github.com/zalando/) [tech blog](https://tech.zalando.com/).  
-Blog post one is basically why and how ghe-backup was done: [tech.zalando.com/blog/multi-aws-github-enterprise-backup](https://tech.zalando.com/blog/multi-aws-github-enterprise-backup/).  
-Blog post two explains how changes gets continuously delivered using [Lizzy](https://github.com/zalando/lizzy/): [tech.zalando.com/blog/ci-pipelines-with-lizzy](https://tech.zalando.com/blog/ci-pipelines-with-lizzy/).  
+### Kubernetes stateful set
+```
+apiVersion: apps/v1beta1
+kind: StatefulSet
+metadata:
+      name: statefulset-ghe-backup
+spec:
+  serviceName: deploy-ghe-backup
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: ghe-backup
+      annotations:
+        pod.alpha.kubernetes.io/initialized: "true"
+    spec:
+      containers:
+      - name: container-{ghe-backup}
+        image: pierone.stups.zalan.do/machinery/ghe-backup-kubernetes:latest
+        resources:
+          requests:
+            cpu: 100m
+            memory: 1Gi
+          limits:
+            cpu: 400m
+            memory: 4Gi
+        volumeMounts:
+        - name: data-{ghe-backup}
+          mountPath: /data
+        - name: {ghe-backup}-secret
+          mountPath: /meta/ghe-backup-secret
+          readOnly: true
+        - name: podinfo
+          mountPath: /details
+          readOnly: false
+      volumes:
+      - name: {ghe-backup}-secret
+        secret:
+          secretName: {ghe-backup}-secret
+      - name: podinfo
+        downwardAPI:
+          items:
+            - path: "labels"
+              fieldRef:
+                fieldPath: metadata.labels
+  volumeClaimTemplates:
+  - metadata:
+      name: data-ghe-backup
+      annotations:
+        volume.beta.kubernetes.io/storage-class: standard
+    spec:
+      accessModes:
+      - ReadWriteOnce
+      resources:
+        requests:
+          storage: 1000Gi 
+```
 
 ===
 ### License
