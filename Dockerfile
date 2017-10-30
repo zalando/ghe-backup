@@ -4,7 +4,10 @@ MAINTAINER lothar.schulz@zalando.de
 #USER root
 # folder structure and user
 RUN \
-  useradd -d /backup -u 998 -o application && \
+  apt-get install -y sudo && \
+  useradd -d /backup -u 998 -o -c "application user" application && \
+  echo "application ALL=(root) NOPASSWD:ALL" > /etc/sudoers.d/application && \
+  chmod 0440 /etc/sudoers.d/application && \
   mkdir -p /data/ghe-production-data/ && mkdir -p /backup/backup-utils/ && \
   mkdir -p /kms && mkdir -p /var/log/ && mkdir /delete-instuck-backups
 WORKDIR /backup
@@ -47,7 +50,7 @@ RUN \
   chown -R application: /backup && \
   chown -R application: /kms && \
   chown -R application: /delete-instuck-backups && \
-  chown -R root: /start_backup.sh && \
+  chown -R application: /start_backup.sh && \
   chmod 0700 /kms/extract_decrypt_kms.py && \
   chmod 0700 /kms/convert-kms-private-ssh-key.sh && \
   chmod 0644 /etc/cron.d/ghe-backup && \
@@ -61,4 +64,4 @@ RUN \
   touch /var/log/ghe-delete-instuck-progress.log && \
   chown -R application: /var/log/ghe-delete-instuck-progress.log
 
-CMD ["/backup/final-docker-cmd.sh"]
+CMD ["su", "-", "application", "-c", "/backup/final-docker-cmd.sh"]
