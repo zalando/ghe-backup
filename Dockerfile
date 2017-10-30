@@ -21,11 +21,13 @@ RUN \
   rm -rf /var/lib/apt/lists/* && \
 # create directories
   mkdir -p /data/ghe-production-data/ && mkdir -p /backup/backup-utils/ && \
-  mkdir -p /kms && mkdir -p /var/log/ && mkdir /delete-instuck-backups && \
+  mkdir -p /kms && mkdir -p /var/log/ && mkdir /delete-instuck-backups
+WORKDIR /backup
+
+RUN \
 # clone backup-utils
   git clone -b stable https://github.com/github/backup-utils.git && \
   git -C /backup/backup-utils pull
-WORKDIR /backup
 
 # copy predefined backup config
 COPY backup.config /backup/backup-utils/backup.config
