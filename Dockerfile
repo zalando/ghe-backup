@@ -21,19 +21,22 @@ RUN \
   git clone -b stable https://github.com/github/backup-utils.git && \
   git -C /backup/backup-utils pull
 
-COPY \
 # copy predefined backup config
- backup.config /backup/backup-utils/backup.config && \
+COPY backup.config /backup/backup-utils/backup.config
+
 # copy files to decrypt private ssh key using kms
- python/extract_decrypt_kms.py /kms/extract_decrypt_kms.py && \
- convert-kms-private-ssh-key.sh /kms/convert-kms-private-ssh-key.sh && \
- start_backup.sh /start_backup.sh && \
+COPY python/extract_decrypt_kms.py /kms/extract_decrypt_kms.py
+COPY convert-kms-private-ssh-key.sh /kms/convert-kms-private-ssh-key.sh
+COPY start_backup.sh /start_backup.sh
+
 # copy file to drop in stuck backup
- python/delete_instuck_progress.py /delete-instuck-backups/delete_instuck_progress.py && \
+COPY python/delete_instuck_progress.py /delete-instuck-backups/delete_instuck_progress.py
+
 # copy cron job
- cron-ghe-backup /etc/cron.d/ghe-backup && \
+COPY cron-ghe-backup-automata /etc/cron.d/ghe-backup
+
 # copy finale CMD commands
- final-docker-cmd.sh /backup/final-docker-cmd.sh
+COPY final-docker-cmd.sh /backup/final-docker-cmd.sh
 
 #PLACEHOLDER_4_COPY_SCM_SOURCE_JSON
 
