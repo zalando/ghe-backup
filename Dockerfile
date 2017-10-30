@@ -12,6 +12,16 @@ RUN \
 # allow su
   echo "application ALL=(root) NOPASSWD:ALL" > /etc/sudoers.d/application && \
   chmod 0440 /etc/sudoers.d/application && \
+# create directories
+  mkdir -p /data/ghe-production-data/ && \
+  mkdir -p /backup/backup-utils/ && \
+  mkdir -p /kms && \
+  mkdir -p /var/log/ && \
+  mkdir /delete-instuck-backups
+WORKDIR /backup
+
+RUN \
+  apt-get update -y && \
 # update w/ latest security patches
 # install python pip3 boto3 pyyaml & english, git, screen
   apt-get update -y && \
@@ -22,14 +32,7 @@ RUN \
   rm -rf /var/lib/apt/lists/* && \
 # clone backup-utils
   git clone -b stable https://github.com/github/backup-utils.git && \
-  git -C /backup/backup-utils pull && \
-# create directories
-  mkdir -p /data/ghe-production-data/ && \
-  mkdir -p /backup/backup-utils/ && \
-  mkdir -p /kms && \
-  mkdir -p /var/log/ && \
-  mkdir /delete-instuck-backups
-WORKDIR /backup
+  git -C /backup/backup-utils pull
 
 COPY \
 # copy predefined backup config
