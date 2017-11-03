@@ -64,8 +64,12 @@ RUN \
   chmod 0700 /start_backup.sh && \
   chmod 0700 /backup/final-docker-cmd.sh && \
   mkfifo /var/log/ghe-prod-backup.log && \
-# delete_instuck_progress log
+  chown -R application: /var/log/ghe-prod-backup.log && \
   touch /var/log/ghe-delete-instuck-progress.log && \
   chown -R application: /var/log/ghe-delete-instuck-progress.log
 
+USER application
+
+# https://docs.docker.com/engine/userguide/eng-image/dockerfile_best-practices/#user mentions to avoid sudo,
+# however cron as part of the final-docker-cmd.sh has to run as
 CMD ["sudo", "/backup/final-docker-cmd.sh"]
