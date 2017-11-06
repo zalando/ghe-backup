@@ -7,5 +7,5 @@ python3 /delete-instuck-backups/delete_instuck_progress.py
 /kms/convert-kms-private-ssh-key.sh
 # do the actual backups via cron
 # everything in sbin directory needs to be executed as privileged user
-/usr/sbin/cron
+sudo /usr/sbin/cron
 tail -F /var/log/ghe-prod-backup.log
