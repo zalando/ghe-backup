@@ -1,4 +1,4 @@
-FROM registry.opensource.zalan.do/stups/python:3.5-cd26
+FROM registry.opensource.zalan.do/stups/python:3.6.2-14
 MAINTAINER lothar.schulz@zalando.de
 
 # folder structure and user
@@ -16,6 +16,8 @@ RUN \
   apt-get install -y --no-install-recommends unattended-upgrades python3=3.5.1-3 python3-dev=3.5.1-3 && \
   apt-get install -y --no-install-recommends python3-pip=8.1.1-2ubuntu0.4 python3-yaml=3.11-3build1 && \
   apt-get install -y --no-install-recommends language-pack-en=1:16.04+20161009 git=1:2.7.4-0ubuntu1.3 screen=4.3.1-2build1 && \
+  apt-get install -y --no-install-recommends bash && \
+  apt-get install -y --no-install-recommends cron && \
 # install boto3
   pip3 install --upgrade boto==2.48.0 boto3==1.4.7 && \
 # clean apt-get lists
