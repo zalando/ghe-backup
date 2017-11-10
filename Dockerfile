@@ -18,6 +18,7 @@ RUN \
   apt-get install -y --no-install-recommends language-pack-en=1:16.04+20161009 git=1:2.7.4-0ubuntu1.3 && \
   apt-get install -y --no-install-recommends ssh=1:7.2p2-4ubuntu2.2 && \
   apt-get install -y --no-install-recommends bash=4.3-14ubuntu1.2 && \
+  apt-get install -y --no-install-recommends rsync && \
   apt-get install -y --no-install-recommends cron=3.0pl1-128ubuntu2 && \
 # install boto3
   pip3 install --upgrade boto==2.48.0 boto3==1.4.7 && \

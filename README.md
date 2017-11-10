@@ -29,6 +29,7 @@ This way one can access the data even if the regarding backup host is down.
 If running on Kubernetes, a [stateful set](https://kubernetes.io/docs/tutorials/stateful-application/basic-stateful-set/) 
 including [volumes](https://kubernetes.io/docs/concepts/storage/volumes/) and 
 [volume claims](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#persistentvolumeclaims) stores the actual backup data.
+See a sample [statefulset below]()https://github.com/zalando/ghe-backup/blob/master/README.md#kubernetes-stateful-set,-volume,-volume-claim)
 [Zalando Kubernetes](https://github.com/zalando-incubator/kubernetes-on-aws#kubernetes-on-aws) is based on AWS, so [volume claims
  are based on EBS](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#aws).
 
@@ -134,6 +135,12 @@ Pls go to bashtest directory:
 
 *Make sure* you run ```./cleanup-tests.sh ``` in order to clean up afterwards.  
 
+
+### Running in an additional AWS account
+Please adapt the cron tab definitions when running in another AWS account e.g. to the values in cron-ghe-backup-alternative.
+This lowers the load on the Github Enterprise master with respect to backup attempts.
+
+
 ## Contribution
 pls refer to [CONTRIBUTING.md](CONTRIBUTING.md)
 
@@ -204,11 +211,9 @@ and run it like:
 ### EBS volumes with Senza
 Please follow these instructions: [senza's storage guild](https://docs.stups.io/en/latest/user-guide/storage.html) to create a EBS volume the stups way.
 
-### Running in second AWS account
-Please adapt the cron tab definitions when running in another AWS account e.g. to the values in cron-ghe-backup-alternative.
-This lowers the load on the Github Enterprise master with respect to backup attempts.
+### Kubernetes stateful set, volume, volume claim
 
-### Kubernetes stateful set
+The statefulset resource definition is the main kubernetes configuration file:
 ```
 apiVersion: apps/v1beta1
 kind: StatefulSet
@@ -226,7 +231,7 @@ spec:
     spec:
       containers:
       - name: container-{ghe-backup}
-        image: pierone.stups.zalan.do/machinery/ghe-backup-kubernetes:latest
+        image: pierone.zalando/machinery/ghe-backup-kubernetes:latest
         resources:
           requests:
             cpu: 100m
