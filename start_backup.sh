@@ -4,7 +4,7 @@ set -euo pipefail
 IFS=$'\n\t'
 
 pidof -o $$ -x "$0" >/dev/null 2>&1 && exit 1
-if [ "root"  ==  "`stat -c '%U' /data`" ]
+if [ "root"  ==  $(stat -c '%U' /data) ]
 then
     sudo chown -R application: /data
 fi
