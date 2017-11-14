@@ -141,6 +141,24 @@ Please adapt the cron tab definitions when running in another AWS account e.g. t
 This lowers the load on the Github Enterprise master with respect to backup attempts.
 
 
+### restore
+
+Restoring backups is based on github's _(using the backup and restore commands)[https://github.com/github/backup-utils#using-the-backup-and-restore-commands]_.
+The actual _ghe-restore_ command gets issued from the backup host. The backup restore can run for several hours.
+
+On Taupage one can use (screen)[https://ss64.com/bash/screen.html] to come back to started backup attempts.
+@TODO: add an example call
+
+(Nohup)[https://en.wikipedia.org/wiki/Nohup] is recommended to restore backup from Docker containers
+on both Kubernetes pods and AWS/Taupage. This is because of the _(unpredictable TTY and signal-forwarding behavior)[https://docs.docker.com/engine/userguide/eng-image/dockerfile_best-practices/#user]_ 
+caused by the (mandatory use of _sudo_ for chmod command)[https://github.com/zalando/ghe-backup/blob/master/start_backup.sh#L9].
+
+```
+nohup ./ghe-restore -f [IP address of the ghe master to restore] &
+# monitor the backup progress
+tail -f nohup.out
+```
+
 ## Contribution
 pls refer to [CONTRIBUTING.md](CONTRIBUTING.md)
 
