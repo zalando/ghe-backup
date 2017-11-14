@@ -141,7 +141,7 @@ Please adapt the cron tab definitions when running in another AWS account e.g. t
 This lowers the load on the Github Enterprise master with respect to backup attempts.
 
 
-### restore
+### Restore
 
 Restoring backups is based on github's _(using the backup and restore commands)[https://github.com/github/backup-utils#using-the-backup-and-restore-commands]_.
 The actual _ghe-restore_ command gets issued from the backup host. The backup restore can run for several hours.
