@@ -25,7 +25,7 @@ RUN \
 # clean apt-get lists
   rm -rf /var/lib/apt/lists/* && \
 # create directories
-  mkdir -p /data/ghe-production-data/ && mkdir -p /backup/backup-utils/ && \
+  mkdir -p /backup/backup-utils/ && \
   mkdir -p /kms && mkdir -p /var/log/ && mkdir /delete-instuck-backups
 WORKDIR /backup
 
@@ -56,7 +56,6 @@ COPY final-docker-cmd.sh /backup/final-docker-cmd.sh
 
 RUN \
 # change mode of files
-  chown -R application: /data && \
   chown -R application: /backup && \
   chown -R application: /kms && \
   chown -R application: /delete-instuck-backups && \
