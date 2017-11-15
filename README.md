@@ -144,17 +144,18 @@ This lowers the load on the Github Enterprise master with respect to backup atte
 ### Restore
 
 Restoring backups is based on github's _(using the backup and restore commands)[https://github.com/github/backup-utils#using-the-backup-and-restore-commands]_.
-The actual _ghe-restore_ command gets issued from the backup host. The backup restore can run for several hours.
+The actual _ghe-restore_ command gets issued from the backup host. Please note: the backup restore can run for several hours.
+(Nohup)[https://en.wikipedia.org/wiki/Nohup] is recommended to keep the restore process running even if the shell connection is lost.
 
-On Taupage one can use (screen)[https://ss64.com/bash/screen.html] to come back to started backup attempts.
-@TODO: add an example call
-
-(Nohup)[https://en.wikipedia.org/wiki/Nohup] is recommended to restore backup from Docker containers
-on both Kubernetes pods and AWS/Taupage. This is because of the _(unpredictable TTY and signal-forwarding behavior)[https://docs.docker.com/engine/userguide/eng-image/dockerfile_best-practices/#user]_ 
-caused by the (mandatory use of _sudo_ for chmod command)[https://github.com/zalando/ghe-backup/blob/master/start_backup.sh#L9].
-
+sample steps include:
 ```
-nohup ./ghe-restore -f [IP address of the ghe master to restore] &
+put ghe instance to restor to into maintenance mode
+# ssh into your ec2 instance and exec into your container
+# docker exec -it [container label or ID] bash/sh
+# or 
+# exec into your pod
+# kubectl exec -it [your pod e.g. statefulset-ghe-backup-0] bash/sh
+nohup /backup/backup-utils/bin/ghe-restore -f [IP address of the ghe master to restore] &
 # monitor the backup progress
 tail -f nohup.out
 ```
