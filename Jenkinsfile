@@ -47,14 +47,14 @@ node('kraken') {
 
 node('kraken') {
     stage("Build Docker Image") {
-        docker(dockerRepo, fullImageName, "DockerfileAutomata" , false)
+        docker(dockerRepo, fullImageName, "Dockerfile" , false)
     }
 }
 
 if (env.BRANCH_NAME == 'master') {
     node('kraken') {
         stage("Build and Push Docker") {
-            docker(dockerRepo, fullImageName, "DockerfileAutomata" , true)
+            docker(dockerRepo, fullImageName, "Dockerfile" , true)
         }
     }
     timeout(time: 60, unit: "MINUTES") {
@@ -99,8 +99,7 @@ if (env.BRANCH_NAME == 'master') {
 def docker(String dockerRepo, String fullImageName, String dockerfile, boolean pushImage) {
     if (pushImage == true) {
         sh "/tools/run :stups -- scm-source"
-        sh "/tools/run :stups -- sed -i 's&.*#PLACEHOLDER_4_COPY_SCM_SOURCE_JSON.*&COPY scm-source.json /scm-source.json&' DockerfileBus"
-        sh "/tools/run :stups -- sed -i 's&.*#PLACEHOLDER_4_COPY_SCM_SOURCE_JSON.*&COPY scm-source.json /scm-source.json&' DockerfileAutomata"
+        sh "/tools/run :stups -- sed -i 's&.*#PLACEHOLDER_4_COPY_SCM_SOURCE_JSON.*&COPY scm-source.json /scm-source.json&' Dockerfile"
     }
 
     sh "/tools/run :stups -- docker build --rm -t $fullImageName -f $dockerfile ."
