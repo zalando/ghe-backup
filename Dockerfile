@@ -1,4 +1,4 @@
-FROM registry.opensource.zalan.do/stups/python:3.6.2-14
+FROM registry.opensource.zalan.do/stups/python:3.6.3-15
 MAINTAINER lothar.schulz@zalando.de
 
 # folder structure and user
