@@ -1,5 +1,4 @@
 # ghe automata prod backups
-# timezone is GMT -1
 13 9,11,13,15,17,19,21 * * 1-6 application /start_backup.sh
 13 10,19 * * 7 application /start_backup.sh
 57 7,8,9,10,11,12,13,14,15,16,17,18,19 * * 1-6 application python3 /delete-instuck-backups/delete_instuck_progress.py 1>> /var/log/ghe-delete-instuck-progress.log 2>&1
