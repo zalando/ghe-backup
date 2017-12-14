@@ -81,7 +81,7 @@ if (env.BRANCH_NAME == 'master') {
             stage("deployment") {
                 build job: 'ghe-backup/GithubEnterpriseBackupDeployAutomataStack',
                     parameters: [string(name: 'IMAGE_PATH', value: fullImageName),
-                                 string(name: 'SENZA_YAML_FILE', value: 'ghe-backup-ci.yaml'),
+                                 string(name: 'SENZA_YAML_FILE', value: 'ci/ghe-backup-ci.yaml'),
                                  string(name: 'KIO_URL', value: 'https://kio.stups.zalan.do'),
                                  string(name: 'KIO_APP', value: 'ghe-backup-automata'),
                                  string(name: 'TAG', value: nextStackVersion),
