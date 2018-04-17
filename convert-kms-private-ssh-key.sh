@@ -33,7 +33,7 @@ then
 elif [ -f $folder/taupage.yaml ]
 then
   echo "File $folder/taupage.yaml exists."
-  SSHKEY=$(python3 /kms/extract_decrypt_kms.py -f "$folder/taupage.yaml" -k "kms_private_ssh_key" -r "eu-west-1")
+  SSHKEY=$(python3 /kms/extract_decrypt_kms.py -f "$folder/taupage.yaml" -k "kms_private_ssh_key" -r "###REGION###")
   if [[ $SSHKEY == "Invalid KMS key." ]]
   then
     echo "KMS key or KMS string is invalid."
