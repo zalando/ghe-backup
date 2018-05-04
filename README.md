@@ -113,7 +113,6 @@ Pls note:
 
 * tests leveraging kms require aws logins e.g. via aws cli. Thats why those don not run on ci environments out of the box. The `run-tests.sh` script uses _zaws_ (a zalando internal tool that is the successor of the former open source tool mai)
 * *make sure* you run ```bashtest/cleanup-tests.sh```  in order to clean up afterwards.
-* running `./run-tests.sh` on mac osx requires you probably to create the folder structure of ```bashtest/prepare-tests.sh``` upfront
 
 ### Nosetest
 
