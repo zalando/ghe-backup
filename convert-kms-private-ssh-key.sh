@@ -4,8 +4,12 @@ set -euo pipefail
 IFS=$'\n\t'
 
 folder=""
-private_key_path="~/.ssh/id_rsa"
+private_key_folder="~/.ssh"
+private_key_path="$private_key_folder/id_rsa"
+private_key_folder_test="./ssh"
+private_key_path_test="$private_key_folder_test/id_rsa_test"
 kms_base="/kms"
+
 set +u
 if [ ! -z $1 ];
 then
@@ -16,10 +20,10 @@ fi
 
 if [ ! -z $2 ];
 then
-  # @TODO: go for ./ssh/id_rsa_test for test case
-  private_key_path="~/.ssh/id_rsa_test"
-  folder="~/ghe-backup-test/mymeta"
-  kms_base="~/ghe-backup-test/kms"
+  private_key_path="$private_key_path_test"
+  private_key_folder="$private_key_folder_test"
+  folder="./ghe-backup-test/mymeta"
+  kms_base="./ghe-backup-test/kms"
 fi
 
 # Treat unset variables as an error when substituting.
@@ -34,7 +38,7 @@ then
     exit 0
   else
     echo "The file $private_key_path does not exists. Start writing private ssh key."
-    mkdir -p ~/.ssh
+    mkdir -p $private_key_folder
     cp $folder/ghe-backup-secret/kms_private_ssh_key $private_key_path
     chmod 0600 $private_key_path
     echo "Private ssh key file written."
@@ -60,7 +64,7 @@ then
     exit 0
   else
     echo "The file $private_key_path does not exists. Start writing private ssh key."
-    mkdir -p ~/.ssh
+    mkdir -p $private_key_folder
     printf "%s" "$SSHKEY" >> $private_key_path
     chmod 0600 $private_key_path
     echo "Private ssh key file written."
