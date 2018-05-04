@@ -1,24 +1,25 @@
 #!/bin/bash
 
-# clean possible left overs
-./cleanup-tests.sh
+kms_base_folder="./ghe-backup-test/kms"
+ghe_production_data_base_folder="./ghe-backup-test/data/ghe-production-data"
+ghe_data_in_progress_file="$ghe_production_data_base_folder/in-progress"
+mymeta_base_folder="./ghe-backup-test/mymeta"
 
 # create folder and file structure
-# call this script from folder above
-mkdir -p /kms/
-cp ../python/extract_decrypt_kms.py /kms/extract_decrypt_kms.py
-chmod 744 /kms/extract_decrypt_kms.py
-mkdir -p /mymeta/
+mkdir -p $kms_base_folder
+cp ../python/extract_decrypt_kms.py $kms_base_folder/extract_decrypt_kms.py
 
-mkdir -p /data/ghe-production-data
-#touch /data/ghe-production-data/in-progress
-cat <<EOT1 >> /data/ghe-production-data/in-progress
-a
+######
+mkdir -p $ghe_production_data_base_folder
+cat <<EOT1 >> $ghe_data_in_progress_file
+foo bla fasel
 EOT1
 
+######
+mkdir -p $mymeta_base_folder
 # create a dummy senza yaml file
 # http://stups.readthedocs.org/en/latest/components/senza.html
-cat <<EOT2 >> /mymeta/taupage.yaml
+cat <<EOT2 >> $mymeta_base_folder/taupage.yaml
 application_id: ghe-backup
 application_version: 0.0.0
 instance_logs_url: https://my.logs.url
@@ -41,3 +42,5 @@ volumes:
     ebs:
         /dev/sdf: abackupvolume
 EOT2
+
+echo -e "prepare tests script finished.\n"

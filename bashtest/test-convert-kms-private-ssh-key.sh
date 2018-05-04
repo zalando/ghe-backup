@@ -1,7 +1,10 @@
 #!/bin/bash
 
+# start with clean setup
+./cleanup-tests.sh
+
 ./prepare-tests.sh
-../convert-kms-private-ssh-key.sh /mymeta
+../convert-kms-private-ssh-key.sh /mymeta test
 
 if [ $? -eq 1 ]
 then
@@ -9,3 +12,6 @@ then
 else
   echo " This is NOT expected." # ../convert-kms-private-ssh-key.sh executed w/o error.
 fi
+
+# clean up
+./cleanup-tests.sh

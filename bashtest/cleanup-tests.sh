@@ -1,17 +1,13 @@
 #!/bin/bash
 
 # clean up test files (before-convert-kms-private-ssh-key.sh)
-files=("/kms/extract_decrypt_kms.py" "/kms/decrypt_kms.py" "/mymeta/taupage.yaml" "/data/ghe-production-data/in-progress" )
-for file in "${files[@]}"
-do
-   :
-   if [ -f "$file" ]; then
-     echo -n "" > $file
-   else
-      echo "cleanup: $file does not exists"
-   fi
-done
+rm -rf ./ghe-backup-test
 
-if [ -f ~/.ssh/id_rsa ]; then
-  rm -f ~/.ssh/id_rsa
+sshkey="./ssh/id_rsa_test"
+if [ -f $sshkey ]; then
+  rm -f $sshkey
+else
+   echo "cleanup: $sshkey does not exists"
 fi
+
+echo -e "cleanup script finished.\n"
