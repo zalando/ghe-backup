@@ -9,6 +9,7 @@ private_key_path="$private_key_folder/id_rsa"
 private_key_folder_test="./ssh"
 private_key_path_test="$private_key_folder_test/id_rsa_test"
 kms_base="/kms"
+aws_region_placeholder="###REGION###"
 
 set +u
 if [ ! -z $1 ];
@@ -24,6 +25,7 @@ then
   private_key_folder="$private_key_folder_test"
   folder="./ghe-backup-test/mymeta"
   kms_base="./ghe-backup-test/kms"
+  aws_region_placeholder="eu-west-1"
 fi
 
 # Treat unset variables as an error when substituting.
@@ -49,7 +51,8 @@ then
 elif [ -f $folder/taupage.yaml ]
 then
   echo "File $folder/taupage.yaml exists."
-  SSHKEY=$(python3 $kms_base/extract_decrypt_kms.py -f "$folder/taupage.yaml" -k "kms_private_ssh_key" -r "###REGION###")
+  echo "python3 $kms_base/extract_decrypt_kms.py -f $folder/taupage.yaml -k kms_private_ssh_key -r $aws_region_placeholder)"
+  SSHKEY=$(python3 $kms_base/extract_decrypt_kms.py -f "$folder/taupage.yaml" -k "kms_private_ssh_key" -r "$aws_region_placeholder")
   if [[ $SSHKEY == "Invalid KMS key." ]]
   then
     echo "KMS key or KMS string is invalid."
