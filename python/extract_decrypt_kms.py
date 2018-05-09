@@ -40,7 +40,6 @@ class Kms:
             result = data[kms_key]
             if result.startswith(cls.aws_kms_str):
                 result = result.replace(cls.aws_kms_str, '', 1)
-                print("result: %s" % (result))
             return result
         return ""
 
@@ -50,7 +49,6 @@ class Kms:
 
     @classmethod
     def aws_decrypt(cls, to_decrypt: str) -> str:
-        print("to_decrypt: %s" % (to_decrypt) )
         if to_decrypt is "":
             return ""
         client = cls.aws_kms_client()
