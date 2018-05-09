@@ -43,4 +43,4 @@ volumes:
         /dev/sdf: abackupvolume
 EOT2
 
-echo -e "prepare tests script finished.\n"
+echo -e "Prepare tests script finished.\n"

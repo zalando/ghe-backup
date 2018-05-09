@@ -24,8 +24,8 @@ then
   private_key_path="$private_key_path_test"
   private_key_folder="$private_key_folder_test"
   folder="./ghe-backup-test/mymeta"
-  kms_base="./ghe-backup-test/kms"
   aws_region_placeholder="eu-west-1"
+  kms_base="$PWD/ghe-backup-test/kms"
 fi
 
 # Treat unset variables as an error when substituting.
@@ -51,7 +51,6 @@ then
 elif [ -f $folder/taupage.yaml ]
 then
   echo "File $folder/taupage.yaml exists."
-  echo "python3 $kms_base/extract_decrypt_kms.py -f $folder/taupage.yaml -k kms_private_ssh_key -r $aws_region_placeholder)"
   SSHKEY=$(python3 $kms_base/extract_decrypt_kms.py -f "$folder/taupage.yaml" -k "kms_private_ssh_key" -r "$aws_region_placeholder")
   if [[ $SSHKEY == "Invalid KMS key." ]]
   then
@@ -70,7 +69,7 @@ then
     mkdir -p $private_key_folder
     printf "%s" "$SSHKEY" >> $private_key_path
     chmod 0600 $private_key_path
-    echo "Private ssh key file written."
+    echo "Private ssh key file '$SSHKEY' written."
     exit 0
   fi
 else

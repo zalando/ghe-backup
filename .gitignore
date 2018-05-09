@@ -3,4 +3,7 @@ python/__pycache__/
 scm-source.json
 .idea
 *.pyc
+
+# testing folders
 ghe-backup-test/
+ssh/

@@ -4,14 +4,16 @@
 ./cleanup-tests.sh
 
 ./prepare-tests.sh
+echo "-----------------"
 ../convert-kms-private-ssh-key.sh /mymeta test
 
-if [ $? -eq 1 ]
+if [ $? -eq 0 ]
 then
-  echo "This is expected. Test succesfully passed." # ../convert-kms-private-ssh-key.sh executed w/ error.
+  echo "Test succesfully passed." # ../convert-kms-private-ssh-key.sh executed w/o error.
 else
-  echo " This is NOT expected." # ../convert-kms-private-ssh-key.sh executed w/o error.
+  echo "Tests NOT succesfully passed." # ../convert-kms-private-ssh-key.sh executed w/ error.
 fi
+echo "-----------------"
 
 # clean up
 ./cleanup-tests.sh

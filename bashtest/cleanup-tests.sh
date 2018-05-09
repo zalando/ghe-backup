@@ -1,13 +1,7 @@
 #!/bin/bash
 
-# clean up test files (before-convert-kms-private-ssh-key.sh)
+# clean up test folder & files
 rm -rf ./ghe-backup-test
+rm -rf ./ssh
 
-sshkey="./ssh/id_rsa_test"
-if [ -f $sshkey ]; then
-  rm -f $sshkey
-else
-   echo "cleanup: $sshkey does not exists"
-fi
-
-echo -e "cleanup script finished.\n"
+echo -e "\nCleanup script finished."
