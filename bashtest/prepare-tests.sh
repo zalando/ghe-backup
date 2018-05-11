@@ -23,7 +23,7 @@ cat <<EOT2 >> $mymeta_base_folder/taupage.yaml
 application_id: ghe-backup
 application_version: 0.0.0
 instance_logs_url: https://my.logs.url
-kms_private_ssh_key: aws:kms:myAWSregion:123456789:key/myrandomstringwithnumbers123456567890
+kms_private_ssh_key: aws:kms:AQECAHjZzNgloNStoxLGlW7zt1M3wLRLUhgdzHy+BTQzoMJMgQAAAL4wgbsGCSqGSIb3DQEHBqCBrTCBqgIBADCBpAYJKoZIhvcNAQcBMB4GCWCGSAFlAwQBLjARBAyfjtZRzn/hG79GjSQCARCAd2NFtV7NFy+WnDnFvJaWn3v4MNMtKWYR+e28dLl/JphJ4ube4X08TKSypKWL2U6ASBy4X32V8ee5mNk+0AFCKll6xC7NV18rsIDWU5vZhY2hqiVL098bqCBRY17vBaDxRPaEKqwJ5z9kPxC/RAJUhFZWH/0oMzuX=
 logentries_account_key: mylogentriesaccoutnkey
 mint_bucket: amintbucket
 mounts:
