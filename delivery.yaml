@@ -1,6 +1,7 @@
 version: "2017-09-20"
 pipeline:
   - id: build
+    overlay: ci/python
     type: script
     #when:
     #  branch: master
