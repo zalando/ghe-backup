@@ -12,8 +12,8 @@ RUN \
   echo "application ALL=(root) NOPASSWD:ALL" > /etc/sudoers.d/application && \
   chmod 0440 /etc/sudoers.d/application && \
 # update w/ latest security patches
-# install python pip3 pyyaml & english, git, screen
-  apt-get install -y --no-install-recommends unattended-upgrades python3=3.6.5-3 python3-dev=3.6.5-3 && \
+# install python pip3 pyyaml & english, git, screen etc
+  apt-get install -y --no-install-recommends unattended-upgrades python3 python3-dev && \
   apt-get install -y --no-install-recommends python3-pip python3-yaml && \
   apt-get install -y --no-install-recommends language-pack-en git && \
   apt-get install -y --no-install-recommends ssh && \
