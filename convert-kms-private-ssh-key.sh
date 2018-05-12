@@ -32,9 +32,10 @@ fi
 # Treat unset variables as an error when substituting.
 set -u
 
+# @TODO: add test for $kubernetes_labels existance
 if [ -f $kubernetes_labels ]
 then
-  # @TODO: separate function parameter would be private key content ($SSHKEY /meta/ghe-backup-secret/kms_private_ssh_key)
+  # @TODO: avoid DRY -> create new function -> parameter would be private key content ($SSHKEY /meta/ghe-backup-secret/kms_private_ssh_key)
   if [ -f $private_key_path ]
   then
     echo "The file $private_key_path exists already. Won't be overridden." >&2
