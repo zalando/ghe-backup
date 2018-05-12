@@ -10,6 +10,7 @@ private_key_folder_test="./ssh"
 private_key_path_test="$private_key_folder_test/id_rsa_test"
 kms_base="/kms"
 aws_region_placeholder="###REGION###"
+kubernetes_labels="/details/labels"
 
 set +u
 if [ ! -z $1 ];
@@ -31,7 +32,7 @@ fi
 # Treat unset variables as an error when substituting.
 set -u
 
-if [ -f $private_key_path ]
+if [ -f $kubernetes_labels ]
 then
   # @TODO: separate function parameter would be private key content ($SSHKEY /meta/ghe-backup-secret/kms_private_ssh_key)
   if [ -f $private_key_path ]
@@ -73,7 +74,7 @@ then
     exit 0
   fi
 else
-  echo "Neither /details/labels nor $folder/taupage.yaml exist."
+  echo "Neither $kubernetes_labels nor $folder/taupage.yaml exist."
 fi
 
 exit 1
