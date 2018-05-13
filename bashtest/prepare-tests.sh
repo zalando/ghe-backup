@@ -1,11 +1,20 @@
 #!/bin/bash
+# http://redsymbol.net/articles/unofficial-bash-strict-mode/
+set -euo pipefail
+IFS=$'\n\t'
 
-kms_base_folder="./ghe-backup-test/kms"
-ghe_production_data_base_folder="./ghe-backup-test/data/ghe-production-data"
+ghe_backup_test_base_folder="./ghe-backup-test"
+string_replace_test="$ghe_backup_test_base_folder/region-replacement"
+kms_base_folder="$ghe_backup_test_base_folder/kms"
+ghe_production_data_base_folder="$ghe_backup_test_base_folder/data/ghe-production-data"
 ghe_data_in_progress_file="$ghe_production_data_base_folder/in-progress"
-mymeta_base_folder="./ghe-backup-test/mymeta"
+mymeta_base_folder="$ghe_backup_test_base_folder/mymeta"
 
-# create folder and file structure
+# create folder and file structure for region replacement test
+mkdir -p $string_replace_test
+cp ../convert-kms-private-ssh-key.sh $string_replace_test/convert-kms-private-ssh-key.sh
+
+# create folder and file structure for decryption test
 mkdir -p $kms_base_folder
 cp ../python/extract_decrypt_kms.py $kms_base_folder/extract_decrypt_kms.py
 
@@ -19,6 +28,8 @@ EOT1
 mkdir -p $mymeta_base_folder
 # create a dummy senza yaml file
 # http://stups.readthedocs.org/en/latest/components/senza.html
+# kms_private_ssh_key should be decryptable via kms,
+# otherwise the decryption test may fail
 cat <<EOT2 >> $mymeta_base_folder/taupage.yaml
 application_id: ghe-backup
 application_version: 0.0.0
