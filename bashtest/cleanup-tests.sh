@@ -4,4 +4,4 @@
 rm -rf ./ghe-backup-test
 rm -rf ./ssh
 
-echo -e "\nCleanup script finished."
+echo -e "\nCleanup tests script finished."

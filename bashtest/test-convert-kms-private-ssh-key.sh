@@ -11,18 +11,18 @@ echo "-----------------"
 ./test-replace-convert-properties.sh
 if [ $? -eq 0 ]
 then
-  echo "test-replace-convert-properties.sh succesfully passed." # ../convert-kms-private-ssh-key.sh executed w/o error.
+  echo "test 'test-replace-convert-properties.sh' succesfully passed." # ../convert-kms-private-ssh-key.sh executed w/o error.
 else
-  echo "test-replace-convert-properties.sh NOT succesfully passed." # ../convert-kms-private-ssh-key.sh executed w/ error.
+  echo "test 'test-replace-convert-properties.sh' NOT succesfully passed." # ../convert-kms-private-ssh-key.sh executed w/ error.
 fi
 
 ../convert-kms-private-ssh-key.sh /mymeta test
 
 if [ $? -eq 0 ]
 then
-  echo "convert-kms-private-ssh-key.sh succesfully passed." # ../convert-kms-private-ssh-key.sh executed w/o error.
+  echo "test conversion 'convert-kms-private-ssh-key.sh' succesfully passed." # ../convert-kms-private-ssh-key.sh executed w/o error.
 else
-  echo "convert-kms-private-ssh-key.sh NOT succesfully passed." # ../convert-kms-private-ssh-key.sh executed w/ error.
+  echo "test conversion 'convert-kms-private-ssh-key.sh' NOT succesfully passed." # ../convert-kms-private-ssh-key.sh executed w/ error.
 fi
 echo "-----------------"
 
