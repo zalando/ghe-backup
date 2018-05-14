@@ -6,8 +6,6 @@ IFS=$'\n\t'
 folder=""
 private_key_folder="~/.ssh"
 private_key_path="$private_key_folder/id_rsa"
-private_key_folder_test="./ssh"
-private_key_path_test="$private_key_folder_test/id_rsa_test"
 kms_base="/kms"
 aws_region_placeholder="###REGION###"
 kubernetes_labels="/details/labels"
@@ -22,8 +20,8 @@ fi
 
 if [ ! -z $2 ];
 then
-  private_key_path="$private_key_path_test"
-  private_key_folder="$private_key_folder_test"
+  private_key_folder="./ssh"
+  private_key_path="./ssh/id_rsa_test"
   folder="./ghe-backup-test/mymeta"
   aws_region_placeholder="eu-west-1"
   kms_base="$PWD/ghe-backup-test/kms"
@@ -45,7 +43,7 @@ then
     mkdir -p $private_key_folder
     cp $folder/ghe-backup-secret/kms_private_ssh_key $private_key_path
     chmod 0600 $private_key_path
-    echo "Private ssh key file written."
+    echo "Private ssh key file '$private_key_path' written."
     exit 0
   fi
   ### end of separate function
@@ -71,7 +69,7 @@ then
     mkdir -p $private_key_folder
     printf "%s" "$SSHKEY" >> $private_key_path
     chmod 0600 $private_key_path
-    echo "Private ssh key file '$SSHKEY' written."
+    echo "Private ssh key file '$private_key_path' written."
     exit 0
   fi
 else
