@@ -7,14 +7,14 @@
 [Zalando Tech's ](https://tech.zalando.com/) [Github Enterprise](https://enterprise.github.com/) backup approach.
 
 ## Overview
-[Github Enterprise](https://enterprise.github.com/) at Zalando Tech is a 
-[high availability](https://help.github.com/enterprise/2.11/admin/guides/installation/configuring-github-enterprise-for-high-availability/) 
-setup running master and replica instances on AWS. 
-The AWS account that runs the [high availability](https://help.github.com/enterprise/2.11/admin/guides/installation/configuring-github-enterprise-for-high-availability/) 
-setup also runs one backup host. 
-Another backup host can run in a different AWS account. 
+[Github Enterprise](https://enterprise.github.com/) at Zalando Tech is a
+[high availability](https://help.github.com/enterprise/2.11/admin/guides/installation/configuring-github-enterprise-for-high-availability/)
+setup running master and replica instances on AWS.
+The AWS account that runs the [high availability](https://help.github.com/enterprise/2.11/admin/guides/installation/configuring-github-enterprise-for-high-availability/)
+setup also runs one backup host.
+Another backup host can run in a different AWS account.
 [Zalando Tech's ](https://tech.zalando.com/) [Github Enterprise](https://enterprise.github.com/) backup
-can also run as a [POD](https://kubernetes.io/docs/concepts/workloads/pods/pod/#what-is-a-pod) 
+can also run as a [POD](https://kubernetes.io/docs/concepts/workloads/pods/pod/#what-is-a-pod)
 inside a [Kubernetes](https://kubernetes.io/) cluster.
 
 We believe this backup approach provides reliable backup data even in case one AWS account or Kubernetes cluster is compromised.
@@ -22,12 +22,12 @@ We believe this backup approach provides reliable backup data even in case one A
 ![overview](/ZalandoGithubEnterprise.jpg "backup approach overview")
 
 Basically [Zalando Tech's ](https://tech.zalando.com/) [Github Enterprise](https://enterprise.github.com/) backup
-wraps github's [backup-utils](https://github.com/github/backup-utils) in a 
-[Docker](https://www.docker.com/) container. 
+wraps github's [backup-utils](https://github.com/github/backup-utils) in a
+[Docker](https://www.docker.com/) container.
 If running on AWS, an [EBS volume](https://aws.amazon.com/de/ebs/) stores the actual backup data.
 This way one can access the data even if the regarding backup host is down.
-If running on Kubernetes, a [stateful set](https://kubernetes.io/docs/tutorials/stateful-application/basic-stateful-set/) 
-including [volumes](https://kubernetes.io/docs/concepts/storage/volumes/) and 
+If running on Kubernetes, a [stateful set](https://kubernetes.io/docs/tutorials/stateful-application/basic-stateful-set/)
+including [volumes](https://kubernetes.io/docs/concepts/storage/volumes/) and
 [volume claims](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#persistentvolumeclaims) stores the actual backup data.
 See a sample [statefulset below]()https://github.com/zalando/ghe-backup/blob/master/README.md#kubernetes-stateful-set,-volume,-volume-claim)
 [Zalando Kubernetes](https://github.com/zalando-incubator/kubernetes-on-aws#kubernetes-on-aws) is based on AWS, so [volume claims
@@ -64,11 +64,11 @@ e.g.
 
 ### IAM [policy](http://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies.html) settings
 
-[Zalando Tech's ](https://tech.zalando.com/) [Github Enterprise](https://enterprise.github.com/) backup hosts contain 
+[Zalando Tech's ](https://tech.zalando.com/) [Github Enterprise](https://enterprise.github.com/) backup hosts contain
 private ssh keys that have to match with public ssh keys registered on the Github Enterprise main instance.
-Private ssh keys should not be propagated unencrypted with deployments. 
-AWS KMS allows to encrypt any kind of data, so this service is used to encrypt the private ssh key for both, 
-[Zalando Tech's ](https://tech.zalando.com/) [Github Enterprise](https://enterprise.github.com/) backup running on AWS and Kubernetes. 
+Private ssh keys should not be propagated unencrypted with deployments.
+AWS KMS allows to encrypt any kind of data, so this service is used to encrypt the private ssh key for both,
+[Zalando Tech's ](https://tech.zalando.com/) [Github Enterprise](https://enterprise.github.com/) backup running on AWS and Kubernetes.
 KMS actions are managed by policies to make sure only configured tasks can be performed.
 
 A kms policy similar to the one shown below is needed to:   
@@ -108,10 +108,10 @@ There are two kinds of tests available:
 * python nose tests
 * bash tests
 
-Both can be run with ```./run-tests.sh ```.  
+Both can be run with ```./run-tests.sh```.  
 Pls note:
 
-* kms tests don't run on ci environments as it requires aws logins e.g. via mai
+* tests leveraging kms require aws logins e.g. via aws cli. Thats why those don not run on ci environments out of the box. The `run-tests.sh` script uses _zaws_ (a zalando internal tool that is the successor of the former open source tool mai)
 * *make sure* you run ```bashtest/cleanup-tests.sh```  in order to clean up afterwards.
 
 ### Nosetest
@@ -152,7 +152,7 @@ sample steps include:
 put ghe instance to restor to into maintenance mode
 # ssh into your ec2 instance and exec into your container
 # docker exec -it [container label or ID] bash/sh
-# or 
+# or
 # exec into your pod
 # kubectl exec -it [your pod e.g. statefulset-ghe-backup-0] bash/sh
 nohup /backup/backup-utils/bin/ghe-restore -f [IP address of the ghe master to restore] &
@@ -287,7 +287,7 @@ spec:
       - ReadWriteOnce
       resources:
         requests:
-          storage: 1000Gi 
+          storage: 1000Gi
 ```
 
 ===
