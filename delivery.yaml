@@ -19,7 +19,7 @@ pipeline:
       - desc: "build and push docker images"
         cmd: |
           PIERONE_NAMESPACE=pierone.stups.zalan.do/machinery
-          BASE_IMAGE=$PIERONE_NAMESPACE/ghe-backup-kubernetes
+          BASE_IMAGE=$PIERONE_NAMESPACE/ghe-backup
           IMAGE=$BASE_IMAGE:cdp-${CDP_BUILD_VERSION}
           CACHE_IMAGE=$BASE_IMAGE:latest
           docker build --cache-from $CACHE_IMAGE -t $CACHE_IMAGE -t $IMAGE -f Dockerfile .
