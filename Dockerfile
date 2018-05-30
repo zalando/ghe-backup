@@ -66,6 +66,7 @@ RUN \
   chmod 0644 /etc/cron.d/ghe-backup && \
   chmod 0700 /delete-instuck-backups/delete_instuck_progress.py && \
   chmod 0700 /start_backup.sh && \
+  chmod 0700 /replace-convert-properties.sh && \
   chmod 0700 /backup/final-docker-cmd.sh && \
   mkfifo /var/log/ghe-prod-backup.log && \
   chown -R application: /var/log/ghe-prod-backup.log && \
