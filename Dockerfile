@@ -40,7 +40,6 @@ COPY backup.config /backup/backup-utils/backup.config
 # copy files to decrypt private ssh key using kms
 COPY python/extract_decrypt_kms.py /kms/extract_decrypt_kms.py
 COPY convert-kms-private-ssh-key.sh /kms/convert-kms-private-ssh-key.sh
-COPY replace-convert-properties.sh /replace-convert-properties.sh
 COPY start_backup.sh /start_backup.sh
 
 # copy file to drop in stuck backup
@@ -51,6 +50,7 @@ COPY cron-ghe-backup /etc/cron.d/ghe-backup
 
 # copy finale CMD commands
 COPY final-docker-cmd.sh /backup/final-docker-cmd.sh
+COPY replace-convert-properties.sh /backup/replace-convert-properties.sh
 
 
 #PLACEHOLDER_4_COPY_SCM_SOURCE_JSON
@@ -66,7 +66,7 @@ RUN \
   chmod 0644 /etc/cron.d/ghe-backup && \
   chmod 0700 /delete-instuck-backups/delete_instuck_progress.py && \
   chmod 0700 /start_backup.sh && \
-  chmod 0700 /replace-convert-properties.sh && \
+  chmod 0700 /backup/replace-convert-properties.sh && \
   chmod 0700 /backup/final-docker-cmd.sh && \
   mkfifo /var/log/ghe-prod-backup.log && \
   chown -R application: /var/log/ghe-prod-backup.log && \
