@@ -133,9 +133,6 @@ Pls go to bashtest directory:
 ``` cd bashtest ``` and run the tests:  
 ``` ./test-convert-kms-private-ssh-key.sh ```  
 
-*Make sure* you run ```./cleanup-tests.sh ``` in order to clean up afterwards.  
-
-
 ### Running in an additional AWS account
 Please adapt the cron tab definitions when running in another AWS account e.g. to the values in cron-ghe-backup-alternative.
 This lowers the load on the Github Enterprise master with respect to backup attempts.
