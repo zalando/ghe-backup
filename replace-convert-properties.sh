@@ -14,11 +14,10 @@ if [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
   exit 0
 fi
 
+# Mac: use gnu-sed - brew install gnu-sed
+# set the path in bash - PATH="/usr/local/opt/gnu-sed/libexec/gnubin:$PATH"
+# http://daoyuan.li/a-normal-sed-on-mac/
 if [ ! -z $1 ] && [ ! -z $2 ] && [ ! -z $3 ] ;
 then
-  # Mac: use gnu-sed - brew install gnu-sed - http://daoyuan.li/a-normal-sed-on-mac/
-  echo "1: $1"
-  echo "2: $2"
-  echo "3: $3"
-  sed -i "s;$1;$2;g" "$3"
+  sed -i 's;$1;$2;g' $3
 fi
