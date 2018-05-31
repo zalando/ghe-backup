@@ -19,5 +19,5 @@ fi
 # http://daoyuan.li/a-normal-sed-on-mac/
 if [ ! -z $1 ] && [ ! -z $2 ] && [ ! -z $3 ] ;
 then
-  sed -i 's;$1;$2;g' $3
+  sed -i "s;$1;$2;g" $3
 fi
