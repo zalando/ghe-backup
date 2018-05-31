@@ -17,5 +17,8 @@ fi
 if [ ! -z $1 ] && [ ! -z $2 ] && [ ! -z $3 ] ;
 then
   # Mac: use gnu-sed - brew install gnu-sed - http://daoyuan.li/a-normal-sed-on-mac/
-  sed -i "s/$1/$2/g" $3
+  echo "1: $1"
+  echo "2: $2"
+  echo "3: $3"
+  sed -i "s;$1;$2;g" "$3"
 fi

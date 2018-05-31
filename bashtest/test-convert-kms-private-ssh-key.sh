@@ -27,4 +27,4 @@ fi
 echo "-----------------"
 
 # clean up
-./cleanup-tests.sh
+#./cleanup-tests.sh
