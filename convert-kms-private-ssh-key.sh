@@ -4,7 +4,7 @@ set -euo pipefail
 IFS=$'\n\t'
 
 folder=""
-private_key_folder="~/.ssh"
+private_key_folder="/backup/.ssh"
 private_key_path="$private_key_folder/id_rsa"
 kms_base="/kms"
 aws_region_placeholder="###REGION###"
