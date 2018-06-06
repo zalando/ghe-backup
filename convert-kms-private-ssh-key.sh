@@ -11,14 +11,14 @@ aws_region_placeholder="###REGION###"
 kubernetes_labels="/details/labels"
 
 set +u
-if [ ! -z $1 ];
+if [ ! -z "$1" ];
 then
   folder=$1
 else
   folder="/meta"
 fi
 
-if [ ! -z $2 ];
+if [ ! -z "$2" ];
 then
   private_key_folder="./ssh"
   private_key_path="./ssh/id_rsa_test"
