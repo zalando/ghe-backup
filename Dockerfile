@@ -78,3 +78,4 @@ USER application
 # https://docs.docker.com/engine/userguide/eng-image/dockerfile_best-practices/#user mentions to avoid sudo,
 # however cron as part of the final-docker-cmd.sh has to run as
 CMD "/backup/final-docker-cmd.sh"
+
