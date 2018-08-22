@@ -10,7 +10,7 @@ if [ -z "$REGION" ]
 then
   REGION="eu-west-1"
 fi
-./replace-convert-properties.sh "###REGION###" "$REGION" /kms/convert-kms-private-ssh-key.sh
+/backup/replace-convert-properties.sh "###REGION###" "$REGION" /kms/convert-kms-private-ssh-key.sh
 /kms/convert-kms-private-ssh-key.sh
 # do the actual backups via cron
 # everything in sbin directory needs to be executed as privileged user
