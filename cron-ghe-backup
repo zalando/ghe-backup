@@ -1,4 +1,4 @@
 # ghe prod backups
-17 9,12,13,15,17,18,21 * * 1-6 application /start_backup.sh
+17 3,9,12,13,15,17,18,21 * * 1-6 application /start_backup.sh
 13 10,20 * * 7 application /start_backup.sh
 55 7,8,9,10,11,12,13,14,15,16,17,18,19 * * 1-6 application python3 /delete-instuck-backups/delete_instuck_progress.py 1>> /var/log/ghe-delete-instuck-progress.log 2>&1
