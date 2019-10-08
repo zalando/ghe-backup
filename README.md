@@ -12,7 +12,6 @@
 setup running master and replica instances on AWS.
 The AWS account that runs the [high availability](https://help.github.com/enterprise/2.11/admin/guides/installation/configuring-github-enterprise-for-high-availability/)
 setup also runs one backup host.
-Another backup host can run in a different AWS account.
 [Zalando Tech's ](https://tech.zalando.com/) [Github Enterprise](https://enterprise.github.com/) backup
 can also run as a [POD](https://kubernetes.io/docs/concepts/workloads/pods/pod/#what-is-a-pod)
 inside a [Kubernetes](https://kubernetes.io/) cluster.
@@ -169,7 +168,7 @@ As [Taupage AMI](https://github.com/zalando-stups/taupage) is part of [Stups](ht
 ### Upload Docker images to [pierone](https://github.com/zalando-stups/pierone) (a Zalando docker registry) would be:
 ```docker push [repo name]:[tag]```  
 e.g.  
-```docker push pierone.stups.zalan.do/bus/ghe-backup:0.0.7```
+```docker push pierone.stups.zalan.do/machinery/ghe-backup:cdp-master-38```
 
 ### Senza yaml file
 [Stups](https://stups.io/) requires a [senza yaml file](http://docs.stups.io/en/latest/components/senza.html#senza-info)
@@ -216,14 +215,6 @@ SenzaComponents:
 _If you copy/paste the template above, make sure your details replace the dummy values_  
 
 
-### Create scm-source.json
-Ghe-backup uses a bash script similar to
-[stups application-development](http://docs.stups.io/en/latest/user-guide/application-development.html) to generate a scm-source.json file.   
-Make sure the bash script is executable:  
-```chmod +x create-scm-source.sh ```  
-and run it like:  
-```./create-scm-source.sh ```  
-
 ### EBS volumes with Senza
 Please follow these instructions: [senza's storage guild](https://docs.stups.io/en/latest/user-guide/storage.html) to create a EBS volume the stups way.
 
@@ -247,7 +238,7 @@ spec:
     spec:
       containers:
       - name: container-{ghe-backup}
-        image: pierone.zalando/machinery/ghe-backup-kubernetes:latest
+        image: pierone.stups.zalan.do/machinery/ghe-backup:cdp-master-38
         resources:
           requests:
             cpu: 100m
