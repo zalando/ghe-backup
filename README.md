@@ -238,7 +238,7 @@ spec:
     spec:
       containers:
       - name: container-{ghe-backup}
-        image: pierone.zalando/machinery/ghe-backup:cdp-master-37
+        image: pierone.stups.zalan.do/machinery/ghe-backup:cdp-master-37
         resources:
           requests:
             cpu: 100m
