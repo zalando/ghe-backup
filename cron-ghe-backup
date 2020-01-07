@@ -2,4 +2,4 @@
 0 */2 * * 1-6 application find /data/ghe-production-data/ -maxdepth 2 -mindepth 2 -name incomplete -atime +1  -printf "%h\0" | xargs -0 rm -Rf
 17 3,9,12,13,15,17,18,21 * * 1-6 application /start_backup.sh
 17 9,15,21 * * 7 application /start_backup.sh
-55 7,8,9,10,11,12,13,14,15,16,17,18,19 * * 1-6 application python3 /delete-instuck-backups/delete_instuck_progress.py 2>&1 | tee -a /var/log/ghe-delete-instuck-progress.log
+55 7,8,9,10,11,12,13,14,15,16,17,18,19 * * 1-6 application python3 /delete-instuck-backups/delete_instuck_progress.py 2>&1

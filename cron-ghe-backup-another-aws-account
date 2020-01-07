@@ -1,4 +1,4 @@
 # ghe prod backups another AWS account
 13 8,11,14,17,18,20 * * 1-6 root /start_backup.sh
-13 9,19 * * 7 root /start_backup.sh
-53 7,8,9,10,11,12,13,14,15,16,17,18,19 * * 1-6 root python3 /delete-instuck-backups/delete_instuck_progress.py 2>&1 | tee -a /var/log/ghe-delete-instuck-progress.log
+13 8,14,20 * * 7 root /start_backup.sh
+53 7,8,9,10,11,12,13,14,15,16,17,18,19 * * 1-6 root python3 /delete-instuck-backups/delete_instuck_progress.py 2>&1
