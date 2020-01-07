@@ -67,7 +67,7 @@ RUN \
   chmod 0700 /delete-instuck-backups/delete_instuck_progress.py && \
   chmod 0700 /start_backup.sh && \
   chmod 0700 /backup/replace-convert-properties.sh && \
-  chmod 0700 /backup/final-docker-cmd.sh && \
+  chmod 0700 /backup/final-docker-cmd.sh
 
 USER application
 
