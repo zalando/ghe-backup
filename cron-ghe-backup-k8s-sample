@@ -1,4 +1,4 @@
 # ghe bus k8s prod backups
 21 10,13,16,19,22 * * 1-6 application /start_backup.sh
-13 11,21 * * 7 application /start_backup.sh
-57 7,8,9,10,11,12,13,14,15,16,17,18,19 * * 1-6 application python3 /delete-instuck-backups/delete_instuck_progress.py 1>> /var/log/ghe-delete-instuck-progress.log 2>&1
+21 10,16,22 * * 7 application /start_backup.sh
+57 7,8,9,10,11,12,13,14,15,16,17,18,19 * * 1-6 application python3 /delete-instuck-backups/delete_instuck_progress.py 2>&1

@@ -12,4 +12,4 @@ if [ ! -d "/data/ghe-production-data/" ]
 then
     mkdir -p /data/ghe-production-data/
 fi
-/backup/backup-utils/bin/ghe-backup 1>> /var/log/ghe-prod-backup.log 2>&1
+/backup/backup-utils/bin/ghe-backup 2>&1

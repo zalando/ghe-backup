@@ -67,11 +67,7 @@ RUN \
   chmod 0700 /delete-instuck-backups/delete_instuck_progress.py && \
   chmod 0700 /start_backup.sh && \
   chmod 0700 /backup/replace-convert-properties.sh && \
-  chmod 0700 /backup/final-docker-cmd.sh && \
-  mkfifo /var/log/ghe-prod-backup.log && \
-  chown -R application: /var/log/ghe-prod-backup.log && \
-  touch /var/log/ghe-delete-instuck-progress.log && \
-  chown -R application: /var/log/ghe-delete-instuck-progress.log
+  chmod 0700 /backup/final-docker-cmd.sh
 
 USER application
 
