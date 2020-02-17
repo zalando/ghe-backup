@@ -23,8 +23,7 @@ We believe this backup approach provides reliable backup data even in case one A
 Basically [Zalando Tech's ](https://tech.zalando.com/) [Github Enterprise](https://enterprise.github.com/) backup
 wraps github's [backup-utils](https://github.com/github/backup-utils) in a
 [Docker](https://www.docker.com/) container.
-If running on AWS, an [EBS volume](https://aws.amazon.com/de/ebs/) stores the actual backup data.
-This way one can access the data even if the regarding backup host is down.
+
 If running on Kubernetes, a [stateful set](https://kubernetes.io/docs/tutorials/stateful-application/basic-stateful-set/)
 including [volumes](https://kubernetes.io/docs/concepts/storage/volumes/) and
 [volume claims](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#persistentvolumeclaims) stores the actual backup data.
@@ -32,23 +31,27 @@ See a sample [statefulset below]()https://github.com/zalando/ghe-backup/blob/mas
 [Zalando Kubernetes](https://github.com/zalando-incubator/kubernetes-on-aws#kubernetes-on-aws) is based on AWS, so [volume claims
  are based on EBS](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#aws).
 
+If running on AWS, an [EBS volume](https://aws.amazon.com/de/ebs/) stores the actual backup data.
+This way one can access the data even if the regarding backup host is down.
+
+
 
 ## Local docker development
 
 ### create a ghe-backup docker image
 ```docker build --rm -t [repo name]:[tag] . ```  
 e.g.  
-```docker build --rm -t pierone.stups.zalan.do/bus/ghe-backup:0.0.7 . ```
+```docker build --rm -t pierone.stups.zalan.do/machinery/ghe-backup:0.0.7 . ```
 
 #### run the image  
 ```docker run -d --name [repo name]:[tag] ```  
 e.g.  
-```docker run -d --name ghe-backup pierone.stups.zalan.do/bus/ghe-backup:0.0.7 ```
+```docker run -d --name ghe-backup pierone.stups.zalan.do/machinery/ghe-backup:0.0.7 ```
 
 or with connected bash:  
 ```docker run -it --entrypoint /bin/bash --name [repo name]:[tag] ```    
 e.g.  
-```docker run -it --entrypoint /bin/bash --name ghe-backup pierone.stups.zalan.do/bus/ghe-backup:0.0.7 ```
+```docker run -it --entrypoint /bin/bash --name ghe-backup pierone.stups.zalan.do/machinery/ghe-backup:0.0.7 ```
 
 ##### attach to the running local container
 ```docker attach --sig-proxy=false [repo name] ```  
