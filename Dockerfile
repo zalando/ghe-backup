@@ -1,5 +1,5 @@
-FROM registry.opensource.zalan.do/stups/python:3.6.5-20
-MAINTAINER lothar.schulz@zalando.de
+FROM registry.opensource.zalan.do/stups/python:3.6.8-28
+MAINTAINER rasha.malek@zalando.de
 
 # folder structure and user
 RUN \
