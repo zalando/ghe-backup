@@ -31,7 +31,9 @@ WORKDIR /backup
 
 RUN \
 # clone backup-utils
-  git clone -b stable https://github.com/github/backup-utils.git && \
+#### change master back to stable again when the master branch is merged into stable https://github.com/github/backup-utils/pull/565
+# git clone -b stable https://github.com/github/backup-utils.git && \
+  git clone -b master https://github.com/github/backup-utils.git && \
   git -C /backup/backup-utils pull
 
 # copy predefined backup config
