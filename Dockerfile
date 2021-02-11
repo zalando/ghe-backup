@@ -15,7 +15,7 @@ RUN \
 # install python pip3 & english, git, screen etc
   apt-get install -y --no-install-recommends unattended-upgrades python3 python3-dev && \
   apt-get install -y --no-install-recommends python3-pip python3-yaml && \
-  apt-get install -y --no-install-recommends language-pack-en git && \
+  apt-get install -y --no-install-recommends git && \
   apt-get install -y --no-install-recommends ssh && \
   apt-get install -y --no-install-recommends bash && \
   apt-get install -y --no-install-recommends rsync && \
