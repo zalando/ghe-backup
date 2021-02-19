@@ -5,16 +5,9 @@ MAINTAINER team-code@zalando.de
 RUN \
 # read package lists
   apt-get update -y && \
-  apt-get install -y sudo && \
-# create application user
-  useradd -d /backup -u 998 -o -c "application user" application && \
-# allow su
-  echo "application ALL=(root) NOPASSWD:ALL" > /etc/sudoers.d/application && \
-  chmod 0440 /etc/sudoers.d/application && \
 # update w/ latest security patches
 # install python pip3 & english, git, screen etc
-  apt-get install -y --no-install-recommends unattended-upgrades python3 python3-dev && \
-  apt-get install -y --no-install-recommends python3-pip python3-yaml && \
+  apt-get install -y --no-install-recommends unattended-upgrades python3 python3-dev python3-pip python3-yaml && \
   apt-get install -y --no-install-recommends git && \
   apt-get install -y --no-install-recommends ssh && \
   apt-get install -y --no-install-recommends bash && \
@@ -59,21 +52,15 @@ COPY replace-convert-properties.sh /backup/replace-convert-properties.sh
 
 RUN \
 # change mode of files
-  chown -R application: /backup && \
-  chown -R application: /kms && \
-  chown -R application: /delete-instuck-backups && \
-  chown -R application: /start_backup.sh && \
-  chmod 0700 /kms/extract_decrypt_kms.py && \
-  chmod 0700 /kms/convert-kms-private-ssh-key.sh && \
   chmod 0644 /etc/cron.d/ghe-backup && \
-  chmod 0700 /delete-instuck-backups/delete_instuck_progress.py && \
-  chmod 0700 /start_backup.sh && \
-  chmod 0700 /backup/replace-convert-properties.sh && \
-  chmod 0700 /backup/final-docker-cmd.sh
+  chmod +x /kms/extract_decrypt_kms.py && \
+  chmod +x /kms/convert-kms-private-ssh-key.sh && \
+  chmod +x /delete-instuck-backups/delete_instuck_progress.py && \
+  chmod +x /start_backup.sh && \
+  chmod +x /backup/replace-convert-properties.sh && \
+  chmod +x /backup/final-docker-cmd.sh
 
-USER application
+USER root
 
-# https://docs.docker.com/engine/userguide/eng-image/dockerfile_best-practices/#user mentions to avoid sudo,
-# however cron as part of the final-docker-cmd.sh has to run as
+# cron must run as root
 CMD "/backup/final-docker-cmd.sh"
-
