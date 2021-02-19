@@ -3,30 +3,26 @@ pipeline:
   - id: build
     overlay: ci/python
     type: script
-    #when:
-    #  branch: master
     commands:
       - desc: "setup the environment"
         cmd: |
           apt-get update
-          apt-get install -y python3-dev python-pip python3-pip
-          curl -sSL https://delivery.cloud.zalando.com/utils/ensure-docker | sh
-          sudo update-alternatives --install /usr/bin/python python /usr/bin/python3 10
+          apt-get install -qy python3-dev python-pip python3-pip
+          update-alternatives --install /usr/bin/python python /usr/bin/python3 10
           pip install -r python/requirements.txt
       - desc: "run tests"
         cmd: |
           nosetests -w python
       - desc: "build and push docker images"
         cmd: |
-          PIERONE_NAMESPACE=pierone.stups.zalan.do/machinery
-          BASE_IMAGE=$PIERONE_NAMESPACE/ghe-backup
-          IMAGE=$BASE_IMAGE:cdp-${CDP_BUILD_VERSION}
-          CACHE_IMAGE=$BASE_IMAGE:latest
-          docker build --cache-from $CACHE_IMAGE -t $CACHE_IMAGE -t $IMAGE -f Dockerfile .
-          #docker build -t $IMAGE -f Dockerfile .
-          if [ -z "$CDP_PULL_REQUEST_NUMBER" ]; then
-            docker push $IMAGE
-            echo "$IMAGE pushed"
+          BASE_IMAGE="pierone.stups.zalan.do/machinery/ghe-backup"
+          if [[ "${CDP_TARGET_BRANCH}" == "master" && -z "${CDP_PULL_REQUEST_NUMBER}" ]]; then
+              IMAGE="${BASE_IMAGE}:cdp-${CDP_BUILD_VERSION}"
           else
-            echo "Image not pushed because the build is not a push to master"
+              IMAGE="${BASE_IMAGE}-test:cdp-${CDP_BUILD_VERSION}"
           fi
+
+          docker build --cache-from "${BASE_IMAGE}:latest" -t "${IMAGE}" -f Dockerfile .
+
+          docker push "${IMAGE}"
+          echo "${IMAGE} pushed"
