@@ -1,4 +1,10 @@
 version: "2017-09-20"
+
+dependencies:
+  - id: python
+    type: docker
+    ref: registry.opensource.zalan.do/library/python-3.8
+
 pipeline:
   - id: build
     overlay: ci/python
