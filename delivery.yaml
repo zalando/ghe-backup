@@ -6,7 +6,7 @@ dependencies:
     ref: registry.opensource.zalan.do/library/python-3.8
 
 pipeline:
-  - id: build
+  - id: test
     overlay: ci/python
     type: script
     commands:
@@ -19,16 +19,3 @@ pipeline:
       - desc: "run tests"
         cmd: |
           nosetests -w python
-      - desc: "build and push docker images"
-        cmd: |
-          BASE_IMAGE="pierone.stups.zalan.do/machinery/ghe-backup"
-          if [[ "${CDP_TARGET_BRANCH}" == "master" && -z "${CDP_PULL_REQUEST_NUMBER}" ]]; then
-              IMAGE="${BASE_IMAGE}:cdp-${CDP_BUILD_VERSION}"
-          else
-              IMAGE="${BASE_IMAGE}-test:cdp-${CDP_BUILD_VERSION}"
-          fi
-
-          docker build --cache-from "${BASE_IMAGE}:latest" -t "${IMAGE}" -f Dockerfile .
-
-          docker push "${IMAGE}"
-          echo "${IMAGE} pushed"
