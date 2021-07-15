@@ -1,6 +1,8 @@
 FROM registry.opensource.zalan.do/library/python-3.8:latest
 MAINTAINER team-code@zalando.de
 
+ARG BACKUP_UTILS_VERSION=stable
+
 # folder structure and user
 RUN \
 # read package lists
@@ -24,10 +26,8 @@ WORKDIR /backup
 
 RUN \
 # clone backup-utils
-#### change master back to stable again when the master branch is merged into stable https://github.com/github/backup-utils/pull/565
-# git clone -b stable https://github.com/github/backup-utils.git && \
-  git clone -b master https://github.com/github/backup-utils.git && \
-  git -C /backup/backup-utils pull
+  git clone https://github.com/github/backup-utils.git && \
+  git -C /backup/backup-utils checkout $BACKUP_UTILS_VERSION
 
 # copy predefined backup config
 COPY backup.config /backup/backup-utils/backup.config
