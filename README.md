@@ -12,6 +12,7 @@ If you are interested in further development of the code please feel free to for
 
 [Zalando Tech's ](https://tech.zalando.com/) [Github Enterprise](https://enterprise.github.com/) backup approach.
 
+
 ## Overview
 [Github Enterprise](https://enterprise.github.com/) at Zalando Tech is a
 [high availability](https://help.github.com/enterprise/2.11/admin/guides/installation/configuring-github-enterprise-for-high-availability/)
