@@ -1,3 +1,9 @@
+# Deprecation Notice 
+This repository is deprecated.
+No further engineering work or support will happen.
+If you are interested in further development of the code please feel free to fork it.
+
+
 # Github Enterprise Backup
 
 [![Build Status](https://travis-ci.org/zalando/ghe-backup.svg?branch=master)](https://travis-ci.org/zalando/ghe-backup)
